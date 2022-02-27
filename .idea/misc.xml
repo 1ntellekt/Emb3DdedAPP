@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/works/androidWorks/Emb3DdedAPP/app/src/main/res/layout/chats_fragment.xml" value="0.4041666666666667" />
+        <entry key="..\:/works/androidWorks/Emb3DdedAPP/app/src/main/res/layout/friends_fragment.xml" value="0.4041666666666667" />
+        <entry key="..\:/works/androidWorks/Emb3DdedAPP/app/src/main/res/layout/load_fragment.xml" value="0.4041666666666667" />
+        <entry key="..\:/works/androidWorks/Emb3DdedAPP/app/src/main/res/layout/main_fragment.xml" value="0.4041666666666667" />
+        <entry key="..\:/works/androidWorks/Emb3DdedAPP/app/src/main/res/layout/news_fragment.xml" value="0.4041666666666667" />
+        <entry key="..\:/works/androidWorks/Emb3DdedAPP/app/src/main/res/layout/orders_fragment.xml" value="0.4041666666666667" />
+        <entry key="..\:/works/androidWorks/Emb3DdedAPP/app/src/main/res/layout/profile_fragment.xml" value="0.4041666666666667" />
+        <entry key="..\:/works/androidWorks/Emb3DdedAPP/app/src/main/res/layout/sign_in_fragment.xml" value="0.4041666666666667" />
+        <entry key="..\:/works/androidWorks/Emb3DdedAPP/app/src/main/res/layout/sign_up_fragment.xml" value="0.4041666666666667" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
