@@ -8,6 +8,7 @@
 
 
     <ImageView
+        android:id="@+id/logo_load"
         android:layout_centerInParent="true"
         android:src="@drawable/big_icon_logo"
         android:layout_width="wrap_content"

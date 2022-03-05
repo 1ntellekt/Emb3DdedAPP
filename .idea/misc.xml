@@ -3,9 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/User/Desktop/diplom/app/src/main/res/drawable/back_btn_sign.xml" value="0.2" />
+        <entry key="..\:/Users/User/Desktop/diplom/app/src/main/res/drawable/back_toggle.xml" value="0.2" />
+        <entry key="..\:/Users/User/Desktop/diplom/app/src/main/res/drawable/ic_baseline_alternate_email_24.xml" value="0.2" />
+        <entry key="..\:/Users/User/Desktop/diplom/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/User/Desktop/diplom/app/src/main/res/layout/load_fragment.xml" value="0.33" />
         <entry key="..\:/Users/User/Desktop/diplom/app/src/main/res/layout/sign_in_fragment.xml" value="0.25" />
-        <entry key="..\:/Users/User/Desktop/diplom/app/src/main/res/layout/sign_up_fragment.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/User/Desktop/diplom/app/src/main/res/layout/sign_up_fragment.xml" value="0.33" />
         <entry key="..\:/works/androidWorks/Emb3DdedAPP/app/src/main/res/layout/chats_fragment.xml" value="0.4041666666666667" />
         <entry key="..\:/works/androidWorks/Emb3DdedAPP/app/src/main/res/layout/friends_fragment.xml" value="0.4041666666666667" />
         <entry key="..\:/works/androidWorks/Emb3DdedAPP/app/src/main/res/layout/load_fragment.xml" value="0.4041666666666667" />

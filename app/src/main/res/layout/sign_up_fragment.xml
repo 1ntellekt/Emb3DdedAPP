@@ -1,13 +1,199 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:weightSum="17"
+    android:background="@color/background_color"
     tools:context=".screens.signup.SignUpFragment">
 
-    <TextView
+    <RelativeLayout
+        android:background="@drawable/back_signup"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+        android:layout_weight="7.5"
+        android:layout_height="0dp">
+        <ImageView
+            android:layout_margin="15dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/big_icon_logo_two"
+            android:cropToPadding="true"
+            android:adjustViewBounds="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
 
-</FrameLayout>
+
+    <RelativeLayout
+        android:layout_weight="0.2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+
+    <TextView
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="Sign Up to account"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_weight="1.8"
+        android:layout_height="0dp"/>
+
+    <RelativeLayout
+        android:layout_weight="0.2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edEmailLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="Enter email address..."
+                app:helperText="Required email"
+                app:startIconDrawable="@drawable/ic_baseline_alternate_email_24"
+                app:endIconMode="clear_text"
+                app:helperTextTextColor="@color/color_purple"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edEmail"
+                    android:inputType="textEmailAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edLoginLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="Enter login..."
+                app:counterEnabled="true"
+                app:counterMaxLength="15"
+                app:helperText="Required login"
+                app:startIconDrawable="@drawable/ic_baseline_person_24"
+                app:endIconMode="clear_text"
+                app:helperTextTextColor="@color/color_purple"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edLogin"
+                    android:inputType="textPersonName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edNumLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="Enter telephone number..."
+                app:helperText="Required number"
+                app:startIconDrawable="@drawable/ic_baseline_call_24"
+                app:endIconMode="clear_text"
+                app:helperTextTextColor="@color/color_purple"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edNum"
+                    android:inputType="phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edPasswordLayout"
+                android:layout_marginTop="5dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="Enter password..."
+                app:endIconMode="password_toggle"
+                app:helperText="Required password"
+                app:startIconDrawable="@drawable/ic_baseline_lock_24"
+                app:helperTextTextColor="@color/color_purple"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edPassword"
+                    android:layout_width="match_parent"
+                    android:inputType="textPassword"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edPasswordLayoutConfirm"
+                android:layout_marginTop="5dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="Confirm your password..."
+                app:endIconMode="password_toggle"
+                app:helperText="Required password"
+                app:startIconDrawable="@drawable/ic_baseline_lock_24"
+                app:helperTextTextColor="@color/color_purple"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edPasswordConfirm"
+                    android:layout_width="match_parent"
+                    android:inputType="textPassword"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_weight="0.5"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+
+    <LinearLayout
+        android:layout_weight="6"
+        android:gravity="center"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnLogInEmail"
+            android:background="@drawable/back_btn_sign"
+            android:layout_width="match_parent"
+            android:text="Sign Up with Email"
+            android:paddingStart="15dp"
+            android:textAllCaps="false"
+            android:drawableTint="@color/white"
+            android:drawableStart="@drawable/ic_baseline_alternate_email_24_2"
+            android:textSize="20sp"
+            android:height="9mm"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnLogInGoogle"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/back_btn_sign"
+            android:text="Sign Up with Google"
+            android:textAllCaps="false"
+            android:drawableStart="@drawable/ic__google"
+            android:paddingStart="15dp"
+            android:height="9mm"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</LinearLayout>
