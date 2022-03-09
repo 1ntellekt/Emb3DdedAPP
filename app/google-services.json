@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "318009760065",
+    "project_id": "emb3ddedapp",
+    "storage_bucket": "emb3ddedapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:318009760065:android:41bcc3206f5bee6d68a9c0",
+        "android_client_info": {
+          "package_name": "com.example.emb3ddedapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "318009760065-9bvj01qbd1jgvdi96qqd5ugm7vmpn9vv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.emb3ddedapp",
+            "certificate_hash": "11dd984e6fcc24b28ebb35389454f70478f3c253"
+          }
+        },
+        {
+          "client_id": "318009760065-2ss6k4dr9sdrljvejd6h0ffv3rl6vehg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHrOoxB-VRYtTje2hoP72B9MVhO3kwesA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "318009760065-2ss6k4dr9sdrljvejd6h0ffv3rl6vehg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -55,6 +55,10 @@
             app:exitAnim="@android:anim/slide_out_right"
             app:launchSingleTop="true"
             app:popUpTo="@id/nav_app" />
+        <action
+            android:id="@+id/action_signUpFragment_to_signInFragment"
+            app:destination="@id/signInFragment"
+            app:enterAnim="@android:anim/slide_in_left" />
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
