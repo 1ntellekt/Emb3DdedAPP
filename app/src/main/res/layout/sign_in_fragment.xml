@@ -143,9 +143,9 @@
             android:paddingStart="15dp"
             android:textAllCaps="false"
             android:drawableTint="@color/white"
-            android:drawableStart="@drawable/ic_baseline_alternate_email_24"
+            android:drawableStart="@drawable/ic_baseline_alternate_email_24_2"
             android:textSize="20sp"
-            android:height="9mm"
+            android:layout_margin="5dp"
             android:textColor="@color/white"
             android:layout_height="wrap_content"/>
 
@@ -157,8 +157,8 @@
             android:textAllCaps="false"
             android:drawableStart="@drawable/ic__google"
             android:paddingStart="15dp"
-            android:height="9mm"
             android:textSize="20sp"
+            android:layout_margin="5dp"
             android:textColor="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

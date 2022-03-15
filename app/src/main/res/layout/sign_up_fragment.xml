@@ -175,26 +175,26 @@
             android:text="Sign Up with Email"
             android:paddingStart="15dp"
             android:textAllCaps="false"
+            android:layout_margin="5dp"
             android:drawableTint="@color/white"
             android:drawableStart="@drawable/ic_baseline_alternate_email_24_2"
             android:textSize="20sp"
-            android:height="9mm"
             android:textColor="@color/white"
             android:layout_height="wrap_content"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnLogInGoogle"
-            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:background="@drawable/back_btn_sign"
+            android:drawableStart="@drawable/ic__google"
+            android:minHeight="48dp"
+            android:paddingStart="15dp"
             android:text="Sign Up with Google"
             android:textAllCaps="false"
-            android:drawableStart="@drawable/ic__google"
-            android:paddingStart="15dp"
-            android:height="9mm"
-            android:textSize="20sp"
             android:textColor="@color/white"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:textSize="20sp" />
 
     </LinearLayout>
 

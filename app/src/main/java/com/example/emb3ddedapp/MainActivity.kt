@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import com.example.emb3ddedapp.database.repository.FireRepository
+import com.example.emb3ddedapp.database.repository.Repository
 import com.example.emb3ddedapp.databinding.ActivityMainBinding
 import com.example.emb3ddedapp.utils.APP
 import com.example.emb3ddedapp.utils.REPOSITORY
@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding?.root)
         mNavController = Navigation.findNavController(this, R.id.fragmentNavHost)
         APP = this
-        REPOSITORY = FireRepository()
+        REPOSITORY = Repository()
         progressDialog = ProgressDialog(APP)
     }
 

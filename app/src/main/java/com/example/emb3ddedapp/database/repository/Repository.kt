@@ -3,6 +3,8 @@ package com.example.emb3ddedapp.database.repository
 import android.util.Log
 import com.example.emb3ddedapp.models.CurrUser
 import com.example.emb3ddedapp.models.User
+import com.example.emb3ddedapp.utils.getInitUser
+import com.example.emb3ddedapp.utils.setInitUser
 import com.google.firebase.auth.*
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
@@ -10,7 +12,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
 
-class FireRepository : DataRepository {
+class Repository : DataRepository {
 
     private val auth = FirebaseAuth.getInstance()
     private val dbFireStore = FirebaseFirestore.getInstance()
@@ -22,7 +24,7 @@ class FireRepository : DataRepository {
     init {
         //TASKS = tasks
     }
-
+/*
     override fun initDatabase() {
         CurrUser.id = auth.currentUser?.uid.toString()
         CurrUser.email = auth.currentUser?.email.toString()
@@ -32,7 +34,8 @@ class FireRepository : DataRepository {
         auth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener {
                 initDatabase()
-                onSuccess()
+                //onSuccess()
+                getCurrentUser({onSuccess()},{onFail(it)})
             }
             .addOnFailureListener {
                 onFail(it.message.toString())
@@ -89,7 +92,12 @@ class FireRepository : DataRepository {
             .addOnSuccessListener {
                 initDatabase()
                 if (isSignUp) setUser({onSuccess()}, {onFail(it)})
-                else checkUserExists({onSuccess()}, {onFail(it)})
+                else {
+                    checkUserExists({
+                        getCurrentUser({onSuccess()},{onFail(it)})
+                    }, {onFail(it)})
+
+                }
             }
             .addOnFailureListener { onFail(it.message.toString()) }
     }
@@ -108,7 +116,23 @@ class FireRepository : DataRepository {
     }
 
     override fun getCurrentUser(onSuccess: () -> Unit, onFail: (String) -> Unit) {
+       // initDatabase()
+            users.document(CurrUser.id).get()
+                .addOnSuccessListener {
+                    CurrUser.tokenMsg = it["tokenMsg"] as String
+                    CurrUser.email = it["email"] as String
+                    CurrUser.login = it["login"] as String
+                    CurrUser.password = it["password"] as String
+                    CurrUser.status = it["status"] as String
+                    CurrUser.telNumber = it["telNumber"] as String
+                    CurrUser.profileUrlPhoto = it["profileUrlPhoto"] as? String
 
+                    onSuccess()
+                }
+                .addOnFailureListener {
+
+                    onFail(it.message.toString())
+                }
     }
 
     override fun setUser(onSuccess: () -> Unit, onFail: (String) -> Unit) {
@@ -131,5 +155,11 @@ class FireRepository : DataRepository {
     override fun editCurrentUser(onSuccess: () -> Unit, onFail: (String) -> Unit) {
 
     }
+
+    override fun signOut() {
+        if (getInitUser()){
+            setInitUser(false)
+        }
+    }*/
 
 }

@@ -10,13 +10,19 @@ import com.google.firebase.auth.FirebaseAuth
 
 class SignInViewModel(application: Application) : AndroidViewModel(application) {
 
+/*
     fun logInGoogle(token:String,onSuccess:()->Unit){
         showProgressDialog("Google logIn....")
         REPOSITORY.signUpLogInGoogle(false,token,{
             //get data current user
-            closeProgressDialog()
-            setInitUser(true)
-            onSuccess()
+            //REPOSITORY.getCurrentUser({
+                closeProgressDialog()
+                setInitUser(true)
+                onSuccess()
+            *//*}, {
+                showToast(it)
+            })*//*
+
         },
             {
                 closeProgressDialog()
@@ -28,12 +34,17 @@ class SignInViewModel(application: Application) : AndroidViewModel(application) 
     fun logInEmail(email:String,password:String,onSuccess:()->Unit){
         showProgressDialog("Email logIn....")
         REPOSITORY.logInEmail(email,password,{
-            closeProgressDialog()
+            //closeProgressDialog()
             Log.i("tag", "${FirebaseAuth.getInstance().currentUser?.email}")
             if (FirebaseAuth.getInstance().currentUser?.isEmailVerified == true){
                 //get data current user
-                setInitUser(true)
-                onSuccess()
+                //REPOSITORY.getCurrentUser({
+                    closeProgressDialog()
+                    setInitUser(true)
+                    onSuccess()
+                *//*}, {
+                    showToast(it)
+                })*//*
             } else {
                 closeProgressDialog()
                 showToast("Verified email please!")
@@ -45,5 +56,6 @@ class SignInViewModel(application: Application) : AndroidViewModel(application) 
             }
         )
     }
+    */
 
 }
