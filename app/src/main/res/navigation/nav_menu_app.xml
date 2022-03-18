@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_menu_app"
+    app:startDestination="@id/newsFragment">
+
+
+    <fragment
+        android:id="@+id/newsFragment"
+        android:name="com.example.emb3ddedapp.screens.news.NewsFragment"
+        android:label="news_fragment"
+        tools:layout="@layout/news_fragment" />
+    <fragment
+        android:id="@+id/chatsFragment"
+        android:name="com.example.emb3ddedapp.screens.chats.ChatsFragment"
+        android:label="chats_fragment"
+        tools:layout="@layout/chats_fragment" />
+    <fragment
+        android:id="@+id/ordersFragment"
+        android:name="com.example.emb3ddedapp.screens.orders.OrdersFragment"
+        android:label="orders_fragment"
+        tools:layout="@layout/orders_fragment" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.emb3ddedapp.screens.profile.ProfileFragment"
+        android:label="profile_fragment"
+        tools:layout="@layout/profile_fragment" />
+</navigation>
