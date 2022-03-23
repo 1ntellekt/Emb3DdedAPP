@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_app"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/pageNewsFragment">
 
     <fragment
         android:id="@+id/loadFragment"
@@ -73,5 +73,37 @@
             app:exitAnim="@android:anim/slide_out_right"
             app:launchSingleTop="true"
             app:popUpTo="@id/nav_app" />
+        <action
+            android:id="@+id/action_mainFragment_to_pageChatFragment"
+            app:destination="@id/pageChatFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_mainFragment_to_pageNewsFragment"
+            app:destination="@id/pageNewsFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/pageChatFragment"
+        android:name="com.example.emb3ddedapp.screens.page_chat.PageChatFragment"
+        android:label="page_chat_fragment"
+        tools:layout="@layout/page_chat_fragment" >
+        <action
+            android:id="@+id/action_pageChatFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/pageNewsFragment"
+        android:name="com.example.emb3ddedapp.screens.page_news.PageNewsFragment"
+        android:label="page_news_fragment"
+        tools:layout="@layout/page_news_fragment" >
+        <action
+            android:id="@+id/action_pageNewsFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
     </fragment>
 </navigation>

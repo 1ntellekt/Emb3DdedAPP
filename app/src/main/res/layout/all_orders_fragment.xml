@@ -1,13 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background_color"
     tools:context=".screens.orders.allorders.AllOrdersFragment">
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/headPanel"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+        android:layout_height="wrap_content">
 
-</FrameLayout>
+        <TextView
+            android:text="Orders"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnNewFirst"
+            android:text="New ones first"
+            android:paddingStart="15dp"
+            android:layout_gravity="center_vertical"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:paddingEnd="15dp"
+            android:layout_margin="5dp"
+            android:textAllCaps="false"
+            android:background="@drawable/back_btn_2"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnOldFirst"
+            android:text="First the old ones"
+            android:paddingStart="15dp"
+            android:layout_gravity="center_vertical"
+            android:textSize="15sp"
+            android:backgroundTint="@color/color_btn_inactive"
+            android:textColor="@color/white"
+            android:paddingEnd="15dp"
+            android:layout_margin="5dp"
+            android:textAllCaps="false"
+            android:background="@drawable/back_btn_2"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"/>
+
+        <ImageButton
+            android:id="@+id/btnFilter"
+            android:src="@drawable/ic_equalizer_filter_filtering_mixer_sorting_icon_123287"
+            android:background="@drawable/back_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:tint="@color/white" />
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        app:queryHint="Enter the name author..."
+        app:layout_constraintTop_toBottomOf="@id/headPanel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/border_input_edtxt"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        app:layout_constraintTop_toBottomOf="@id/searchView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2"
+        tools:listitem="@layout/order_item_layout_1"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="3dp"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,8 +22,8 @@
             tools:ignore="UseCompoundDrawables">
 
             <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:layout_margin="5dp"
                 android:src="@drawable/logo_mini_menu"
                 android:contentDescription="logo" />
@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="10dp"
-                android:text="Emb3dedApp"
+                android:text="@string/app_name"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
         </LinearLayout>

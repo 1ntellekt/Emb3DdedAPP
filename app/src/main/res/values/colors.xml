@@ -12,5 +12,10 @@
     <color name="color_purple">#5943BD</color>
     <color name="color_btn_auth">#141510</color>
     <color name="color_dark_back_color">#68637E</color>
+    <color name="color_blue">#0090FF</color>
+    <color name="color_btn">#342B49</color>
+    <color name="color_btn_inactive">#84799D</color>
+    <color name="color_back_chat">#FBF6F6</color>
+    <color name="color_pages_grey">#DFDBDB</color>
 
 </resources>

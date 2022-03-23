@@ -1,13 +1,188 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background_color"
     tools:context=".screens.profile.ProfileFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="4dp"
+        android:id="@+id/imgProfile"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/ic_person"
+        app:civ_border_color="@color/color_purple"
+        app:civ_border_width="3dp"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="180dp"
+        android:layout_height="180dp"/>
 
-</FrameLayout>
+
+    <ImageButton
+        android:padding="5dp"
+        app:layout_constraintBottom_toBottomOf="@id/imgProfile"
+        app:layout_constraintEnd_toEndOf="@id/imgProfile"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/back_btn"
+        android:src="@drawable/ic_baseline_edit_24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:id="@+id/panelEmail"
+            android:layout_marginTop="15dp"
+            android:gravity="center_horizontal"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imgProfile"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                tools:text="Email-address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/tvEmail"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:padding="15dp"
+                android:backgroundTint="@color/color_btn_inactive"
+                android:background="@drawable/back_btn"
+                android:textColor="@color/white"
+                tools:text="example@gmail.com"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edLoginLayout"
+        app:layout_constraintBottom_toBottomOf="@id/imgProfile"
+        app:layout_constraintStart_toEndOf="@id/imgProfile"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        app:helperTextTextColor="@color/color_purple"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="5dp"
+        android:layout_width="0dp"
+        app:helperText="Login"
+        android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edLogin"
+            android:hint="Enter login..."
+            android:layout_width="wrap_content"
+            android:background="@drawable/back_ed_input"
+            android:layout_height="wrap_content"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <LinearLayout
+        android:gravity="center"
+
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintTop_toBottomOf="@id/imgProfile"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edNumberLayout"
+            app:helperTextTextColor="@color/color_purple"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            app:helperText="Telephone number"
+            android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edNumber"
+            android:hint="Enter telephone number..."
+            android:layout_width="match_parent"
+            android:background="@drawable/back_ed_input"
+            android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edStatusLayout"
+            app:helperTextTextColor="@color/color_purple"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            app:helperText="User status"
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edStatus"
+                android:hint="Enter person status..."
+                android:layout_width="match_parent"
+                android:background="@drawable/back_ed_input"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edOldPasswordLayout"
+            app:helperTextTextColor="@color/color_purple"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            app:helperText="Old password"
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edOldPassword"
+                android:hint="Enter old password..."
+                android:layout_width="match_parent"
+                android:background="@drawable/back_ed_input"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edNewPasswordLayout"
+            app:helperTextTextColor="@color/color_purple"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            app:helperText="New password"
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edNewPassword"
+                android:hint="Enter new password..."
+                android:layout_width="match_parent"
+                android:background="@drawable/back_ed_input"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnEditProfile"
+            android:layout_marginTop="10dp"
+            android:paddingStart="15dp"
+            android:textAllCaps="false"
+            android:drawableTint="@color/white"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:text="User profile update"
+            android:drawableStart="@drawable/ic_edit_person"
+            android:background="@drawable/back_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnExit"
+            android:layout_marginTop="10dp"
+            android:paddingStart="15dp"
+            android:textAllCaps="false"
+            android:drawableTint="@color/white"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:text="Exit from application"
+            android:drawableStart="@drawable/ic_edit_person"
+            android:backgroundTint="#950505"
+            android:background="@drawable/back_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

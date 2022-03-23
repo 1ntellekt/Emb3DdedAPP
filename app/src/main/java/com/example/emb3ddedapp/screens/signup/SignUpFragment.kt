@@ -50,101 +50,101 @@ class SignUpFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-//        binding.apply {
-//
-//            edLogin.doOnTextChanged { text, start, before, count ->
-//                text?.let { txt->
-//                    if (txt.toString().length <= 6) {
-//                        edLoginLayout.error = "More than 6 characters"
-//                    } else if (txt.toString().length >= 20){
-//                        edLoginLayout.error = "Less than 20 characters"
-//                    } else {
-//                        edLoginLayout.error = null
-//                    }
-//                }
-//            }
-//
-//            edPassword.doOnTextChanged { text, start, before, count ->
-//                text?.let { txt->
-//                    if (txt.toString().length <= 7) {
-//                        edPasswordLayout.error = "More than 7 characters"
-//                    } else {
-//                        edPasswordLayout.error = null
-//                    }
-//                }
-//            }
-//
-//            edPasswordConfirm.doOnTextChanged { text, start, before, count ->
-//                text?.let { txt->
-//                    if (txt.toString().length <= 7) {
-//                        edPasswordLayoutConfirm.error = "More than 7 characters"
-//                    } else {
-//                        edPasswordLayoutConfirm.error = null
-//                    }
-//                }
-//            }
-//
-//            edNum.doOnTextChanged { text, start, before, count -> edNumLayout.error = null }
-//            edEmail.doOnTextChanged { text, start, before, count -> edEmailLayout.error = null }
-//
-//            btnLogInEmail.setOnClickListener {
-//                if (edEmail.text.toString().isEmpty()){
-//                    edEmailLayout.error = "Input email address is empty!"
-//                }else if (edLogin.text.toString().isEmpty()){
-//                    edLoginLayout.error = "Input login is empty!"
-//                } else if (edNum.text.toString().isEmpty()){
-//                    edNumLayout.error = "Input phone number is empty!"
-//                } else if (edPassword.text.toString().isEmpty()){
-//                    edPasswordLayout.error = "Input password is empty!"
-//                } else if (edPasswordConfirm.text.toString().isEmpty()){
-//                    edPasswordLayoutConfirm.error = "input confirm password is empty!"
-//                } else if (edPassword.text.toString() != edPasswordConfirm.text.toString()){
-//                    edPasswordLayout.error = "Different passwords"
-//                    edPasswordLayoutConfirm.error = "Different passwords"
-//                } else if (edPasswordLayout.error.isNullOrEmpty() && edPasswordLayoutConfirm.error.isNullOrEmpty()
-//                    && edEmailLayout.error.isNullOrEmpty() && edLoginLayout.error.isNullOrEmpty() && edNumLayout.error.isNullOrEmpty()) {
-//                        CurrUser.password = edPassword.text.toString()
-//                        CurrUser.profileUrlPhoto = null
-//                        CurrUser.email = edEmail.text.toString()
-//                        CurrUser.login = edLogin.text.toString()
-//                        CurrUser.status = "Connected APP"
-//                        CurrUser.telNumber = edNum.text.toString()
-//
-//                    viewModel.signUpEmail(edEmail.text.toString(),edPassword.text.toString()){
-//                            APP.mNavController.navigate(R.id.action_signUpFragment_to_signInFragment)
-//                    }
-//                }
-//            }
-//
-//            btnLogInGoogle.setOnClickListener {
-//                if (edEmail.text.toString().isEmpty()){
-//                    edEmailLayout.error = "Input email address is empty!"
-//                }else if (edLogin.text.toString().isEmpty()){
-//                    edLoginLayout.error = "Input login is empty!"
-//                } else if (edNum.text.toString().isEmpty()){
-//                    edNumLayout.error = "Input phone number is empty!"
-//                } else if (edPassword.text.toString().isEmpty()){
-//                    edPasswordLayout.error = "Input password is empty!"
-//                } else if (edPasswordConfirm.text.toString().isEmpty()){
-//                    edPasswordLayoutConfirm.error = "input confirm password is empty!"
-//                } else if (edPassword.text.toString() != edPasswordConfirm.text.toString()){
-//                    edPasswordLayout.error = "Different passwords"
-//                    edPasswordLayoutConfirm.error = "Different passwords"
-//                } else if (edPasswordLayout.error.isNullOrEmpty() && edPasswordLayoutConfirm.error.isNullOrEmpty()
-//                    && edEmailLayout.error.isNullOrEmpty() && edLoginLayout.error.isNullOrEmpty() && edNumLayout.error.isNullOrEmpty()) {
-//                    CurrUser.password = edPassword.text.toString()
-//                    CurrUser.profileUrlPhoto = null
-//                    CurrUser.email = edEmail.text.toString()
-//                    CurrUser.login = edLogin.text.toString()
-//                    CurrUser.status = "Connected APP"
-//                    CurrUser.telNumber = edNum.text.toString()
-//
-//                    getSignInClient().signOut()
-//                    takeGoogleAcc.launch(getSignInClient().signInIntent)
-//                }
-//            }
-//
-//        }
+        binding.apply {
+
+            edLogin.doOnTextChanged { text, start, before, count ->
+                text?.let { txt->
+                    if (txt.toString().length <= 6) {
+                        edLoginLayout.error = "More than 6 characters"
+                    } else if (txt.toString().length >= 20){
+                        edLoginLayout.error = "Less than 20 characters"
+                    } else {
+                        edLoginLayout.error = null
+                    }
+                }
+            }
+
+            edPassword.doOnTextChanged { text, start, before, count ->
+                text?.let { txt->
+                    if (txt.toString().length <= 7) {
+                        edPasswordLayout.error = "More than 7 characters"
+                    } else {
+                        edPasswordLayout.error = null
+                    }
+                }
+            }
+
+            edPasswordConfirm.doOnTextChanged { text, start, before, count ->
+                text?.let { txt->
+                    if (txt.toString().length <= 7) {
+                        edPasswordLayoutConfirm.error = "More than 7 characters"
+                    } else {
+                        edPasswordLayoutConfirm.error = null
+                    }
+                }
+            }
+
+            edNum.doOnTextChanged { text, start, before, count -> edNumLayout.error = null }
+            edEmail.doOnTextChanged { text, start, before, count -> edEmailLayout.error = null }
+
+            btnLogInEmail.setOnClickListener {
+                if (edEmail.text.toString().isEmpty()){
+                    edEmailLayout.error = "Input email address is empty!"
+                }else if (edLogin.text.toString().isEmpty()){
+                    edLoginLayout.error = "Input login is empty!"
+                } else if (edNum.text.toString().isEmpty()){
+                    edNumLayout.error = "Input phone number is empty!"
+                } else if (edPassword.text.toString().isEmpty()){
+                    edPasswordLayout.error = "Input password is empty!"
+                } else if (edPasswordConfirm.text.toString().isEmpty()){
+                    edPasswordLayoutConfirm.error = "input confirm password is empty!"
+                } else if (edPassword.text.toString() != edPasswordConfirm.text.toString()){
+                    edPasswordLayout.error = "Different passwords"
+                    edPasswordLayoutConfirm.error = "Different passwords"
+                } else if (edPasswordLayout.error.isNullOrEmpty() && edPasswordLayoutConfirm.error.isNullOrEmpty()
+                    && edEmailLayout.error.isNullOrEmpty() && edLoginLayout.error.isNullOrEmpty() && edNumLayout.error.isNullOrEmpty()) {
+                        CurrUser.password = edPassword.text.toString()
+                        CurrUser.profileUrlPhoto = null
+                        CurrUser.email = edEmail.text.toString()
+                        CurrUser.login = edLogin.text.toString()
+                        CurrUser.status = "Connected APP"
+                        CurrUser.telNumber = edNum.text.toString()
+
+                    /*viewModel.signUpEmail(edEmail.text.toString(),edPassword.text.toString()){
+                            APP.mNavController.navigate(R.id.action_signUpFragment_to_signInFragment)
+                    }*/
+                }
+            }
+
+            btnLogInGoogle.setOnClickListener {
+                if (edEmail.text.toString().isEmpty()){
+                    edEmailLayout.error = "Input email address is empty!"
+                }else if (edLogin.text.toString().isEmpty()){
+                    edLoginLayout.error = "Input login is empty!"
+                } else if (edNum.text.toString().isEmpty()){
+                    edNumLayout.error = "Input phone number is empty!"
+                } else if (edPassword.text.toString().isEmpty()){
+                    edPasswordLayout.error = "Input password is empty!"
+                } else if (edPasswordConfirm.text.toString().isEmpty()){
+                    edPasswordLayoutConfirm.error = "input confirm password is empty!"
+                } else if (edPassword.text.toString() != edPasswordConfirm.text.toString()){
+                    edPasswordLayout.error = "Different passwords"
+                    edPasswordLayoutConfirm.error = "Different passwords"
+                } else if (edPasswordLayout.error.isNullOrEmpty() && edPasswordLayoutConfirm.error.isNullOrEmpty()
+                    && edEmailLayout.error.isNullOrEmpty() && edLoginLayout.error.isNullOrEmpty() && edNumLayout.error.isNullOrEmpty()) {
+                    CurrUser.password = edPassword.text.toString()
+                    CurrUser.profileUrlPhoto = null
+                    CurrUser.email = edEmail.text.toString()
+                    CurrUser.login = edLogin.text.toString()
+                    CurrUser.status = "Connected APP"
+                    CurrUser.telNumber = edNum.text.toString()
+
+                    getSignInClient().signOut()
+                    takeGoogleAcc.launch(getSignInClient().signInIntent)
+                }
+            }
+
+        }
         
     }
 

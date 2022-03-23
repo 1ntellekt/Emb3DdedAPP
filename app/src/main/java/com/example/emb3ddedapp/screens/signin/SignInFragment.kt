@@ -51,40 +51,40 @@ class SignInFragment : Fragment() {
         super.onStart()
         binding.apply {
 
-//            toggleSignUp.setOnClickListener {
-//            APP.mNavController.navigate(R.id.action_signInFragment_to_signUpFragment)
-//            }
-//
-//            edPassword.doOnTextChanged { text, start, count, after ->
-//                text?.let { txt->
-//                    if (txt.toString().length <=7){
-//                        edPasswordLayout.error = "More than 7 characters"
-//                    } else {
-//                        edPasswordLayout.error = null
-//                    }
-//                }
-//            }
-//
-//            edEmail.doOnTextChanged { text, start, before, count -> edEmailLayout.error = null }
-//
-//
-//            btnLogInEmail.setOnClickListener {
-//                if (edPasswordLayout.error.isNullOrEmpty() && edEmail.text.toString().isNotEmpty() && edPassword.text.toString().isNotEmpty()){
-//                    //log in email
-//                    viewModel.logInEmail(edEmail.text.toString(),edPassword.text.toString()) {
-//                        APP.mNavController.navigate(R.id.action_signInFragment_to_mainFragment)
-//                    }
-//                } else if (edEmail.text.toString().isEmpty()){
-//                    edEmailLayout.error = "Input email address!"
-//                } else if (edPassword.text.toString().isEmpty()){
-//                    edPasswordLayout.error = "Input password!"
-//                }
-//            }
-//
-//            btnLogInGoogle.setOnClickListener {
-//                getSignInClient().signOut()
-//                takeGoogleAcc.launch(getSignInClient().signInIntent)
-//            }
+            toggleSignUp.setOnClickListener {
+            APP.mNavController.navigate(R.id.action_signInFragment_to_signUpFragment)
+            }
+
+            edPassword.doOnTextChanged { text, start, count, after ->
+                text?.let { txt->
+                    if (txt.toString().length <=7){
+                        edPasswordLayout.error = "More than 7 characters"
+                    } else {
+                        edPasswordLayout.error = null
+                    }
+                }
+            }
+
+            edEmail.doOnTextChanged { text, start, before, count -> edEmailLayout.error = null }
+
+
+            btnLogInEmail.setOnClickListener {
+                if (edPasswordLayout.error.isNullOrEmpty() && edEmail.text.toString().isNotEmpty() && edPassword.text.toString().isNotEmpty()){
+                    //log in email
+                    /*viewModel.logInEmail(edEmail.text.toString(),edPassword.text.toString()) {
+                        APP.mNavController.navigate(R.id.action_signInFragment_to_mainFragment)
+                    }*/
+                } else if (edEmail.text.toString().isEmpty()){
+                    edEmailLayout.error = "Input email address!"
+                } else if (edPassword.text.toString().isEmpty()){
+                    edPasswordLayout.error = "Input password!"
+                }
+            }
+
+            btnLogInGoogle.setOnClickListener {
+                getSignInClient().signOut()
+                takeGoogleAcc.launch(getSignInClient().signInIntent)
+            }
 
         }
     }
