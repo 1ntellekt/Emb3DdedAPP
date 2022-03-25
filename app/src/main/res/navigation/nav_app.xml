@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_app"
-    app:startDestination="@id/pageNewsFragment">
+    app:startDestination="@id/mainFragment">
 
     <fragment
         android:id="@+id/loadFragment"
@@ -83,6 +83,21 @@
             app:destination="@id/pageNewsFragment"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_mainFragment_to_pageOrderFragment"
+            app:destination="@id/pageOrderFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_mainFragment_to_pageNewsEditFragment"
+            app:destination="@id/pageNewsEditFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_mainFragment_to_pageOrderEditFragment"
+            app:destination="@id/pageOrderEditFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/pageChatFragment"
@@ -102,6 +117,39 @@
         tools:layout="@layout/page_news_fragment" >
         <action
             android:id="@+id/action_pageNewsFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/pageOrderFragment"
+        android:name="com.example.emb3ddedapp.screens.page_order.PageOrderFragment"
+        android:label="page_order_fragment"
+        tools:layout="@layout/page_order_fragment" >
+        <action
+            android:id="@+id/action_pageOrderFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/pageNewsEditFragment"
+        android:name="com.example.emb3ddedapp.screens.page_news_edit.PageNewsEditFragment"
+        android:label="page_news_edit_fragment"
+        tools:layout="@layout/page_news_edit_fragment" >
+        <action
+            android:id="@+id/action_pageNewsEditFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/pageOrderEditFragment"
+        android:name="com.example.emb3ddedapp.screens.page_order_edit.PageOrderEditFragment"
+        android:label="page_order_edit_fragment"
+        tools:layout="@layout/page_order_edit_fragment" >
+        <action
+            android:id="@+id/action_pageOrderEditFragment_to_mainFragment"
             app:destination="@id/mainFragment"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right" />

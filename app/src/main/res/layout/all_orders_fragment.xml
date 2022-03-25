@@ -82,7 +82,7 @@
         android:id="@+id/recyclerView"
         app:layout_constraintTop_toBottomOf="@id/searchView"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
         app:spanCount="2"
         tools:listitem="@layout/order_item_layout_1"
         android:layout_marginTop="15dp"

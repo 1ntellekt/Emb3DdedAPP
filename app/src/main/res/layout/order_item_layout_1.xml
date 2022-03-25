@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:background="@color/background_color"
         app:shapeAppearanceOverlay="@style/roundImgView"
-        tools:src="@drawable/default_img_3d_order_obj"/>
+        tools:src="@drawable/order_img"/>
 
     <TextView
         android:id="@+id/tvShortDescription"

@@ -18,19 +18,19 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/imgNew"
+            android:id="@+id/imgNews"
             android:layout_width="120dp"
             android:layout_height="120dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/roundImgView"
-            tools:src="@drawable/ic_launcher_background"/>
+            android:src="@drawable/news_img"/>
 
         <ImageButton
             android:id="@+id/btnEdit"
             android:visibility="invisible"
-            app:layout_constraintStart_toStartOf="@id/imgNew"
-            app:layout_constraintTop_toTopOf="@id/imgNew"
+            app:layout_constraintStart_toStartOf="@id/imgNews"
+            app:layout_constraintTop_toTopOf="@id/imgNews"
             android:src="@drawable/ic_baseline_edit_24"
             android:padding="3dp"
             android:background="@drawable/back_btn"
@@ -40,8 +40,8 @@
         <ImageButton
             android:id="@+id/btnDel"
             android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="@id/imgNew"
-            app:layout_constraintTop_toTopOf="@id/imgNew"
+            app:layout_constraintEnd_toEndOf="@id/imgNews"
+            app:layout_constraintTop_toTopOf="@id/imgNews"
             android:src="@drawable/ic_baseline_delete_24"
             android:padding="3dp"
             android:background="@drawable/back_btn"
@@ -52,7 +52,7 @@
             android:id="@+id/tvContentLayout"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/imgNew"
+            app:layout_constraintEnd_toStartOf="@id/imgNews"
             android:layout_marginEnd="7dp"
             android:orientation="vertical"
             android:layout_width="0dp"
