@@ -1,15 +1,8 @@
 package com.example.emb3ddedapp.database.repository
 
-import android.util.Log
-import com.example.emb3ddedapp.models.CurrUser
-import com.example.emb3ddedapp.models.User
-import com.example.emb3ddedapp.utils.getInitUser
-import com.example.emb3ddedapp.utils.setInitUser
 import com.google.firebase.auth.*
 import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
 
 class Repository : DataRepository {

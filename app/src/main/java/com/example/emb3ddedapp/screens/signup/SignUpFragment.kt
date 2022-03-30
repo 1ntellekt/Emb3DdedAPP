@@ -103,12 +103,12 @@ class SignUpFragment : Fragment() {
                     edPasswordLayoutConfirm.error = "Different passwords"
                 } else if (edPasswordLayout.error.isNullOrEmpty() && edPasswordLayoutConfirm.error.isNullOrEmpty()
                     && edEmailLayout.error.isNullOrEmpty() && edLoginLayout.error.isNullOrEmpty() && edNumLayout.error.isNullOrEmpty()) {
-                        CurrUser.password = edPassword.text.toString()
-                        CurrUser.profileUrlPhoto = null
-                        CurrUser.email = edEmail.text.toString()
-                        CurrUser.login = edLogin.text.toString()
-                        CurrUser.status = "Connected APP"
-                        CurrUser.telNumber = edNum.text.toString()
+//                        CurrUser.password = edPassword.text.toString()
+//                        CurrUser.profileUrlPhoto = null
+//                        CurrUser.email = edEmail.text.toString()
+//                        CurrUser.login = edLogin.text.toString()
+//                        CurrUser.status = "Connected APP"
+//                        CurrUser.telNumber = edNum.text.toString()
 
                     /*viewModel.signUpEmail(edEmail.text.toString(),edPassword.text.toString()){
                             APP.mNavController.navigate(R.id.action_signUpFragment_to_signInFragment)
@@ -132,12 +132,12 @@ class SignUpFragment : Fragment() {
                     edPasswordLayoutConfirm.error = "Different passwords"
                 } else if (edPasswordLayout.error.isNullOrEmpty() && edPasswordLayoutConfirm.error.isNullOrEmpty()
                     && edEmailLayout.error.isNullOrEmpty() && edLoginLayout.error.isNullOrEmpty() && edNumLayout.error.isNullOrEmpty()) {
-                    CurrUser.password = edPassword.text.toString()
-                    CurrUser.profileUrlPhoto = null
-                    CurrUser.email = edEmail.text.toString()
-                    CurrUser.login = edLogin.text.toString()
-                    CurrUser.status = "Connected APP"
-                    CurrUser.telNumber = edNum.text.toString()
+//                    CurrUser.password = edPassword.text.toString()
+//                    CurrUser.profileUrlPhoto = null
+//                    CurrUser.email = edEmail.text.toString()
+//                    CurrUser.login = edLogin.text.toString()
+//                    CurrUser.status = "Connected APP"
+//                    CurrUser.telNumber = edNum.text.toString()
 
                     getSignInClient().signOut()
                     takeGoogleAcc.launch(getSignInClient().signInIntent)

@@ -13,6 +13,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 lateinit var APP:MainActivity
 lateinit var REPOSITORY:DataRepository
 lateinit var progressDialog:ProgressDialog
+lateinit var BEARER_TOKEN:String
 
 const val dataName = "data"
 const val TIME_PAT = "HH:mm:ss"
@@ -39,10 +40,19 @@ fun showToast(msg:String){
     Toast.makeText(APP,msg,Toast.LENGTH_LONG).show()
 }
 
-fun setInitUser(init:Boolean){
+//prefs
+fun setInitUserId(id:Int){
     val pref = APP.getSharedPreferences(dataName, MODE_PRIVATE).edit()
-    pref.putBoolean("user_init",init)
+    pref.putInt("user_init_id",id)
     pref.apply()
 }
 
-fun getInitUser():Boolean = APP.getSharedPreferences(dataName, MODE_PRIVATE).getBoolean("user_init", false)
+fun getInitUserId():Int = APP.getSharedPreferences(dataName, MODE_PRIVATE).getInt("user_init_id", 0)
+
+fun setAccessToken(bearerToken : String){
+    val pref = APP.getSharedPreferences(dataName, MODE_PRIVATE).edit()
+    pref.putString("bearer_token",bearerToken)
+    pref.apply()
+}
+
+fun getTokenAccess():String? = APP.getSharedPreferences(dataName, MODE_PRIVATE).getString("bearer_token","")

@@ -12,9 +12,13 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.emb3ddedapp.R
+import com.example.emb3ddedapp.database.api.RetrofitInstance
 import com.example.emb3ddedapp.databinding.MainFragmentBinding
 import com.example.emb3ddedapp.utils.APP
 import com.google.firebase.messaging.FirebaseMessaging
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainFragment : Fragment() {
 
@@ -54,11 +58,38 @@ class MainFragment : Fragment() {
 /*        binding.tvTest.text = "${CurrUser.id} ${CurrUser.email} ${CurrUser.login} ${CurrUser.password} " +
                 "${CurrUser.profileUrlPhoto} ${CurrUser.status} ${CurrUser.telNumber} ${CurrUser.tokenMsg}"*/
         FirebaseMessaging.getInstance().token
-            .addOnSuccessListener { Log.i("tag","generated token: $it") }
-            .addOnFailureListener {  Log.e("tag","Error generated token: ${it.message.toString()}") }
-
-        Log.i("tag", android.os.Build.MODEL)
+            .addOnSuccessListener { Log.i("tagDevice","generated token: $it") }
+            .addOnFailureListener {  Log.e("tagDevice","Error generated token: ${it.message.toString()}") }
+        Log.i("tagDevice", android.os.Build.MODEL)
         //FirebaseMessaging.getInstance().deleteToken()
+
+//        RetrofitInstance.api.getOrdersByUser(2).enqueue(object : Callback<OrdersByUserResponse>{
+//            override fun onResponse(call: Call<OrdersByUserResponse>, response: Response<OrdersByUserResponse>) {
+//                if (response.isSuccessful){
+//                    Log.i("tagAPI", "${response.body()}")
+//                } else {
+//                    Log.i("tagAPI", "${response.code()} | ${response.message()}")
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<OrdersByUserResponse>, t: Throwable) {
+//                Log.i("tagAPI", "message error: ${t.message}")
+//            }
+//
+//        })
+
+//        RetrofitInstance.api.login("sdhjvgsdfjvhgsdjfvhvbjk","12345678").enqueue(object : Callback<UserAuthResponse>{
+//            override fun onResponse(call: Call<UserAuthResponse>, response: Response<UserAuthResponse>) {
+//                if (response.isSuccessful){
+//                   Log.i("tagAPI", "${response.body()}")
+//                } else {
+//                  Log.i("tagAPI", "${response.code()} | ${response.message()}")
+//                }
+//            }
+//            override fun onFailure(call: Call<UserAuthResponse>, t: Throwable) {
+//                Log.i("tagAPI", "message error: ${t.message}")
+//            }
+//        })
 
     }
 
