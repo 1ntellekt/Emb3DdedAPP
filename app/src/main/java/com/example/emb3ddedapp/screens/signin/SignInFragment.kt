@@ -14,7 +14,6 @@ import androidx.core.widget.doOnTextChanged
 import com.example.emb3ddedapp.R
 import com.example.emb3ddedapp.databinding.SignInFragmentBinding
 import com.example.emb3ddedapp.utils.APP
-import com.example.emb3ddedapp.utils.getSignInClient
 import com.example.emb3ddedapp.utils.showToast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
@@ -71,9 +70,9 @@ class SignInFragment : Fragment() {
             btnLogInEmail.setOnClickListener {
                 if (edPasswordLayout.error.isNullOrEmpty() && edEmail.text.toString().isNotEmpty() && edPassword.text.toString().isNotEmpty()){
                     //log in email
-                    /*viewModel.logInEmail(edEmail.text.toString(),edPassword.text.toString()) {
+                    viewModel.logInEmail(edEmail.text.toString(),edPassword.text.toString()) {
                         APP.mNavController.navigate(R.id.action_signInFragment_to_mainFragment)
-                    }*/
+                    }
                 } else if (edEmail.text.toString().isEmpty()){
                     edEmailLayout.error = "Input email address!"
                 } else if (edPassword.text.toString().isEmpty()){
@@ -81,15 +80,15 @@ class SignInFragment : Fragment() {
                 }
             }
 
-            btnLogInGoogle.setOnClickListener {
+/*            btnLogInGoogle.setOnClickListener {
                 getSignInClient().signOut()
                 takeGoogleAcc.launch(getSignInClient().signInIntent)
-            }
+            }*/
 
         }
     }
 
-    private val takeGoogleAcc = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+/*    private val takeGoogleAcc = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         val task = GoogleSignIn.getSignedInAccountFromIntent(it.data!!)
         try {
             val account = task.getResult(ApiException::class.java)
@@ -101,6 +100,6 @@ class SignInFragment : Fragment() {
         }catch (e: ApiException){
             Log.e("tag", "error sign Google: ${e.message.toString()}")
         }
-    }
+    }*/
 
 }

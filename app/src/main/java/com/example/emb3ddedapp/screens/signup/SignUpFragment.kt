@@ -15,7 +15,6 @@ import com.example.emb3ddedapp.databinding.SignInFragmentBinding
 import com.example.emb3ddedapp.databinding.SignUpFragmentBinding
 import com.example.emb3ddedapp.models.CurrUser
 import com.example.emb3ddedapp.utils.APP
-import com.example.emb3ddedapp.utils.getSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 
@@ -103,53 +102,48 @@ class SignUpFragment : Fragment() {
                     edPasswordLayoutConfirm.error = "Different passwords"
                 } else if (edPasswordLayout.error.isNullOrEmpty() && edPasswordLayoutConfirm.error.isNullOrEmpty()
                     && edEmailLayout.error.isNullOrEmpty() && edLoginLayout.error.isNullOrEmpty() && edNumLayout.error.isNullOrEmpty()) {
-//                        CurrUser.password = edPassword.text.toString()
-//                        CurrUser.profileUrlPhoto = null
-//                        CurrUser.email = edEmail.text.toString()
-//                        CurrUser.login = edLogin.text.toString()
-//                        CurrUser.status = "Connected APP"
-//                        CurrUser.telNumber = edNum.text.toString()
+                        CurrUser.email = edEmail.text.toString()
+                        CurrUser.login = edLogin.text.toString()
+                        CurrUser.number = edNum.text.toString()
 
-                    /*viewModel.signUpEmail(edEmail.text.toString(),edPassword.text.toString()){
-                            APP.mNavController.navigate(R.id.action_signUpFragment_to_signInFragment)
-                    }*/
+                    viewModel.signUpEmail(edEmail.text.toString(),edPassword.text.toString()){
+                        APP.mNavController.navigate(R.id.action_signUpFragment_to_signInFragment)
+                    }
                 }
             }
 
-            btnLogInGoogle.setOnClickListener {
-                if (edEmail.text.toString().isEmpty()){
-                    edEmailLayout.error = "Input email address is empty!"
-                }else if (edLogin.text.toString().isEmpty()){
-                    edLoginLayout.error = "Input login is empty!"
-                } else if (edNum.text.toString().isEmpty()){
-                    edNumLayout.error = "Input phone number is empty!"
-                } else if (edPassword.text.toString().isEmpty()){
-                    edPasswordLayout.error = "Input password is empty!"
-                } else if (edPasswordConfirm.text.toString().isEmpty()){
-                    edPasswordLayoutConfirm.error = "input confirm password is empty!"
-                } else if (edPassword.text.toString() != edPasswordConfirm.text.toString()){
-                    edPasswordLayout.error = "Different passwords"
-                    edPasswordLayoutConfirm.error = "Different passwords"
-                } else if (edPasswordLayout.error.isNullOrEmpty() && edPasswordLayoutConfirm.error.isNullOrEmpty()
-                    && edEmailLayout.error.isNullOrEmpty() && edLoginLayout.error.isNullOrEmpty() && edNumLayout.error.isNullOrEmpty()) {
-//                    CurrUser.password = edPassword.text.toString()
-//                    CurrUser.profileUrlPhoto = null
-//                    CurrUser.email = edEmail.text.toString()
-//                    CurrUser.login = edLogin.text.toString()
-//                    CurrUser.status = "Connected APP"
-//                    CurrUser.telNumber = edNum.text.toString()
+            /*            btnLogInGoogle.setOnClickListener {
+                            if (edEmail.text.toString().isEmpty()){
+                                edEmailLayout.error = "Input email address is empty!"
+                            }else if (edLogin.text.toString().isEmpty()){
+                                edLoginLayout.error = "Input login is empty!"
+                            } else if (edNum.text.toString().isEmpty()){
+                                edNumLayout.error = "Input phone number is empty!"
+                            } else if (edPassword.text.toString().isEmpty()){
+                                edPasswordLayout.error = "Input password is empty!"
+                            } else if (edPasswordConfirm.text.toString().isEmpty()){
+                                edPasswordLayoutConfirm.error = "input confirm password is empty!"
+                            } else if (edPassword.text.toString() != edPasswordConfirm.text.toString()){
+                                edPasswordLayout.error = "Different passwords"
+                                edPasswordLayoutConfirm.error = "Different passwords"
+                            } else if (edPasswordLayout.error.isNullOrEmpty() && edPasswordLayoutConfirm.error.isNullOrEmpty()
+                                && edEmailLayout.error.isNullOrEmpty() && edLoginLayout.error.isNullOrEmpty() && edNumLayout.error.isNullOrEmpty()) {
+                                CurrUser.email = edEmail.text.toString()
+                                CurrUser.login = edLogin.text.toString()
+                                CurrUser.status = "Connected APP"
+                                CurrUser.number = edNum.text.toString()
 
-                    getSignInClient().signOut()
-                    takeGoogleAcc.launch(getSignInClient().signInIntent)
-                }
-            }
+                                getSignInClient().signOut()
+                                takeGoogleAcc.launch(getSignInClient().signInIntent)
+                            }
+                        }*/
 
         }
         
     }
 
 
-    private val takeGoogleAcc = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+        /*    private val takeGoogleAcc = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         val task = GoogleSignIn.getSignedInAccountFromIntent(it.data!!)
         try {
             val account = task.getResult(ApiException::class.java)
@@ -161,6 +155,6 @@ class SignUpFragment : Fragment() {
         }catch (e: ApiException){
             Log.e("tag", "error sign Google: ${e.message.toString()}")
         }
-    }
+    }*/
 
 }

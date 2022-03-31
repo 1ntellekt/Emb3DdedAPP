@@ -1,11 +1,11 @@
 package com.example.emb3ddedapp.models
 
 object CurrUser {
-    val id:Int = 0
-    val login:String = ""
-    val email:String = ""
-    val uid:String = ""
-    val number:String = ""
-    val status:String =""
-    val url_profile:String? = null
+    var id:Int = 0
+    var login:String = ""
+    var email:String = ""
+    var uid:String = ""
+    var number:String = ""
+    var status:String =""
+    var url_profile:String? = null
 }

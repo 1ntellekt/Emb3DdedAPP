@@ -29,12 +29,12 @@ fun closeProgressDialog() {
         progressDialog.dismiss()
 }
 
-//Google sign in
+/*//Google sign in
 fun getSignInClient(): GoogleSignInClient {
     val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(
         APP.getString(com.firebase.ui.auth.R.string.default_web_client_id)).requestEmail().build()
     return GoogleSignIn.getClient(APP,gso)
-}
+}*/
 
 fun showToast(msg:String){
     Toast.makeText(APP,msg,Toast.LENGTH_LONG).show()
@@ -47,9 +47,17 @@ fun setInitUserId(id:Int){
     pref.apply()
 }
 
+fun setInitTokenDevice(init:Boolean){
+    val pref = APP.getSharedPreferences(dataName, MODE_PRIVATE).edit()
+    pref.putBoolean("user_init_device",init)
+    pref.apply()
+}
+
+fun getInitTokenDevice():Boolean = APP.getSharedPreferences(dataName, MODE_PRIVATE).getBoolean("user_init_device", false)
+
 fun getInitUserId():Int = APP.getSharedPreferences(dataName, MODE_PRIVATE).getInt("user_init_id", 0)
 
-fun setAccessToken(bearerToken : String){
+fun setAccessToken(bearerToken : String?){
     val pref = APP.getSharedPreferences(dataName, MODE_PRIVATE).edit()
     pref.putString("bearer_token",bearerToken)
     pref.apply()

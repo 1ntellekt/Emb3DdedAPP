@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import com.example.emb3ddedapp.R
 import com.example.emb3ddedapp.databinding.LoadFragmentBinding
 import com.example.emb3ddedapp.utils.APP
-import com.example.emb3ddedapp.utils.getInitUser
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

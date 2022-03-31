@@ -1,5 +1,6 @@
 package com.example.emb3ddedapp.database.repository
 
+import com.example.emb3ddedapp.models.User
 import com.google.firebase.auth.FirebaseUser
 
 interface DataRepository {
@@ -8,24 +9,24 @@ interface DataRepository {
 
 //    fun initDatabase()
 //
-//    fun logInEmail(email:String,password:String,onSuccess:()->Unit,onFail:(String)->Unit)
-//
-//    fun singUpEmail(email:String,password:String,onSuccess:()->Unit,onFail:(String)->Unit)
-//
-//    fun sendVerifyEmail(user: FirebaseUser, onSuccess: () -> Unit, onFail: (String) -> Unit)
-//
-//    fun linkEmailToGoogle(email: String,password: String,onSuccess: () -> Unit,onFail: (String) -> Unit)
-//
-//    fun signUpLogInGoogle(isSignUp:Boolean,token:String,onSuccess: () -> Unit,onFail: (String) -> Unit)
-//
-//    fun checkUserExists(onSuccess: () -> Unit, onFail: (String) -> Unit)
-//
-//    fun getCurrentUser(onSuccess:()->Unit,onFail:(String)->Unit)
-//
-//    fun setUser(onSuccess:()->Unit,onFail:(String)->Unit)
-//
-//    fun editCurrentUser(onSuccess:()->Unit,onFail:(String)->Unit)
-//
-//    fun signOut()
+    fun logInEmail(email:String,password:String,onSuccess:()->Unit,onFail:(String)->Unit)
+
+    fun singUpEmail(email:String,password:String,onSuccess:()->Unit,onFail:(String)->Unit)
+
+    fun sendVerifyEmail(user: FirebaseUser,password: String,onSuccess: () -> Unit, onFail: (String) -> Unit)
+
+    //fun linkEmailToGoogle(email: String,password: String,onSuccess: () -> Unit,onFail: (String) -> Unit)
+    //fun signUpLogInGoogle(isSignUp:Boolean,token:String,onSuccess: () -> Unit,onFail: (String) -> Unit)
+
+    fun signOut()
+
+    //user
+    fun loginUser(uid:String,password: String,onSuccess:()->Unit,onFail:(String)->Unit)
+    fun registerUser(uid:String,password: String,onSuccess:()->Unit,onFail:(String)->Unit)
+    fun editCurrentUser(oldPassword:String?, password: String?, user: User?, onSuccess:()->Unit, onFail:(String)->Unit)
+
+    //device
+    fun addDevice(user_id:Int, nameDevice:String,onSuccess:()->Unit,onFail:(String)->Unit)
+    fun deleteDevice(token:String,onSuccess:()->Unit,onFail:(String)->Unit)
 
 }

@@ -58,4 +58,19 @@ class SignInViewModel(application: Application) : AndroidViewModel(application) 
     }
     */
 
+    fun logInEmail(email:String,password:String,onSuccess:()->Unit){
+        showProgressDialog("Email logIn....")
+        REPOSITORY.logInEmail(email,password, {
+            closeProgressDialog()
+            if (FirebaseAuth.getInstance().currentUser?.isEmailVerified == true){
+                onSuccess()
+            }
+                else {
+                showToast("Verified email please!")
+                }
+        },{
+            showToast(it)
+        })
+    }
+
 }

@@ -14,6 +14,10 @@ import androidx.navigation.ui.NavigationUI
 import com.example.emb3ddedapp.R
 import com.example.emb3ddedapp.database.api.RetrofitInstance
 import com.example.emb3ddedapp.databinding.MainFragmentBinding
+import com.example.emb3ddedapp.models.ChatDefault
+import com.example.emb3ddedapp.models.ChatMessagesByChatResponse
+import com.example.emb3ddedapp.models.ChatsByUserResponse
+import com.example.emb3ddedapp.models.StatusMsgResponse
 import com.example.emb3ddedapp.utils.APP
 import com.google.firebase.messaging.FirebaseMessaging
 import retrofit2.Call
@@ -57,10 +61,10 @@ class MainFragment : Fragment() {
         super.onStart()
 /*        binding.tvTest.text = "${CurrUser.id} ${CurrUser.email} ${CurrUser.login} ${CurrUser.password} " +
                 "${CurrUser.profileUrlPhoto} ${CurrUser.status} ${CurrUser.telNumber} ${CurrUser.tokenMsg}"*/
-        FirebaseMessaging.getInstance().token
-            .addOnSuccessListener { Log.i("tagDevice","generated token: $it") }
-            .addOnFailureListener {  Log.e("tagDevice","Error generated token: ${it.message.toString()}") }
-        Log.i("tagDevice", android.os.Build.MODEL)
+//        FirebaseMessaging.getInstance().token
+//            .addOnSuccessListener { Log.i("tagDevice","generated token: $it") }
+//            .addOnFailureListener {  Log.e("tagDevice","Error generated token: ${it.message.toString()}") }
+//        Log.i("tagDevice", android.os.Build.MODEL)
         //FirebaseMessaging.getInstance().deleteToken()
 
 //        RetrofitInstance.api.getOrdersByUser(2).enqueue(object : Callback<OrdersByUserResponse>{
@@ -87,6 +91,40 @@ class MainFragment : Fragment() {
 //                }
 //            }
 //            override fun onFailure(call: Call<UserAuthResponse>, t: Throwable) {
+//                Log.i("tagAPI", "message error: ${t.message}")
+//            }
+//        })
+
+//        RetrofitInstance.api.getChatsByUser(1).enqueue(object : Callback<ChatsByUserResponse>{
+//            override fun onResponse(
+//                call: Call<ChatsByUserResponse>,
+//                response: Response<ChatsByUserResponse>
+//            ) {
+//                if (response.isSuccessful){
+//                   Log.i("tagAPI", "${response.body()}")
+//                } else {
+//                  Log.i("tagAPI", "${response.code()} | ${response.message()}")
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<ChatsByUserResponse>, t: Throwable) {
+//                Log.i("tagAPI", "message error: ${t.message}")
+//            }
+//        })
+
+//        RetrofitInstance.api.getChatMessagesById(5).enqueue(object : Callback<ChatMessagesByChatResponse>{
+//            override fun onResponse(
+//                call: Call<ChatMessagesByChatResponse>,
+//                response: Response<ChatMessagesByChatResponse>
+//            ) {
+//                if (response.isSuccessful){
+//                    Log.i("tagAPI", "${response.body()}")
+//                } else {
+//                    Log.i("tagAPI", "${response.code()} | ${response.message()}")
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<ChatMessagesByChatResponse>, t: Throwable) {
 //                Log.i("tagAPI", "message error: ${t.message}")
 //            }
 //        })
