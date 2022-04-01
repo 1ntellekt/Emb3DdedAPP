@@ -8,12 +8,10 @@ import com.example.emb3ddedapp.utils.showToast
 
 class LoadViewModel(application: Application) : AndroidViewModel(application) {
 
-//    fun getDataForCurrentUser(onSuccess:()->Unit){
-//        REPOSITORY.initDatabase()
-//        REPOSITORY.getCurrentUser({
-//               onSuccess()
-//        }
-//            ,{ showToast(it)})
-//    }
+    fun getDataForCurrentUser(onSuccess:()->Unit){
+        REPOSITORY.getCurrUser({
+               onSuccess()
+        },{ showToast(it)})
+    }
 
 }

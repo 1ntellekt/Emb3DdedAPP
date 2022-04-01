@@ -1,32 +1,25 @@
 package com.example.emb3ddedapp.screens.signin
 
-import androidx.lifecycle.ViewModelProvider
+import android.app.AlertDialog
+import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.widget.doAfterTextChanged
-import androidx.core.widget.doBeforeTextChanged
 import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.emb3ddedapp.R
+import com.example.emb3ddedapp.databinding.DialogForgotPassLayoutBinding
 import com.example.emb3ddedapp.databinding.SignInFragmentBinding
 import com.example.emb3ddedapp.utils.APP
 import com.example.emb3ddedapp.utils.showToast
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.common.api.ApiException
 
 class SignInFragment : Fragment() {
 
     private var _binding:SignInFragmentBinding? = null
     private val binding:SignInFragmentBinding
     get() = _binding!!
-
-    companion object {
-        fun newInstance() = SignInFragment()
-    }
 
     private lateinit var viewModel: SignInViewModel
 
@@ -41,17 +34,13 @@ class SignInFragment : Fragment() {
         // TODO: Use the ViewModel
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun onStart() {
-        super.onStart()
         binding.apply {
 
             toggleSignUp.setOnClickListener {
-            APP.mNavController.navigate(R.id.action_signInFragment_to_signUpFragment)
+                APP.mNavController.navigate(R.id.action_signInFragment_to_signUpFragment)
             }
 
             edPassword.doOnTextChanged { text, start, count, after ->
@@ -85,7 +74,40 @@ class SignInFragment : Fragment() {
                 takeGoogleAcc.launch(getSignInClient().signInIntent)
             }*/
 
+            toggleForgotPass.setOnClickListener {
+                dialogForgotPassword()
+            }
+
         }
+
+    }
+
+    private fun dialogForgotPassword() {
+        val alertDialog = AlertDialog.Builder(requireContext())
+        val binding:DialogForgotPassLayoutBinding = DialogForgotPassLayoutBinding.inflate(LayoutInflater.from(context))
+        alertDialog.setView(binding.root)
+
+        binding.apply {
+            edEmail.doOnTextChanged { text, start, before, count -> edEmailLayout.error = null }
+
+            alertDialog.setPositiveButton("Ok"){ dialog, which ->
+
+                if (edEmail.text.toString().isNotEmpty()){
+                    viewModel.resetPassword(email = edEmail.text.toString())
+                } else {
+                    showToast("Input was empty!")
+                }
+
+            }.setNegativeButton("Cancel"){dialog, which ->
+                dialog.dismiss()
+            }
+
+        }
+        alertDialog.create().show()
+    }
+
+    override fun onStart() {
+        super.onStart()
     }
 
 /*    private val takeGoogleAcc = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
@@ -101,5 +123,10 @@ class SignInFragment : Fragment() {
             Log.e("tag", "error sign Google: ${e.message.toString()}")
         }
     }*/
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
 }

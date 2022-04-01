@@ -65,12 +65,16 @@ class SignInViewModel(application: Application) : AndroidViewModel(application) 
             if (FirebaseAuth.getInstance().currentUser?.isEmailVerified == true){
                 onSuccess()
             }
-                else {
+            else {
                 showToast("Verified email please!")
-                }
+            }
         },{
             showToast(it)
         })
+    }
+
+    fun resetPassword(email: String){
+        REPOSITORY.resetPasswordEmail(email,{ showToast("Send email message to reset user password")},{ showToast(it)})
     }
 
 }

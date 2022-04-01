@@ -23,10 +23,6 @@ class SignUpFragment : Fragment() {
     private var _binding: SignUpFragmentBinding? = null
     private val binding: SignUpFragmentBinding
         get() = _binding!!
-    
-    companion object {
-        fun newInstance() = SignUpFragment()
-    }
 
     private lateinit var viewModel: SignUpViewModel
 
@@ -41,9 +37,11 @@ class SignUpFragment : Fragment() {
         // TODO: Use the ViewModel
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+
     }
 
     override fun onStart() {
@@ -140,6 +138,11 @@ class SignUpFragment : Fragment() {
 
         }
         
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 

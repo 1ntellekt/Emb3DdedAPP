@@ -15,14 +15,18 @@ interface DataRepository {
 
     fun sendVerifyEmail(user: FirebaseUser,password: String,onSuccess: () -> Unit, onFail: (String) -> Unit)
 
+    fun resetPasswordEmail(email: String, onSuccess: () -> Unit, onFail: (String) -> Unit)
+
     //fun linkEmailToGoogle(email: String,password: String,onSuccess: () -> Unit,onFail: (String) -> Unit)
     //fun signUpLogInGoogle(isSignUp:Boolean,token:String,onSuccess: () -> Unit,onFail: (String) -> Unit)
 
-    fun signOut()
+    fun signOut(onSuccess: () -> Unit, onFail: (String) -> Unit)
 
     //user
-    fun loginUser(uid:String,password: String,onSuccess:()->Unit,onFail:(String)->Unit)
-    fun registerUser(uid:String,password: String,onSuccess:()->Unit,onFail:(String)->Unit)
+   fun loginUser(uid:String,password: String,onSuccess:()->Unit,onFail:(String)->Unit)
+   fun registerUser(uid:String,password: String,onSuccess:()->Unit,onFail:(String)->Unit)
+    fun getCurrUser(onSuccess: () -> Unit, onFail: (String) -> Unit)
+    fun resetPassword(uid: String, password: String, onSuccess: () -> Unit, onFail: (String) -> Unit)
     fun editCurrentUser(oldPassword:String?, password: String?, user: User?, onSuccess:()->Unit, onFail:(String)->Unit)
 
     //device

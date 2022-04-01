@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:weightSum="6"
     android:orientation="vertical"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -10,46 +10,52 @@
     tools:context=".screens.signin.SignInFragment">
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
+        android:id="@+id/header"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="190dp"
         android:background="@drawable/back_top_signin">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:scaleType="centerCrop"
             android:layout_centerInParent="true"
-            android:background="@drawable/big_icon_logo_two" />
+             android:src="@drawable/big_icon_logo_two"/>
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_weight="0.25"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"/>
-
     <TextView
+        android:id="@+id/tvHeadTitle"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:gravity="center"
         android:text="Log in to account"
-        android:textSize="40sp"
+        android:textSize="35sp"
         android:textStyle="bold"
         android:textColor="@color/black"
         android:layout_width="wrap_content"
-        android:layout_weight="0.5"
-        android:layout_height="0dp"/>
+        android:layout_height="wrap_content"/>
 
         <LinearLayout
-            android:layout_weight="2"
+            android:id="@+id/panelInput"
+            app:layout_constraintTop_toBottomOf="@id/tvHeadTitle"
+            app:layout_constraintBottom_toTopOf="@id/panelBtn"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:gravity="center"
-            android:layout_height="0dp">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:orientation="vertical"
-                android:layout_marginEnd="20dp"
-                android:layout_marginStart="20dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -122,18 +128,21 @@
 
             </LinearLayout>
 
-
-
         </LinearLayout>
 
+
     <LinearLayout
-        android:layout_weight="1"
+        android:id="@+id/panelBtn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:gravity="center"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnLogInEmail"
@@ -146,10 +155,11 @@
             android:drawableStart="@drawable/ic_baseline_alternate_email_24_2"
             android:textSize="20sp"
             android:layout_margin="5dp"
+            android:minHeight="55dp"
             android:textColor="@color/white"
             android:layout_height="wrap_content"/>
 
-        <androidx.appcompat.widget.AppCompatButton
+<!--        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnLogInGoogle"
             android:layout_marginTop="10dp"
             android:background="@drawable/back_btn_sign"
@@ -161,14 +171,26 @@
             android:layout_margin="5dp"
             android:textColor="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"/>-->
+
+        <TextView
+            android:id="@+id/toggleForgotPass"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/back_toggle"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="4dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:text="Forgot password?"
+            android:textColor="@color/color_purple"
+            android:textSize="19sp"
+            android:textStyle="bold"
+            tools:ignore="TouchTargetSizeCheck" />
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_weight="0.25"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"/>
 
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

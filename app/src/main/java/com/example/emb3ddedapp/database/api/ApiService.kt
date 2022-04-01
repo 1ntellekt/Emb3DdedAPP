@@ -14,7 +14,7 @@ interface ApiService {
 
     @GET("users/{id}")
     @Headers("Accept:application/json", "Content-Type:application/json", "X-Requested-With:XMLHttpRequest")
-    fun getUserById(@Path("id") id:Int, @Header("Authorization") authHeader:String):Call<UserDefaultResponse>
+    fun getUserById(@Path("id") id:Int):Call<UserDefaultResponse>
 
     @POST("register")
     @Headers("Accept:application/json", "Content-Type:application/json", "X-Requested-With:XMLHttpRequest")
@@ -29,10 +29,12 @@ interface ApiService {
     fun logout():Call<StatusMsgResponse>
 
     @POST("users/{id}?_method=PUT")
-    @Headers("Accept:application/json", "Content-Type:application/json", "X-Requested-With:XMLHttpRequest","Authorization: Bearer cGx82W6TXYbnlkQGyZxAp3ZBjC7rJwdTUfsXSPiY")
-    fun updateUser(@Path("id") id:Int, @Body params: User?, @Query("old_password") old_password:String?, @Query("password") password:String?):Call<StatusMsgResponse>
+    @Headers("Accept:application/json", "Content-Type:application/json", "X-Requested-With:XMLHttpRequest")
+    fun updateUser(@Path("id") id:Int, @Body params: User?, @Query("old_password") old_password:String?,@Query("password") password:String?):Call<StatusMsgResponse>
 
-
+    @POST("reset?_method=PUT")
+    @Headers("Accept:application/json", "Content-Type:application/json", "X-Requested-With:XMLHttpRequest")
+    fun resetPassword(@Query("uid") uid: String, @Query("reset_password") reset_password:String):Call<StatusMsgResponse>
 
     //orders
     @GET("orders")
@@ -68,7 +70,7 @@ interface ApiService {
     //devices
     @POST("devices")
     @Headers("Accept:application/json", "Content-Type:application/json", "X-Requested-With:XMLHttpRequest")
-    fun addDevice(@Body params:Device, @Header("Authorization") authHeader:String):Call<DeviceDefaultResponse>
+    fun addDevice(@Body params:Device):Call<DeviceDefaultResponse>
 
     @POST("deldevices")
     @Headers("Accept:application/json", "Content-Type:application/json", "X-Requested-With:XMLHttpRequest","Authorization: Bearer cGx82W6TXYbnlkQGyZxAp3ZBjC7rJwdTUfsXSPiY")

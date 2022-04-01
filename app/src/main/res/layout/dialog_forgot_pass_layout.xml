@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/background_color"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:padding="5dp"
+        android:background="@color/color_btn"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/white"
+        android:layout_width="match_parent"
+        android:text="Enter email address for reset password"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edEmailLayout"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:hint="Enter email..."
+        app:helperText="Required email address"
+        app:startIconDrawable="@drawable/ic_baseline_alternate_email_24"
+        app:endIconMode="clear_text"
+        app:helperTextTextColor="@color/color_purple"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edEmail"
+            android:inputType="textPersonName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+</LinearLayout>

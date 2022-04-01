@@ -7,8 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.emb3ddedapp.R
+import com.example.emb3ddedapp.database.api.RetrofitInstance
 import com.example.emb3ddedapp.databinding.LoadFragmentBinding
 import com.example.emb3ddedapp.utils.APP
+import com.example.emb3ddedapp.utils.getInitUserId
+import com.example.emb3ddedapp.utils.getTokenAccess
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -38,55 +41,56 @@ class LoadFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-//        if (getInitUser()){
-//            viewModel.getDataForCurrentUser {
-//                CoroutineScope(Dispatchers.Main).launch {
-//                    binding.logoLoad.animate().apply {
-//                        duration = 1000
-//                        alpha(.5f)
-//                        rotation(.5f)
-//                        scaleXBy(.5f)
-//                        scaleYBy(.5f)
-//                        rotationYBy(360f)
-//                        translationYBy(200f)
-//                    }.withEndAction {
-//                        binding.logoLoad.animate().apply {
-//                            duration = 1000
-//                            alpha(1f)
-//                            scaleXBy(-.5f)
-//                            scaleYBy(-.5f)
-//                            rotationXBy(360f)
-//                            translationYBy(-200f)
-//                        }
-//                    }.start()
-//                    delay(2500)
-//                    APP.mNavController.navigate(R.id.action_loadFragment_to_mainFragment)
-//                }
-//            }
-//        } else {
-//            CoroutineScope(Dispatchers.Main).launch {
-//                binding.logoLoad.animate().apply {
-//                    duration = 1000
-//                    alpha(.5f)
-//                    rotation(.5f)
-//                    scaleXBy(.5f)
-//                    scaleYBy(.5f)
-//                    rotationYBy(360f)
-//                    translationYBy(200f)
-//                }.withEndAction {
-//                    binding.logoLoad.animate().apply {
-//                        duration = 1000
-//                        alpha(1f)
-//                        scaleXBy(-.5f)
-//                        scaleYBy(-.5f)
-//                        rotationXBy(360f)
-//                        translationYBy(-200f)
-//                    }
-//                }.start()
-//                delay(2500)
-//                APP.mNavController.navigate(R.id.action_loadFragment_to_signInFragment)
-//            }
-//        }
+        if (getInitUserId() > 0){
+            RetrofitInstance.setAuthorizationBearer(getTokenAccess()!!)
+            viewModel.getDataForCurrentUser {
+                CoroutineScope(Dispatchers.Main).launch {
+                    binding.logoLoad.animate().apply {
+                        duration = 1000
+                        alpha(.5f)
+                        rotation(.5f)
+                        scaleXBy(.5f)
+                        scaleYBy(.5f)
+                        rotationYBy(360f)
+                        translationYBy(200f)
+                    }.withEndAction {
+                        binding.logoLoad.animate().apply {
+                            duration = 1000
+                            alpha(1f)
+                            scaleXBy(-.5f)
+                            scaleYBy(-.5f)
+                            rotationXBy(360f)
+                            translationYBy(-200f)
+                        }
+                    }.start()
+                    delay(2500)
+                    APP.mNavController.navigate(R.id.action_loadFragment_to_mainFragment)
+                }
+            }
+        } else {
+            CoroutineScope(Dispatchers.Main).launch {
+                binding.logoLoad.animate().apply {
+                    duration = 1000
+                    alpha(.5f)
+                    rotation(.5f)
+                    scaleXBy(.5f)
+                    scaleYBy(.5f)
+                    rotationYBy(360f)
+                    translationYBy(200f)
+                }.withEndAction {
+                    binding.logoLoad.animate().apply {
+                        duration = 1000
+                        alpha(1f)
+                        scaleXBy(-.5f)
+                        scaleYBy(-.5f)
+                        rotationXBy(360f)
+                        translationYBy(-200f)
+                    }
+                }.start()
+                delay(2500)
+                APP.mNavController.navigate(R.id.action_loadFragment_to_signInFragment)
+            }
+        }
     }
 
 }
