@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:background="@color/background_color"
         app:shapeAppearanceOverlay="@style/roundImgView"
-        tools:src="@drawable/order_img"/>
+        android:src="@drawable/order_img"/>
 
     <TextView
         android:id="@+id/tvShortDescription"
@@ -47,9 +47,10 @@ and typesetting industry."
         tools:text="Order Author: 1ntellekt"
         app:layout_constraintTop_toBottomOf="@id/tvShortDescription"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="5dp"
         android:layout_marginTop="7dp"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <TextView
         android:id="@+id/tvDateTime"

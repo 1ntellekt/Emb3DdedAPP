@@ -57,13 +57,14 @@ fun setInitTokenDevice(init:Boolean){
 
 fun getInitTokenDevice():Boolean = APP.getSharedPreferences(dataName, MODE_PRIVATE).getBoolean("user_init_device", false)
 
-fun setInitResetPassword(uid:String,isResetPasswordEmail:String?){
+fun setInitResetPassword(isResetPasswordEmail:String,init:Boolean){
     val pref = APP.getSharedPreferences(dataName, MODE_PRIVATE).edit()
-    pref.putString("reset_email_$uid", isResetPasswordEmail)
+    pref.putBoolean("reset_email_$isResetPasswordEmail", init)
     pref.apply()
 }
 
-fun getInitResetPassword(uid: String):String? = APP.getSharedPreferences(dataName, MODE_PRIVATE).getString("reset_email_$uid","")
+fun getInitResetPassword(isResetPasswordEmail:String):Boolean =
+    APP.getSharedPreferences(dataName, MODE_PRIVATE).getBoolean("reset_email_$isResetPasswordEmail",false)
 
 fun setAccessToken(bearerToken : String?){
     val pref = APP.getSharedPreferences(dataName, MODE_PRIVATE).edit()

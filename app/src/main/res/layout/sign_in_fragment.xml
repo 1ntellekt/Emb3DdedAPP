@@ -73,7 +73,8 @@
                         android:id="@+id/edEmail"
                         android:inputType="textPersonName"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:text="furadarkvan@gmail.com"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -91,6 +92,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edPassword"
                         android:layout_width="match_parent"
+                        android:text="12345678"
                         android:inputType="textPassword"
                         android:layout_height="wrap_content"/>
                 </com.google.android.material.textfield.TextInputLayout>

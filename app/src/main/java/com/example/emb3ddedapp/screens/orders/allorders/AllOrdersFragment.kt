@@ -2,31 +2,89 @@ package com.example.emb3ddedapp.screens.orders.allorders
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import com.example.emb3ddedapp.R
+import com.example.emb3ddedapp.databinding.AllOrdersFragmentBinding
+import com.example.emb3ddedapp.models.Order
+import com.example.emb3ddedapp.screens.orders.allorders.adapter.AllOrdersAdapter
+import com.example.emb3ddedapp.utils.showToast
+import java.text.SimpleDateFormat
+import java.util.*
 
 class AllOrdersFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = AllOrdersFragment()
-    }
-
     private lateinit var viewModel: AllOrdersViewModel
+    private var _binding:AllOrdersFragmentBinding? = null
+    private val binding:AllOrdersFragmentBinding
+    get() = _binding!!
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.all_orders_fragment, container, false)
+    private val ordersList = mutableListOf<Order>()
+    private lateinit var mObserver:Observer<List<Order>?>
+    private lateinit var adapter:AllOrdersAdapter
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        _binding = AllOrdersFragmentBinding.inflate(inflater,container,false)
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(AllOrdersViewModel::class.java)
         // TODO: Use the ViewModel
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        adapter = AllOrdersAdapter { posItem -> showToast(ordersList[posItem].title) }
+        binding.apply {
+            recyclerView.setHasFixedSize(true)
+            recyclerView.adapter = adapter
+            btnFilter.setOnClickListener {  }
+            btnNewFirst.setOnClickListener {
+                val list = ordersList.sortedByDescending {
+                    SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+                        .format(SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",Locale.getDefault()).parse(it.created_at!!)!!) }
+                adapter.setData(list)
+                btnOldFirst.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
+                btnNewFirst.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_active)
+            }
+            btnOldFirst.setOnClickListener {
+                val list = ordersList.sortedBy {
+                    SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+                        .format(SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",Locale.getDefault()).parse(it.created_at!!)!!) }
+                adapter.setData(list)
+                btnOldFirst.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_active)
+                btnNewFirst.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
+            }
+        }
+        mObserver = Observer { list->
+            list?.let {
+                ordersList.clear()
+                ordersList.addAll(it)
+                adapter.setData(it)
+            }
+        }
+        Log.i("tagLife", "onViewCreated() on AllOrders")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.getAllOrders()
+        viewModel.allOrdersList.observe(this,mObserver)
+        //showToast("ALLOrders")
+        //Log.i("tagLife", "onStart() on AllOrders")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.allOrdersList.removeObserver(mObserver)
+        _binding = null
     }
 
 }

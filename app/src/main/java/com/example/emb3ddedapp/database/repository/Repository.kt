@@ -18,15 +18,14 @@ class Repository : DataRepository {
     private val auth = FirebaseAuth.getInstance()
 
 
-
     override fun logInEmail(email: String, password: String, onSuccess: () -> Unit, onFail: (String) -> Unit) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener {
                // initDatabase()
                 //onSuccess()
-                if (getInitResetPassword(auth.uid!!)!=null){
+                if (getInitResetPassword(email)){
                     resetPassword(auth.uid!!,password,{
-                       setInitResetPassword(auth.uid!!,null)
+                       setInitResetPassword(email,false)
                        loginUser(auth.uid!!,password, {onSuccess()},{onFail(it)})
                     }, {onFail(it)})
                 } else {
@@ -70,13 +69,14 @@ class Repository : DataRepository {
     }
 
     override fun resetPasswordEmail(email: String, onSuccess: () -> Unit, onFail: (String) -> Unit) {
-        auth.sendPasswordResetEmail(email)
+        FirebaseAuth.getInstance().sendPasswordResetEmail(email)
             .addOnSuccessListener {
-                setInitResetPassword(auth.uid!!,email)
+                setInitResetPassword(email,true)
                 onSuccess()
             }
             .addOnFailureListener { onFail(it.message.toString()) }
     }
+
 
     override fun resetPassword(uid: String, password: String, onSuccess: () -> Unit, onFail: (String) -> Unit) {
         RetrofitInstance.api.resetPassword(uid,password)
@@ -96,41 +96,14 @@ class Repository : DataRepository {
             })
     }
 
-/*    override fun linkEmailToGoogle(email: String, password: String, onSuccess: () -> Unit, onFail: (String) -> Unit) {
-        val credential = EmailAuthProvider.getCredential(email, password)
-        auth.currentUser?.linkWithCredential(credential)
-            ?.addOnSuccessListener {
-                //auth.currentUser?.sendEmailVerification()
-                   // ?.addOnSuccessListener {
-                        //initDatabase()
-                        //setUser({onSuccess()},{onFail(it)})
-                   // }
-                   // ?.addOnFailureListener { onFail(it.message.toString()) }
-            }
-            ?.addOnFailureListener { onFail(it.message.toString()) }
-    }*/
-
-/*    override fun signUpLogInGoogle(isSignUp: Boolean, token: String, onSuccess: () -> Unit, onFail: (String) -> Unit) {
-        val credential = GoogleAuthProvider.getCredential(token, null)
-        auth.signInWithCredential(credential)
-            .addOnSuccessListener {
-                //initDatabase()
-                if (isSignUp) {
-                    //setUser({onSuccess()}, {onFail(it)})
-                }
-                else {
-
-                }
-            }
-            .addOnFailureListener { onFail(it.message.toString()) }
-    }*/
 
     override fun loginUser(uid:String,password: String,onSuccess: () -> Unit, onFail: (String) -> Unit) {
-        RetrofitInstance.api.login(uid,password).enqueue(object : Callback<UserAuthResponse> {
+        RetrofitInstance.api.login(LoginModel(uid,password)).enqueue(object : Callback<UserAuthResponse> {
             override fun onResponse(call: Call<UserAuthResponse>, response: Response<UserAuthResponse>) {
                 if (response.isSuccessful){
                     response.body()?.let { body->
                         setAccessToken(body.token)
+                        RetrofitInstance.setAuthorizationBearer(body.token)
                         setInitUserId(body.user.id)
                         body.user.apply {
                             CurrUser.number = number
@@ -166,6 +139,7 @@ class Repository : DataRepository {
                 if (response.isSuccessful){
                         response.body()?.let { body->
                             setAccessToken(body.token)
+                            RetrofitInstance.setAuthorizationBearer(body.token)
                             setInitUserId(body.user.id)
                             CurrUser.status = body.user.status
                             CurrUser.id = body.user.id
@@ -214,7 +188,6 @@ class Repository : DataRepository {
             })
     }
 
-
     override fun editCurrentUser(oldPassword: String?, password: String?, user: User?, onSuccess: () -> Unit, onFail: (String) -> Unit) {
         RetrofitInstance.api.updateUser(CurrUser.id,user,oldPassword,password)
             .enqueue(object : Callback<StatusMsgResponse>{
@@ -233,6 +206,7 @@ class Repository : DataRepository {
         })
     }
 
+
     override fun addDevice(user_id: Int, nameDevice: String, onSuccess: () -> Unit, onFail: (String) -> Unit) {
             FirebaseMessaging.getInstance().token
             .addOnSuccessListener {
@@ -245,7 +219,7 @@ class Repository : DataRepository {
                                     onSuccess()
                                 }
                             } else {
-                                Log.i("tagAPI","Error add device: ${response.code()}")
+                                Log.i("tagAPI","Error add device: ${response.code()} ${response.headers()}")
                                 onFail("Error add device: ${response.code()}")
                             }
                         }
@@ -279,6 +253,7 @@ class Repository : DataRepository {
         })
     }
 
+
     private fun logout(onSuccess: () -> Unit, onFail: (String) -> Unit){
         RetrofitInstance.api.logout()
             .enqueue(object : Callback<StatusMsgResponse>{
@@ -310,4 +285,69 @@ class Repository : DataRepository {
         }
     }
 
+
+    override fun addOrder(order: Order, onSuccess: () -> Unit, onFail: (String) -> Unit) {
+        RetrofitInstance.api.addOrder(order).enqueue(object : Callback<OrderDefaultResponse>{
+            override fun onResponse(call: Call<OrderDefaultResponse>, response: Response<OrderDefaultResponse>) {
+                if (response.isSuccessful){
+                    response.body()?.let {
+                        onSuccess()
+                    }
+                } else {
+                    Log.i("tagAPI","Error add order: ${response.code()}")
+                    onFail("Error add order: ${response.code()}")
+                }
+            }
+            override fun onFailure(call: Call<OrderDefaultResponse>, t: Throwable) {
+                Log.i("tagAPI","Error add order: ${t.message.toString()}")
+                onFail("Error add order: ${t.message.toString()}")
+            }
+        })
+    }
+
+    override fun updateOrder(id: Int, order: Order, onSuccess: () -> Unit, onFail: (String) -> Unit) {
+        RetrofitInstance.api.updateOrder(id = id, order).enqueue(object : Callback<StatusMsgResponse>{
+            override fun onResponse(call: Call<StatusMsgResponse>, response: Response<StatusMsgResponse>) {
+                if (response.isSuccessful){
+                    onSuccess()
+                } else {
+                    Log.i("tagAPI","Error update order: ${response.code()}")
+                    onFail("Error update order: ${response.code()}")
+                }
+            }
+            override fun onFailure(call: Call<StatusMsgResponse>, t: Throwable) {
+                Log.i("tagAPI","Error update order: ${t.message.toString()}")
+                onFail("Error update order: ${t.message.toString()}")
+            }
+        })
+    }
+
+    override fun deleteOrder(id: Int, onSuccess: () -> Unit, onFail: (String) -> Unit) {
+        RetrofitInstance.api.deleteOrder(id).enqueue(object : Callback<StatusMsgResponse>{
+            override fun onResponse(call: Call<StatusMsgResponse>, response: Response<StatusMsgResponse>) {
+                if (response.isSuccessful){
+                    onSuccess()
+                } else {
+                    Log.i("tagAPI","Error delete order: ${response.code()}")
+                    onFail("Error delete order: ${response.code()}")
+                }
+            }
+            override fun onFailure(call: Call<StatusMsgResponse>, t: Throwable) {
+                Log.i("tagAPI","Error delete order: ${t.message.toString()}")
+                onFail("Error delete order: ${t.message.toString()}")
+            }
+        })
+    }
+
+    override fun getOrdersByUserId(user_id: Int): Call<OrdersByUserResponse> {
+        return  RetrofitInstance.api.getOrdersByUser(user_id = user_id)
+    }
+
+    override fun getOrderById(id: Int): Call<OrderDefaultResponse> {
+        return RetrofitInstance.api.getOrderById(id)
+    }
+
+    override fun getAllOrders(): Call<OrdersByUserResponse> {
+        return RetrofitInstance.api.getAllOrders()
+    }
 }

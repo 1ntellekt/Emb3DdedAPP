@@ -1,7 +1,11 @@
 package com.example.emb3ddedapp.database.repository
 
+import com.example.emb3ddedapp.models.Order
+import com.example.emb3ddedapp.models.OrderDefaultResponse
+import com.example.emb3ddedapp.models.OrdersByUserResponse
 import com.example.emb3ddedapp.models.User
 import com.google.firebase.auth.FirebaseUser
+import retrofit2.Call
 
 interface DataRepository {
 
@@ -32,5 +36,13 @@ interface DataRepository {
     //device
     fun addDevice(user_id:Int, nameDevice:String,onSuccess:()->Unit,onFail:(String)->Unit)
     fun deleteDevice(token:String,onSuccess:()->Unit,onFail:(String)->Unit)
+
+    //orders
+    fun addOrder(order:Order,onSuccess: () -> Unit, onFail: (String) -> Unit)
+    fun updateOrder(id:Int, order: Order, onSuccess: () -> Unit, onFail: (String) -> Unit)
+    fun deleteOrder(id: Int,onSuccess: () -> Unit,onFail: (String) -> Unit)
+    fun getOrdersByUserId(user_id: Int):Call<OrdersByUserResponse>
+    fun getOrderById(id: Int):Call<OrderDefaultResponse>
+    fun getAllOrders():Call<OrdersByUserResponse>
 
 }

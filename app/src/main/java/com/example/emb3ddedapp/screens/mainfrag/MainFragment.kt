@@ -59,76 +59,6 @@ class MainFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-/*        binding.tvTest.text = "${CurrUser.id} ${CurrUser.email} ${CurrUser.login} ${CurrUser.password} " +
-                "${CurrUser.profileUrlPhoto} ${CurrUser.status} ${CurrUser.telNumber} ${CurrUser.tokenMsg}"*/
-//        FirebaseMessaging.getInstance().token
-//            .addOnSuccessListener { Log.i("tagDevice","generated token: $it") }
-//            .addOnFailureListener {  Log.e("tagDevice","Error generated token: ${it.message.toString()}") }
-//        Log.i("tagDevice", android.os.Build.MODEL)
-        //FirebaseMessaging.getInstance().deleteToken()
-
-//        RetrofitInstance.api.getOrdersByUser(2).enqueue(object : Callback<OrdersByUserResponse>{
-//            override fun onResponse(call: Call<OrdersByUserResponse>, response: Response<OrdersByUserResponse>) {
-//                if (response.isSuccessful){
-//                    Log.i("tagAPI", "${response.body()}")
-//                } else {
-//                    Log.i("tagAPI", "${response.code()} | ${response.message()}")
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<OrdersByUserResponse>, t: Throwable) {
-//                Log.i("tagAPI", "message error: ${t.message}")
-//            }
-//
-//        })
-
-//        RetrofitInstance.api.login("sdhjvgsdfjvhgsdjfvhvbjk","12345678").enqueue(object : Callback<UserAuthResponse>{
-//            override fun onResponse(call: Call<UserAuthResponse>, response: Response<UserAuthResponse>) {
-//                if (response.isSuccessful){
-//                   Log.i("tagAPI", "${response.body()}")
-//                } else {
-//                  Log.i("tagAPI", "${response.code()} | ${response.message()}")
-//                }
-//            }
-//            override fun onFailure(call: Call<UserAuthResponse>, t: Throwable) {
-//                Log.i("tagAPI", "message error: ${t.message}")
-//            }
-//        })
-
-//        RetrofitInstance.api.getChatsByUser(1).enqueue(object : Callback<ChatsByUserResponse>{
-//            override fun onResponse(
-//                call: Call<ChatsByUserResponse>,
-//                response: Response<ChatsByUserResponse>
-//            ) {
-//                if (response.isSuccessful){
-//                   Log.i("tagAPI", "${response.body()}")
-//                } else {
-//                  Log.i("tagAPI", "${response.code()} | ${response.message()}")
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<ChatsByUserResponse>, t: Throwable) {
-//                Log.i("tagAPI", "message error: ${t.message}")
-//            }
-//        })
-
-//        RetrofitInstance.api.getChatMessagesById(5).enqueue(object : Callback<ChatMessagesByChatResponse>{
-//            override fun onResponse(
-//                call: Call<ChatMessagesByChatResponse>,
-//                response: Response<ChatMessagesByChatResponse>
-//            ) {
-//                if (response.isSuccessful){
-//                    Log.i("tagAPI", "${response.body()}")
-//                } else {
-//                    Log.i("tagAPI", "${response.code()} | ${response.message()}")
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<ChatMessagesByChatResponse>, t: Throwable) {
-//                Log.i("tagAPI", "message error: ${t.message}")
-//            }
-//        })
-
     }
 
     override fun onDestroyView() {
@@ -145,8 +75,9 @@ class MainFragment : Fragment() {
 
         when(item.itemId){
             R.id.idExit -> {
-                //viewModel.signOutAccount()
-                APP.mNavController.navigate(R.id.action_mainFragment_to_signInFragment)
+                viewModel.signOut{
+                    APP.mNavController.navigate(R.id.action_mainFragment_to_signInFragment)
+                }
             }
         }
         return true

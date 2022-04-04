@@ -8,6 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
 import com.example.emb3ddedapp.databinding.OrdersFragmentBinding
+import com.example.emb3ddedapp.screens.orders.allorders.AllOrdersFragment
+import com.example.emb3ddedapp.screens.orders.myorders.MyOrdersFragment
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 class OrdersFragment : Fragment() {
@@ -17,6 +20,8 @@ class OrdersFragment : Fragment() {
     private var _binding:OrdersFragmentBinding? = null
     private val binding:OrdersFragmentBinding
     get() = _binding!!
+
+    private lateinit var adapter: OrdersPagerAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = OrdersFragmentBinding.inflate(inflater, container, false)
@@ -29,10 +34,13 @@ class OrdersFragment : Fragment() {
         // TODO: Use the ViewModel
     }
 
+    private val frags = mutableListOf(AllOrdersFragment(),MyOrdersFragment())
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-            viewPager.adapter = OrdersPagerAdapter(context as FragmentActivity)
+           adapter =  OrdersPagerAdapter(requireActivity().supportFragmentManager,frags,lifecycle)
+            viewPager.adapter = adapter
             tabLayout.tabIconTint = null
             TabLayoutMediator(tabLayout, viewPager){ tab, pos ->
                 when(pos){
@@ -41,6 +49,10 @@ class OrdersFragment : Fragment() {
                 }
             }.attach()
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
     }
 
     override fun onDestroyView() {
