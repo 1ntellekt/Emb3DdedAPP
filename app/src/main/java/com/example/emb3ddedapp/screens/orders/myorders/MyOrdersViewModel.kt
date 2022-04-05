@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModel
 import com.example.emb3ddedapp.database.api.RetrofitInstance
 import com.example.emb3ddedapp.models.Order
 import com.example.emb3ddedapp.models.OrdersByUserResponse
+import com.example.emb3ddedapp.utils.REPOSITORY
+import com.example.emb3ddedapp.utils.showToast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -34,6 +36,14 @@ class MyOrdersViewModel(application: Application) : AndroidViewModel(application
                     Log.i("tagAPI","Error get user orders: ${t.message.toString()}")
                 }
             })
+    }
+
+    fun deleteOrder(id:Int){
+        REPOSITORY.deleteOrder(id,{},{ showToast(it)})
+    }
+
+    fun updateOrder(order: Order,onSuccess: () -> Unit){
+        REPOSITORY.updateOrder(id = order.id, order, {onSuccess()}, { showToast(it)})
     }
 
 }

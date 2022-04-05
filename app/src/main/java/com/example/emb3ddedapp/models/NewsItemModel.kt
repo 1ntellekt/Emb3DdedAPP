@@ -1,5 +1,7 @@
 package com.example.emb3ddedapp.models
 
+import java.io.Serializable
+
 data class NewsItem(
     val id: Int = 0,
     val title: String,
@@ -9,7 +11,7 @@ data class NewsItem(
     val tag: String,
     val created_at: String,
     val user: User? = null
-)
+):Serializable
 
 data class NewsList(val news:List<NewsItem>?)
 

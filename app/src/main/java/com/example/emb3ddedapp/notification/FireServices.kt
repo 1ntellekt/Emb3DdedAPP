@@ -11,6 +11,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.navigation.NavDeepLinkBuilder
+import com.example.emb3ddedapp.R
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -24,21 +25,34 @@ class FireServices:FirebaseMessagingService() {
     }
 
     override fun onMessageReceived(remMesg: RemoteMessage) {
-        Log.i("tagPush", "onMessageReceive() title| ${remMesg.notification?.title}")
-        Log.i("tagPush", "onMessageReceive() body| ${remMesg.notification?.body}")
         super.onMessageReceived(remMesg)
+        //Log.i("tagPush", "onMessageReceive() title| ${remMesg.notification?.title}")
+        //Log.i("tagPush", "onMessageReceive() body| ${remMesg.notification?.body}")
         remMesg.notification?.let {
             if (it.title!=null && it.body != null){
+                if (it.title != "action" )
                 showNotification(it.title!!, it.body!!)
             }
         }
+        val intent = Intent(PUSH_TAG)
+        remMesg.data.forEach{ entry ->
+            Log.i("tagPush", "${entry.key}|${entry.value}")
+            intent.putExtra(entry.key, entry.value)
+        }
+
+        sendBroadcast(intent)
+
         Log.i("tagPush", "onMessageReceive() data | ${remMesg.data}")
     }
 
 
-    companion object{
+    companion object {
         const val NAME_CHANNEL="idFbChannel"
         const val CHANNEL_ID = "123"
+        const val PUSH_TAG = "push_tag"
+        const val KEY_ACTION="action"
+        const val ACTION_SHOW_MESSAGE="show_message"
+        const val ACTION_ORDER = "order"
     }
 
     private fun showNotification(title:String, body:String){
@@ -57,6 +71,7 @@ class FireServices:FirebaseMessagingService() {
             NotificationCompat.BigTextStyle()
             .setBigContentTitle(title)
             .setSummaryText("Body").bigText(body))
+            .setSmallIcon(R.drawable.ic_baseline_notifications_24)
             .setDefaults(NotificationCompat.DEFAULT_ALL)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)

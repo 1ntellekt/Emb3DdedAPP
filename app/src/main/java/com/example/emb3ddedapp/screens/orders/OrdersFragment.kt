@@ -34,12 +34,12 @@ class OrdersFragment : Fragment() {
         // TODO: Use the ViewModel
     }
 
-    private val frags = mutableListOf(AllOrdersFragment(),MyOrdersFragment())
+//    private val frags = mutableListOf(AllOrdersFragment(),MyOrdersFragment())
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-           adapter =  OrdersPagerAdapter(requireActivity().supportFragmentManager,frags,lifecycle)
+           adapter =  OrdersPagerAdapter(requireActivity().supportFragmentManager,lifecycle)
             viewPager.adapter = adapter
             tabLayout.tabIconTint = null
             TabLayoutMediator(tabLayout, viewPager){ tab, pos ->

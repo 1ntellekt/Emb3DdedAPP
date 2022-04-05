@@ -285,7 +285,7 @@ class Repository : DataRepository {
         }
     }
 
-
+    //orders
     override fun addOrder(order: Order, onSuccess: () -> Unit, onFail: (String) -> Unit) {
         RetrofitInstance.api.addOrder(order).enqueue(object : Callback<OrderDefaultResponse>{
             override fun onResponse(call: Call<OrderDefaultResponse>, response: Response<OrderDefaultResponse>) {
@@ -349,5 +349,75 @@ class Repository : DataRepository {
 
     override fun getAllOrders(): Call<OrdersByUserResponse> {
         return RetrofitInstance.api.getAllOrders()
+    }
+
+    //news
+    override fun addNewsItem(newsItem: NewsItem, onSuccess: () -> Unit, onFail: (String) -> Unit) {
+        RetrofitInstance.api.addNewsItem(newsItem).enqueue(object : Callback<NewsDefaultResponse>{
+            override fun onResponse(call: Call<NewsDefaultResponse>, response: Response<NewsDefaultResponse>) {
+                if (response.isSuccessful){
+                    response.body()?.let {
+                        onSuccess()
+                    }
+                } else {
+                    Log.i("tagAPI", "Error add news_item: ${response.code()}")
+                    onFail("Error add news_item: ${response.code()}")
+                }
+            }
+            override fun onFailure(call: Call<NewsDefaultResponse>, t: Throwable) {
+                Log.i("tagAPI", "Error add news_item: ${t.message}")
+                onFail("Error add news_item: ${t.message}")
+            }
+        })
+    }
+
+    override fun updateNewsItem(id: Int, newsItem: NewsItem, onSuccess: () -> Unit, onFail: (String) -> Unit) {
+        RetrofitInstance.api.updateNewsItem(id,newsItem).enqueue(object : Callback<StatusMsgResponse>{
+            override fun onResponse(call: Call<StatusMsgResponse>, response: Response<StatusMsgResponse>) {
+                if (response.isSuccessful){
+                    response.body()?.let {
+                        onSuccess()
+                    }
+                } else {
+                    Log.i("tagAPI", "Error update news_item: ${response.code()}")
+                    onFail("Error update news_item: ${response.code()}")
+                }
+            }
+            override fun onFailure(call: Call<StatusMsgResponse>, t: Throwable) {
+                Log.i("tagAPI", "Error update news_item: ${t.message}")
+                onFail("Error update news_item: ${t.message}")
+            }
+        })
+    }
+
+    override fun deleteNewsItem(id: Int, onSuccess: () -> Unit, onFail: (String) -> Unit) {
+        RetrofitInstance.api.deleteNews(id).enqueue(object : Callback<StatusMsgResponse>{
+            override fun onResponse(call: Call<StatusMsgResponse>, response: Response<StatusMsgResponse>) {
+                if (response.isSuccessful){
+                    response.body()?.let {
+                        onSuccess()
+                    }
+                } else {
+                    Log.i("tagAPI", "Error delete news_item: ${response.code()}")
+                    onFail("Error delete news_item: ${response.code()}")
+                }
+            }
+            override fun onFailure(call: Call<StatusMsgResponse>, t: Throwable) {
+                Log.i("tagAPI", "Error delete news_item: ${t.message}")
+                onFail("Error delete news_item: ${t.message}")
+            }
+        })
+    }
+
+    override fun getNewsByUserId(user_id: Int): Call<NewsByUserResponse> {
+        return RetrofitInstance.api.getNewsByUser(user_id)
+    }
+
+    override fun getNewsItemById(id: Int): Call<NewsDefaultResponse> {
+        return RetrofitInstance.api.getNewsItemById(id)
+    }
+
+    override fun getAllNews(): Call<NewsByUserResponse> {
+        return RetrofitInstance.api.getAllNews()
     }
 }

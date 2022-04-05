@@ -51,7 +51,7 @@ class AllOrdersAdapter(private val onItemListener:AdapterListeners.OnItemClick):
         val order = ordersList[position]
         holder.apply {
             tvAuthor.text = "Order author: ${ order.user!!.login }"
-            tvShortDescription.text = "${order.description.take(90)}...."
+            tvShortDescription.text = "${order.description.take(120)}...."
             order.img_url?.let { url->
                 Glide.with(imgOrder.context).load(url).into(imgOrder)
             }

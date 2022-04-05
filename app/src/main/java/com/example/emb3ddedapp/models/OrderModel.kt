@@ -1,5 +1,7 @@
 package com.example.emb3ddedapp.models
 
+import java.io.Serializable
+
 data class Order(
     val id: Int = 0,
     val title: String,
@@ -9,7 +11,7 @@ data class Order(
     val status: Int = 0,
     val created_at: String?,
     val user: User? = null
-)
+):Serializable
 
 data class OrdersList(val orders:List<Order>?)
 

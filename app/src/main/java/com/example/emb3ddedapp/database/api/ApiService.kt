@@ -53,8 +53,8 @@ interface ApiService {
     //@Headers("Accept:application/json", "Content-Type:application/json", "X-Requested-With:XMLHttpRequest","Authorization: Bearer cGx82W6TXYbnlkQGyZxAp3ZBjC7rJwdTUfsXSPiY")
     fun updateOrder(@Path("id") id: Int, @Body params: Order):Call<StatusMsgResponse>
 
-    @DELETE("orders/{id}")
-    //@Headers("Accept:application/json", "Content-Type:application/json", "X-Requested-With:XMLHttpRequest","Authorization: Bearer cGx82W6TXYbnlkQGyZxAp3ZBjC7rJwdTUfsXSPiY")
+    @POST("orders/{id}?_method=DELETE")
+    @Headers("X-Requested-With:XMLHttpRequest")
     fun deleteOrder(@Path("id") id: Int):Call<StatusMsgResponse>
 
     @GET("filter/orders")
@@ -97,7 +97,7 @@ interface ApiService {
    // @Headers("Accept:application/json", "Content-Type:application/json", "X-Requested-With:XMLHttpRequest","Authorization: Bearer cGx82W6TXYbnlkQGyZxAp3ZBjC7rJwdTUfsXSPiY")
     fun updateNewsItem(@Path("id") id: Int, @Body params: NewsItem):Call<StatusMsgResponse>
 
-    @DELETE("news/{id}")
+    @POST("news/{id}?_method=DELETE")
     //@Headers("Accept:application/json", "Content-Type:application/json", "X-Requested-With:XMLHttpRequest","Authorization: Bearer cGx82W6TXYbnlkQGyZxAp3ZBjC7rJwdTUfsXSPiY")
     fun deleteNews(@Path("id") id: Int):Call<StatusMsgResponse>
 

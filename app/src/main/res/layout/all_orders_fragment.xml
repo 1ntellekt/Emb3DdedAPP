@@ -78,18 +78,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refLayout"
+        android:layout_width="match_parent"
         app:layout_constraintTop_toBottomOf="@id/searchView"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-        app:spanCount="2"
-        tools:listitem="@layout/order_item_layout_1"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="3dp"
-        android:layout_marginEnd="3dp"
-        android:scrollbars="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"/>
+        android:layout_height="0dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+            app:spanCount="2"
+            tools:listitem="@layout/order_item_layout_1"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="3dp"
+            android:scrollbars="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

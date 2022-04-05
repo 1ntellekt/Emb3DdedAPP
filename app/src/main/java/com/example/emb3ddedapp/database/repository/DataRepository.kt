@@ -1,9 +1,6 @@
 package com.example.emb3ddedapp.database.repository
 
-import com.example.emb3ddedapp.models.Order
-import com.example.emb3ddedapp.models.OrderDefaultResponse
-import com.example.emb3ddedapp.models.OrdersByUserResponse
-import com.example.emb3ddedapp.models.User
+import com.example.emb3ddedapp.models.*
 import com.google.firebase.auth.FirebaseUser
 import retrofit2.Call
 
@@ -45,4 +42,11 @@ interface DataRepository {
     fun getOrderById(id: Int):Call<OrderDefaultResponse>
     fun getAllOrders():Call<OrdersByUserResponse>
 
+    //news
+    fun addNewsItem(newsItem: NewsItem,onSuccess: () -> Unit, onFail: (String) -> Unit)
+    fun updateNewsItem(id: Int,newsItem: NewsItem,onSuccess: () -> Unit, onFail: (String) -> Unit)
+    fun deleteNewsItem(id: Int, onSuccess: () -> Unit, onFail: (String) -> Unit)
+    fun getNewsByUserId(user_id: Int):Call<NewsByUserResponse>
+    fun getNewsItemById(id: Int):Call<NewsDefaultResponse>
+    fun getAllNews():Call<NewsByUserResponse>
 }

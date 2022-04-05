@@ -45,7 +45,7 @@ class MyOrdersAdapter(
         val btnDel:ImageButton = itemView.findViewById(R.id.btnDel)
 
         fun getDataTimeWithFormat(dateTime:String):String{
-            val dateFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
+            val dateFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
             val date: Date = dateFormat.parse(dateTime)!!
             val formatter: DateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
             return formatter.format(date)
@@ -61,13 +61,16 @@ class MyOrdersAdapter(
         val order = ordersList[position]
         holder.apply {
             tvAuthor.text = "Order author: ${ order.user!!.login }"
-            tvShortDescription.text = "${order.description.take(30)}...."
+            tvShortDescription.text = "${order.description.take(220)}...."
             order.img_url?.let { url->
                 Glide.with(imgOrder.context).load(url).into(imgOrder)
             }
             tvDateTime.text = holder.getDataTimeWithFormat(order.created_at!!)
 
-            if (order.status>0) imgStatusDone.visibility = View.VISIBLE
+            if (order.status>0) {
+                imgStatusDone.visibility = View.VISIBLE
+                btnDone.isEnabled = false
+            }
         }
     }
 

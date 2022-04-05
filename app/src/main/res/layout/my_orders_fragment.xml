@@ -8,17 +8,22 @@
     tools:context=".screens.orders.myorders.MyOrdersFragment">
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refLayout"
+        android:layout_width="match_parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/order_item_layout_2"
-        android:layout_marginStart="3dp"
-        android:layout_marginEnd="3dp"
-        android:scrollbars="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"/>
+        android:layout_height="0dp">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/order_item_layout_2"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="3dp"
+            android:scrollbars="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"/>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnAddOrders"

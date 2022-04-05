@@ -32,7 +32,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:shapeAppearanceOverlay="@style/roundImgView"
             android:background="@color/background_color"
-            tools:src="@drawable/order_img"/>
+            android:src="@drawable/order_img"/>
 
         <ImageButton
             android:id="@+id/btnDel"

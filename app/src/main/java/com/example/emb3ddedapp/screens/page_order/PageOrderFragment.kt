@@ -6,9 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import com.example.emb3ddedapp.R
 import com.example.emb3ddedapp.databinding.PageOrderFragmentBinding
+import com.example.emb3ddedapp.models.Order
 import com.google.android.material.appbar.AppBarLayout
+import java.text.SimpleDateFormat
+import java.util.*
 
 class PageOrderFragment : Fragment() {
 
@@ -16,6 +20,8 @@ class PageOrderFragment : Fragment() {
     private var _binding:PageOrderFragmentBinding? = null
     private val binding:PageOrderFragmentBinding
     get() = _binding!!
+
+    private var curOrder:Order? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = PageOrderFragmentBinding.inflate(inflater, container, false)
@@ -40,6 +46,20 @@ class PageOrderFragment : Fragment() {
                     }
                 }
             })
+
+//            curOrder = arguments?.getSerializable("order") as Order
+//            curOrder?.let {
+//                tvDescription.text = it.description
+//                tvAuthor.text = it.user!!.login
+//                tvHeadTitle.text = it.title
+//                tvDateTime.text = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+//                    .format(SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault()).parse(it.created_at!!)!!)
+//                tvTitle.text = it.title
+//                it.img_url?.let { url->
+//                    Glide.with(requireContext()).load(url).into(imgOrder)
+//                }
+//            }
+
         }
     }
 
