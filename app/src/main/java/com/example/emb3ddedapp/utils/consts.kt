@@ -9,6 +9,9 @@ import com.example.emb3ddedapp.database.repository.DataRepository
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 lateinit var APP:MainActivity
 lateinit var REPOSITORY:DataRepository
@@ -16,8 +19,10 @@ lateinit var progressDialog:ProgressDialog
 lateinit var BEARER_TOKEN:String
 
 const val dataName = "data"
-const val TIME_PAT = "HH:mm:ss"
-const val DATE_PAT = "yyyy-MM-dd"
+//const val TIME_PAT = "HH:mm:ss"
+//const val DATE_PAT = "yyyy-MM-dd"
+const val DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss"
+const val DB_DATE_TIME_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 
 fun showProgressDialog(title:String) {
     progressDialog.setTitle(title)
@@ -27,6 +32,13 @@ fun showProgressDialog(title:String) {
 fun closeProgressDialog() {
     if (progressDialog.isShowing)
         progressDialog.dismiss()
+}
+
+fun getDataTimeWithFormat(dateTime:String):String{
+    val dateFormat: DateFormat = SimpleDateFormat(DB_DATE_TIME_PATTERN, Locale.getDefault())
+    val date: Date = dateFormat.parse(dateTime)!!
+    val formatter: DateFormat = SimpleDateFormat(DATE_TIME_PATTERN, Locale.getDefault())
+    return formatter.format(date)
 }
 
 /*//Google sign in

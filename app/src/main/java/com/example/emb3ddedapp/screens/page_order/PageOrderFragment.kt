@@ -9,7 +9,10 @@ import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.example.emb3ddedapp.R
 import com.example.emb3ddedapp.databinding.PageOrderFragmentBinding
+import com.example.emb3ddedapp.models.CurrUser
 import com.example.emb3ddedapp.models.Order
+import com.example.emb3ddedapp.utils.APP
+import com.example.emb3ddedapp.utils.getDataTimeWithFormat
 import com.google.android.material.appbar.AppBarLayout
 import java.text.SimpleDateFormat
 import java.util.*
@@ -47,19 +50,18 @@ class PageOrderFragment : Fragment() {
                 }
             })
 
-//            curOrder = arguments?.getSerializable("order") as Order
-//            curOrder?.let {
-//                tvDescription.text = it.description
-//                tvAuthor.text = it.user!!.login
-//                tvHeadTitle.text = it.title
-//                tvDateTime.text = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-//                    .format(SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault()).parse(it.created_at!!)!!)
-//                tvTitle.text = it.title
-//                it.img_url?.let { url->
-//                    Glide.with(requireContext()).load(url).into(imgOrder)
-//                }
-//            }
-
+            curOrder = arguments?.getSerializable("order") as? Order
+            curOrder?.let {
+                tvDescription.text = it.description
+                tvAuthor.text = it.user!!.login
+                tvHeadTitle.text = it.title
+                tvDateTime.text = getDataTimeWithFormat(it.created_at!!)
+                tvTitle.text = it.title
+                it.img_url?.let { url->
+                    Glide.with(requireContext()).load(url).into(imgOrder)
+                }
+            }
+            btnBack.setOnClickListener { APP.mNavController.navigate(R.id.action_pageOrderFragment_to_mainFragment) }
         }
     }
 
@@ -67,6 +69,31 @@ class PageOrderFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(PageOrderViewModel::class.java)
         // TODO: Use the ViewModel
+    }
+
+    override fun onStart() {
+        super.onStart()
+        binding.apply {
+            curOrder?.let {  order ->
+                btnCallPhone.setOnClickListener {
+                    //call to order's owner
+                }
+                btnMsg.setOnClickListener {
+                    viewModel.createChat(CurrUser.id, order.user!!.id){ createdChat->
+                        val args = Bundle().also { it.putSerializable("created_chat", createdChat) }
+                        APP.mNavController.navigate(R.id.action_pageOrderFragment_to_pageChatFragment, args)
+                    }
+                }
+                tvTitle.text = order.title
+                tvHeadTitle.text = order.title
+                tvDescription.text = order.description
+                tvAuthor.text = order.user!!.login
+                tvDateTime.text = getDataTimeWithFormat(order.created_at!!)
+                order.img_url?.let { url->
+                    Glide.with(requireContext()).load(url).into(imgOrder)
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {

@@ -59,6 +59,8 @@
                     <ImageButton
                         android:id="@+id/btnPopMenu"
                         app:tint="@color/white"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginTop="5dp"
                         android:background="@drawable/back_btn_2"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"

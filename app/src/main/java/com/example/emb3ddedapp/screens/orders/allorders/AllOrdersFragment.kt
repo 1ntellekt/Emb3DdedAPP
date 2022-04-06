@@ -19,7 +19,7 @@ import com.example.emb3ddedapp.databinding.AllOrdersFragmentBinding
 import com.example.emb3ddedapp.models.Order
 import com.example.emb3ddedapp.notification.FireServices
 import com.example.emb3ddedapp.screens.orders.allorders.adapter.AllOrdersAdapter
-import com.example.emb3ddedapp.utils.showToast
+import com.example.emb3ddedapp.utils.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -47,28 +47,28 @@ class AllOrdersFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = AllOrdersAdapter { posItem -> showToast(ordersList[posItem].title) }
+        adapter = AllOrdersAdapter { posItem ->
+            val order = ordersList[posItem]
+            val args = Bundle().also { it.putSerializable("order", order) }
+            APP.mNavController.navigate(R.id.action_mainFragment_to_pageOrderFragment,args)
+        }
         binding.apply {
             recyclerView.setHasFixedSize(true)
             recyclerView.adapter = adapter
             btnFilter.setOnClickListener {  }
             btnNewFirst.setOnClickListener {
-                val list = ordersList.sortedByDescending {
-                    SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-                        .format(SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",Locale.getDefault()).parse(it.created_at!!)!!)
-                }
+                val list = ordersList.sortedByDescending { getDataTimeWithFormat(it.created_at!!)}
                 adapter.setData(list)
                 btnOldFirst.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
                 btnNewFirst.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_active)
             }
             btnOldFirst.setOnClickListener {
-                val list = ordersList.sortedBy {
-                    SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-                        .format(SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",Locale.getDefault()).parse(it.created_at!!)!!) }
+                val list = ordersList.sortedBy {getDataTimeWithFormat(it.created_at!!)}
                 adapter.setData(list)
                 btnOldFirst.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_active)
                 btnNewFirst.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
             }
+            refLayout.setOnRefreshListener(refLayListener)
         }
         mObserver = Observer { list->
             list?.let {
@@ -77,7 +77,7 @@ class AllOrdersFragment : Fragment() {
                 adapter.setData(it)
             }
         }
-        Log.i("tagLife", "onViewCreated() on AllOrders")
+        //Log.i("tagLife", "onViewCreated() on AllOrders")
     }
 
     private val refLayListener = SwipeRefreshLayout.OnRefreshListener {
@@ -91,7 +91,6 @@ class AllOrdersFragment : Fragment() {
         viewModel.allOrdersList.observe(this,mObserver)
         //showToast("ALLOrders")
         //Log.i("tagLife", "onStart() on AllOrders")
-        binding.refLayout.setOnRefreshListener(refLayListener)
 
 
         val intentFilter = IntentFilter()

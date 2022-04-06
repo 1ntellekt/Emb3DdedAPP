@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -19,8 +20,8 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imgNews"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/roundImgView"
@@ -29,6 +30,7 @@
         <ImageButton
             android:id="@+id/btnEdit"
             android:visibility="invisible"
+            android:contentDescription="edit news item"
             app:layout_constraintStart_toStartOf="@id/imgNews"
             app:layout_constraintTop_toTopOf="@id/imgNews"
             android:src="@drawable/ic_baseline_edit_24"
@@ -39,6 +41,7 @@
 
         <ImageButton
             android:id="@+id/btnDel"
+            android:contentDescription="delete news item"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="@id/imgNews"
             app:layout_constraintTop_toTopOf="@id/imgNews"
@@ -85,9 +88,6 @@ a page when looking at its layout. werkflajfgklsdjflsdkfvjdklvjdfvklfjvflvjdfklg
                 android:layout_height="wrap_content"/>
 
         </LinearLayout>
-
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

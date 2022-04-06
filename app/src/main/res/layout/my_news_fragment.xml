@@ -8,17 +8,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".screens.news.mynews.MyNewsFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_margin="10dp"
-        tools:listitem="@layout/new_item_layout"
-        android:scrollbars="vertical"
-        tools:itemCount="8"
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refLayout"
         android:layout_width="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_height="0dp"/>
+        android:layout_height="wrap_content">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_margin="10dp"
+            tools:listitem="@layout/new_item_layout"
+            android:scrollbars="vertical"
+            tools:itemCount="8"
+            android:layout_width="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_height="match_parent"/>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnAddNews"

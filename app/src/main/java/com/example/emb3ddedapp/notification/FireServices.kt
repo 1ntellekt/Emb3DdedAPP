@@ -30,7 +30,6 @@ class FireServices:FirebaseMessagingService() {
         //Log.i("tagPush", "onMessageReceive() body| ${remMesg.notification?.body}")
         remMesg.notification?.let {
             if (it.title!=null && it.body != null){
-                if (it.title != "action" )
                 showNotification(it.title!!, it.body!!)
             }
         }
@@ -53,6 +52,8 @@ class FireServices:FirebaseMessagingService() {
         const val KEY_ACTION="action"
         const val ACTION_SHOW_MESSAGE="show_message"
         const val ACTION_ORDER = "order"
+        const val ACTION_CHAT = "chat_holder"
+        const val ACTION_NEWS = "news"
     }
 
     private fun showNotification(title:String, body:String){

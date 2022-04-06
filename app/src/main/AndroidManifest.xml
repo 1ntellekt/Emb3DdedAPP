@@ -36,7 +36,7 @@
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/ic_baseline_notifications_24"/>
+            android:resource="@drawable/logo_mini_menu"/>
 
     </application>
 

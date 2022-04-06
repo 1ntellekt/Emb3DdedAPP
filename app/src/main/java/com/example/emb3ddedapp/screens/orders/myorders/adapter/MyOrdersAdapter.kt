@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.example.emb3ddedapp.R
 import com.example.emb3ddedapp.models.Order
 import com.example.emb3ddedapp.screens.listeners.AdapterListeners
+import com.example.emb3ddedapp.utils.getDataTimeWithFormat
 import com.google.android.material.imageview.ShapeableImageView
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -43,14 +44,6 @@ class MyOrdersAdapter(
         val btnDone:ImageButton = itemView.findViewById(R.id.btnDone)
         val btnEdit:ImageButton = itemView.findViewById(R.id.btnEdit)
         val btnDel:ImageButton = itemView.findViewById(R.id.btnDel)
-
-        fun getDataTimeWithFormat(dateTime:String):String{
-            val dateFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
-            val date: Date = dateFormat.parse(dateTime)!!
-            val formatter: DateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-            return formatter.format(date)
-        }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderHolder {
@@ -65,7 +58,7 @@ class MyOrdersAdapter(
             order.img_url?.let { url->
                 Glide.with(imgOrder.context).load(url).into(imgOrder)
             }
-            tvDateTime.text = holder.getDataTimeWithFormat(order.created_at!!)
+            tvDateTime.text = getDataTimeWithFormat(order.created_at!!)
 
             if (order.status>0) {
                 imgStatusDone.visibility = View.VISIBLE

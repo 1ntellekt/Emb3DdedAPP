@@ -131,6 +131,11 @@
             app:destination="@id/mainFragment"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_pageOrderFragment_to_pageChatFragment"
+            app:destination="@id/pageChatFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/pageNewsEditFragment"

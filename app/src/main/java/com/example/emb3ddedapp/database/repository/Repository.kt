@@ -420,4 +420,69 @@ class Repository : DataRepository {
     override fun getAllNews(): Call<NewsByUserResponse> {
         return RetrofitInstance.api.getAllNews()
     }
+
+    //chats
+    override fun addNewChat(user_id_first: Int, user_id_second: Int, onSuccess: (Chat) -> Unit, onFail: (String) -> Unit) {
+        RetrofitInstance.api.addChat(user_id_first, user_id_second).enqueue(object : Callback<ChatDefaultResponse>{
+            override fun onResponse(call: Call<ChatDefaultResponse>, response: Response<ChatDefaultResponse>) {
+                if (response.isSuccessful){
+                    response.body()?.let { body->
+                        onSuccess(body.chat)
+                    }
+                } else {
+                    Log.i("tagAPI", "Error add chat: ${response.code()} ${response.message()}")
+                    if (response.code() == 400){
+                        onFail("Chat also created, please go to 'Chats'")
+                    } else onFail("Error add chat: ${response.code()} ${response.message()}")
+                }
+            }
+            override fun onFailure(call: Call<ChatDefaultResponse>, t: Throwable) {
+                Log.i("tagAPI", "Error add chat: ${t.message}")
+                onFail("Error add chat: ${t.message}")
+            }
+        })
+    }
+
+    override fun updateChat(id: Int, download_first: Int?, download_second: Int?, onSuccess: () -> Unit, onFail: (String) -> Unit) {
+        RetrofitInstance.api.updateChat(id, download_first, download_second).enqueue(object : Callback<StatusMsgResponse>{
+            override fun onResponse(call: Call<StatusMsgResponse>, response: Response<StatusMsgResponse>) {
+                if (response.isSuccessful){
+                    onSuccess()
+                } else {
+                    Log.i("tagAPI", "Error update chat: ${response.code()}")
+                    onFail("Error update chat: ${response.code()}")
+                }
+            }
+            override fun onFailure(call: Call<StatusMsgResponse>, t: Throwable) {
+                Log.i("tagAPI", "Error update chat: ${t.message}")
+                onFail("Error update chat: ${t.message}")
+            }
+        })
+    }
+
+    override fun getChatsByUserId(user_id: Int): Call<ChatsByUserResponse> {
+        return RetrofitInstance.api.getChatsByUser(user_id)
+    }
+
+    override fun getMessagesByChatId(id: Int): Call<ChatMessagesByChatResponse> {
+        return RetrofitInstance.api.getChatMessagesById(id)
+    }
+
+    //messages
+    override fun addMessage(msg: Message, onSuccess: () -> Unit, onFail: (String) -> Unit) {
+        RetrofitInstance.api.addMessage(msg).enqueue(object : Callback<MessageDefaultResponse>{
+            override fun onResponse(call: Call<MessageDefaultResponse>, response: Response<MessageDefaultResponse>) {
+                if (response.isSuccessful){
+                    onSuccess()
+                } else {
+                    Log.i("tagAPI", "Error add message: ${response.code()} ${response.message()}")
+                    onFail("Error add message: ${response.code()} ${response.message()}")
+                }
+            }
+            override fun onFailure(call: Call<MessageDefaultResponse>, t: Throwable) {
+                Log.i("tagAPI", "Error add message: ${t.message}")
+                onFail("Error add chat: ${t.message}")
+            }
+        })
+    }
 }

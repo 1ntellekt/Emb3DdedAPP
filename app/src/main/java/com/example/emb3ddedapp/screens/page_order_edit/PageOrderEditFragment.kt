@@ -69,8 +69,10 @@ class PageOrderEditFragment : Fragment() {
                     Glide.with(requireContext()).load(url).into(imgOrder)
                     selectedImg = url
                 }
-                tvAuthor.text = curOrder!!.user!!.login
+                //tvAuthor.text = curOrder!!.user!!.login
             }
+
+            tvAuthor.text = CurrUser.login
 
             btnBack.setOnClickListener {
                 APP.mNavController.navigate(R.id.action_pageOrderEditFragment_to_mainFragment)
@@ -86,7 +88,7 @@ class PageOrderEditFragment : Fragment() {
                 } else if(edDescription.text.toString().isEmpty()){
                     edDescriptionLayout.error = "Input description"
                 } else {
-                    if (curOrder == null){
+                    if (curOrder == null) {
                         viewModel.addOrder(Order(title = edTitle.text.toString(),
                             description = edDescription.text.toString(), user_id = CurrUser.id, created_at = null, img_url = selectedImg)
                         ){ APP.mNavController.navigate(R.id.action_pageOrderEditFragment_to_mainFragment)}

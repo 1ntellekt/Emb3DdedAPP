@@ -63,6 +63,7 @@ class MyOrdersFragment : Fragment() {
             btnAddOrders.setOnClickListener {
                 APP.mNavController.navigate(R.id.action_mainFragment_to_pageOrderEditFragment)
             }
+            refLayout.setOnRefreshListener(refLayListener)
         }
         mObserver = Observer { list->
             list?.let {
@@ -73,7 +74,7 @@ class MyOrdersFragment : Fragment() {
                 else binding.tvHint.visibility = View.VISIBLE
             }
         }
-        Log.i("tagLife", "onViewCreated() on MyOrders")
+        //Log.i("tagLife", "onViewCreated() on MyOrders")
     }
 
     private val refLayListener = SwipeRefreshLayout.OnRefreshListener {
@@ -87,7 +88,6 @@ class MyOrdersFragment : Fragment() {
         viewModel.myOrdersList.observe(this,mObserver)
         //showToast("MYOrders")
        // Log.i("tagLife", "onStart() on MyOrders")
-        binding.refLayout.setOnRefreshListener(refLayListener)
 
 
         val intentFilter = IntentFilter()

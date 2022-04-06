@@ -6,12 +6,12 @@
     android:background="@color/background_color"
     android:layout_height="wrap_content">
 
-    <RelativeLayout
-        android:background="#515050"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"/>
+<!--    <RelativeLayout-->
+<!--        android:background="#515050"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="2dp"/>-->
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgChatPerson"
@@ -43,8 +43,12 @@
             tools:text="Name login"
             android:textSize="18sp"
             android:textColor="@color/color_btn"
+            android:singleLine="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:ellipsize="marquee"
+            android:scrollHorizontally="true"
             android:textStyle="bold"
-            android:layout_width="wrap_content"
+            android:layout_width="240dp"
             android:layout_height="wrap_content"/>
 
         <TextView

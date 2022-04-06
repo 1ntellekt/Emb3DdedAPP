@@ -11,11 +11,8 @@ interface DataRepository {
 //    fun initDatabase()
 //
     fun logInEmail(email:String,password:String,onSuccess:()->Unit,onFail:(String)->Unit)
-
     fun singUpEmail(email:String,password:String,onSuccess:()->Unit,onFail:(String)->Unit)
-
     fun sendVerifyEmail(user: FirebaseUser,password: String,onSuccess: () -> Unit, onFail: (String) -> Unit)
-
     fun resetPasswordEmail(email: String, onSuccess: () -> Unit, onFail: (String) -> Unit)
 
     //fun linkEmailToGoogle(email: String,password: String,onSuccess: () -> Unit,onFail: (String) -> Unit)
@@ -49,4 +46,14 @@ interface DataRepository {
     fun getNewsByUserId(user_id: Int):Call<NewsByUserResponse>
     fun getNewsItemById(id: Int):Call<NewsDefaultResponse>
     fun getAllNews():Call<NewsByUserResponse>
+
+    //chats
+    fun addNewChat(user_id_first:Int, user_id_second:Int, onSuccess: (Chat) -> Unit, onFail: (String) -> Unit)
+    fun updateChat(id: Int, download_first:Int?, download_second:Int?,onSuccess: () -> Unit, onFail: (String) -> Unit)
+    fun getChatsByUserId(user_id: Int):Call<ChatsByUserResponse>
+    fun getMessagesByChatId(id: Int):Call<ChatMessagesByChatResponse>
+
+    //message
+    fun addMessage(msg:Message, onSuccess: () -> Unit, onFail: (String) -> Unit)
+
 }
