@@ -20,6 +20,7 @@ import com.example.emb3ddedapp.models.Chat
 import com.example.emb3ddedapp.models.CurrUser
 import com.example.emb3ddedapp.notification.FireServices
 import com.example.emb3ddedapp.screens.chats.adapter.ChatAdapter
+import com.example.emb3ddedapp.utils.APP
 
 class ChatsFragment : Fragment() {
 
@@ -45,7 +46,11 @@ class ChatsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = ChatAdapter(CurrUser.id){ idItem-> }
+        adapter = ChatAdapter(CurrUser.id){ idItem->
+            val chatId = chatList[idItem].id
+            val args = Bundle().also { it.putInt("id_chat",chatId) }
+            APP.mNavController.navigate(R.id.action_mainFragment_to_pageChatFragment,args)
+        }
         binding.apply {
             val decoration = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
             recyclerView.setHasFixedSize(true)

@@ -8,9 +8,12 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.emb3ddedapp.R
 import com.example.emb3ddedapp.databinding.PageNewsFragmentBinding
+import com.example.emb3ddedapp.models.NewsItem
 import com.example.emb3ddedapp.utils.APP
+import com.example.emb3ddedapp.utils.getDataTimeWithFormat
 import com.google.android.material.appbar.AppBarLayout
 
 
@@ -22,6 +25,8 @@ class PageNewsFragment : Fragment() {
 
     private lateinit var viewModel: PageNewsViewModel
 
+    private var currNewsItem:NewsItem? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = PageNewsFragmentBinding.inflate(inflater,container,false)
         return binding.root
@@ -29,6 +34,7 @@ class PageNewsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        currNewsItem = arguments?.getSerializable("news_item") as? NewsItem
         binding.apply {
             appbar.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
                 var scrollRange = -1
@@ -45,6 +51,18 @@ class PageNewsFragment : Fragment() {
                     }
                 }
             })
+            currNewsItem?.let { newsItem ->
+                newsItem.img_url?.let { url->
+                    Glide.with(requireContext()).load(url).into(imgNews)
+                }
+                tvDescription.text = newsItem.description
+                tvHeadTitle.text = newsItem.title
+                tvTag.text = newsItem.tag
+                tvTitle.text = newsItem.title
+                tvAuthor.text = newsItem.user!!.login
+                tvDateTime.text = getDataTimeWithFormat(newsItem.created_at)
+            }
+            btnBack.setOnClickListener { APP.mNavController.navigate(R.id.action_pageNewsFragment_to_mainFragment)}
         }
     }
 

@@ -2,6 +2,8 @@ package com.example.emb3ddedapp.database.api
 
 import com.example.emb3ddedapp.models.*
 import com.example.emb3ddedapp.utils.getTokenAccess
+import com.squareup.okhttp.ResponseBody
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -132,4 +134,8 @@ interface ApiService {
    // @Headers("Accept:application/json", "Content-Type:application/json", "X-Requested-With:XMLHttpRequest","Authorization: Bearer cGx82W6TXYbnlkQGyZxAp3ZBjC7rJwdTUfsXSPiY")
     fun addMessage(@Body params:Message):Call<MessageDefaultResponse>
 
+    //files
+    //@Multipart
+    //@POST("putfile")
+    //fun uploadFile(@Part part:MultipartBody.Part):Call<ResponseBody>
 }

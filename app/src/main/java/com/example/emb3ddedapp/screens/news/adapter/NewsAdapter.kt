@@ -30,10 +30,16 @@ class NewsAdapter(
         notifyDataSetChanged()
     }
 
+    fun deleteItem(position: Int){
+        newsList.removeAt(position)
+        notifyItemRemoved(position)
+        notifyItemRangeChanged(position,itemCount)
+    }
+
     class NewsHolder(itemView: View) :RecyclerView.ViewHolder(itemView){
         val tvShortDescription:TextView = itemView.findViewById(R.id.tvShortDescription)
-        val tvTag:TextView = itemView.findViewWithTag(R.id.tvTag)
-        val tvAuthor:TextView = itemView.findViewWithTag(R.id.tvAuthor)
+        val tvTag:TextView = itemView.findViewById(R.id.tvTag)
+        val tvAuthor:TextView = itemView.findViewById(R.id.tvAuthor)
         val imgNews:ShapeableImageView = itemView.findViewById(R.id.imgNews)
         val btnEdit:ImageButton = itemView.findViewById(R.id.btnEdit)
         val btnDel:ImageButton = itemView.findViewById(R.id.btnDel)

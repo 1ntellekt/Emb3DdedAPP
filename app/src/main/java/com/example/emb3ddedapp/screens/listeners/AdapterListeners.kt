@@ -18,4 +18,12 @@ interface AdapterListeners {
         fun onDoneClick(position: Int)
     }
 
+    fun interface On3dFile{
+        fun on3dFileClick(position: Int)
+    }
+
+    fun interface OnFile{
+        fun onFileClick(position: Int)
+    }
+
 }

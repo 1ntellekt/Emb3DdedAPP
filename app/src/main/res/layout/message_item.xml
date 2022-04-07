@@ -33,10 +33,11 @@
 
             <TextView
                 android:id="@+id/tvMsgPartner"
+                android:textAlignment="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:visibility="visible"
+                android:visibility="gone"
                 tools:text="Example message hjfkvdfjvhdfkvgdfhvgkhfbjkhdfbjkdfhb" />
 
             <ImageView
@@ -46,8 +47,8 @@
                 android:scaleType="centerCrop"
                 android:adjustViewBounds="true"
                 android:layout_centerInParent="true"
-                android:layout_width="130dp"
-                android:layout_height="130dp"/>
+                android:layout_width="140dp"
+                android:layout_height="140dp"/>
 
             <LinearLayout
                 android:id="@+id/panel3dFilePartner"
@@ -128,6 +129,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layMsgMy"
         android:padding="5dp"
+        android:visibility="visible"
         android:layout_width="0dp"
         app:layout_constraintStart_toEndOf="@id/divider"
         app:layout_constraintEnd_toEndOf="parent"
@@ -142,10 +144,11 @@
 
             <TextView
                 android:id="@+id/tvMsgMy"
+                android:textAlignment="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:visibility="visible"
+                android:visibility="gone"
                 tools:text="Example message dfklvdfvlkfjrefgerjfgodrigujeroguerioeurjdfbklfkldfkldkdkdkk" />
 
             <ImageView

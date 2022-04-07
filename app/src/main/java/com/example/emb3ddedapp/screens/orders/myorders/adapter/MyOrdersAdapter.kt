@@ -33,6 +33,12 @@ class MyOrdersAdapter(
         notifyDataSetChanged()
     }
 
+    fun deleteItem(position: Int){
+        ordersList.removeAt(position)
+        notifyItemRemoved(position)
+        notifyItemRangeChanged(position,itemCount)
+    }
+
     class OrderHolder(itemView: View) :RecyclerView.ViewHolder(itemView){
         val imgOrder: ShapeableImageView = itemView.findViewById(R.id.imgOrder)
         val imgStatusDone:ImageView = itemView.findViewById(R.id.imgStatusDone)

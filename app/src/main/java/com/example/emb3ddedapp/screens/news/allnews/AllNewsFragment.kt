@@ -19,6 +19,7 @@ import com.example.emb3ddedapp.models.CurrUser
 import com.example.emb3ddedapp.models.NewsItem
 import com.example.emb3ddedapp.notification.FireServices
 import com.example.emb3ddedapp.screens.news.adapter.NewsAdapter
+import com.example.emb3ddedapp.utils.APP
 
 class AllNewsFragment : Fragment() {
 
@@ -46,7 +47,9 @@ class AllNewsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         adapter = NewsAdapter(false,{ idItem->
-
+            val newsItem = newsList[idItem]
+            val args = Bundle().also { it.putSerializable("news_item", newsItem)}
+            APP.mNavController.navigate(R.id.action_mainFragment_to_pageNewsFragment, args)
         },null,null)
         binding.apply {
             recyclerView.setHasFixedSize(true)

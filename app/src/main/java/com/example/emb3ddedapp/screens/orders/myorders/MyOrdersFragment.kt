@@ -49,6 +49,7 @@ class MyOrdersFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         adapter = MyOrdersAdapter({deleteId->
             viewModel.deleteOrder(ordersList[deleteId].id)
+            adapter.deleteItem(deleteId)
         },{editId->
             val order = ordersList[editId]
             val args = Bundle().also { it.putSerializable("order",order) }

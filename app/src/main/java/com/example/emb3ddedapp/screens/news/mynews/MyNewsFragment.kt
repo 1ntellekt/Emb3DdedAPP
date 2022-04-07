@@ -54,6 +54,7 @@ class MyNewsFragment : Fragment() {
         },
         { delId->
             viewModel.deleteNewsItem(newsList[delId].id)
+            adapter.deleteItem(delId)
         })
         binding.apply {
             recyclerView.setHasFixedSize(true)

@@ -2,27 +2,15 @@ package com.example.emb3ddedapp.screens.mainfrag
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NavUtils
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.emb3ddedapp.R
-import com.example.emb3ddedapp.database.api.RetrofitInstance
 import com.example.emb3ddedapp.databinding.MainFragmentBinding
-import com.example.emb3ddedapp.models.ChatDefault
-import com.example.emb3ddedapp.models.ChatMessagesByChatResponse
-import com.example.emb3ddedapp.models.ChatsByUserResponse
-import com.example.emb3ddedapp.models.StatusMsgResponse
 import com.example.emb3ddedapp.utils.APP
-import com.google.firebase.messaging.FirebaseMessaging
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class MainFragment : Fragment() {
 

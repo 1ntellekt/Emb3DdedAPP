@@ -56,7 +56,7 @@ class FireServices:FirebaseMessagingService() {
         const val ACTION_NEWS = "news"
     }
 
-    private fun showNotification(title:String, body:String){
+    private fun showNotification(title:String, body:String) {
         val notificationManagerCompat = NotificationManagerCompat.from(this)
         val notId = Random.nextInt()
 
@@ -72,7 +72,7 @@ class FireServices:FirebaseMessagingService() {
             NotificationCompat.BigTextStyle()
             .setBigContentTitle(title)
             .setSummaryText("Body").bigText(body))
-            .setSmallIcon(R.drawable.ic_baseline_notifications_24)
+            .setSmallIcon(R.drawable.logo_mini_menu)
             .setDefaults(NotificationCompat.DEFAULT_ALL)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)

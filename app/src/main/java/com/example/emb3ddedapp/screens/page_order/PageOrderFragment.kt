@@ -51,14 +51,23 @@ class PageOrderFragment : Fragment() {
             })
 
             curOrder = arguments?.getSerializable("order") as? Order
-            curOrder?.let {
-                tvDescription.text = it.description
-                tvAuthor.text = it.user!!.login
-                tvHeadTitle.text = it.title
-                tvDateTime.text = getDataTimeWithFormat(it.created_at!!)
-                tvTitle.text = it.title
-                it.img_url?.let { url->
+            curOrder?.let { order->
+                tvDescription.text = order.description
+                tvAuthor.text = order.user!!.login
+                tvHeadTitle.text = order.title
+                tvDateTime.text = getDataTimeWithFormat(order.created_at!!)
+                tvTitle.text = order.title
+                order.img_url?.let { url->
                     Glide.with(requireContext()).load(url).into(imgOrder)
+                }
+                btnCallPhone.setOnClickListener {
+                    //call to order's owner
+                }
+                btnMsg.setOnClickListener {
+                    viewModel.createChat(CurrUser.id, order.user.id){ createdChat->
+                        val args = Bundle().also { it.putInt("id_chat", createdChat.id) }
+                        APP.mNavController.navigate(R.id.action_pageOrderFragment_to_pageChatFragment, args)
+                    }
                 }
             }
             btnBack.setOnClickListener { APP.mNavController.navigate(R.id.action_pageOrderFragment_to_mainFragment) }
@@ -69,31 +78,6 @@ class PageOrderFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(PageOrderViewModel::class.java)
         // TODO: Use the ViewModel
-    }
-
-    override fun onStart() {
-        super.onStart()
-        binding.apply {
-            curOrder?.let {  order ->
-                btnCallPhone.setOnClickListener {
-                    //call to order's owner
-                }
-                btnMsg.setOnClickListener {
-                    viewModel.createChat(CurrUser.id, order.user!!.id){ createdChat->
-                        val args = Bundle().also { it.putSerializable("created_chat", createdChat) }
-                        APP.mNavController.navigate(R.id.action_pageOrderFragment_to_pageChatFragment, args)
-                    }
-                }
-                tvTitle.text = order.title
-                tvHeadTitle.text = order.title
-                tvDescription.text = order.description
-                tvAuthor.text = order.user!!.login
-                tvDateTime.text = getDataTimeWithFormat(order.created_at!!)
-                order.img_url?.let { url->
-                    Glide.with(requireContext()).load(url).into(imgOrder)
-                }
-            }
-        }
     }
 
     override fun onDestroyView() {

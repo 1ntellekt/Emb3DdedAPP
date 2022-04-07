@@ -219,11 +219,15 @@ class Repository : DataRepository {
                                     onSuccess()
                                 }
                             } else {
+                                setInitUserId(0)
+                                setAccessToken(null)
                                 Log.i("tagAPI","Error add device: ${response.code()} ${response.headers()}")
                                 onFail("Error add device: ${response.code()}")
                             }
                         }
                         override fun onFailure(call: Call<DeviceDefaultResponse>, t: Throwable) {
+                            setInitUserId(0)
+                            setAccessToken(null)
                             Log.i("tagAPI","Error add device: ${t.message.toString()}")
                             onFail("Error add device: ${t.message.toString()}")
                         }
