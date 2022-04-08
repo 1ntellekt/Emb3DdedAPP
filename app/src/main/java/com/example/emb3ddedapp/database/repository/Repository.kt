@@ -1,5 +1,6 @@
 package com.example.emb3ddedapp.database.repository
 
+import android.os.Handler
 import android.util.Log
 import com.example.emb3ddedapp.database.api.RetrofitInstance
 import com.example.emb3ddedapp.models.*
@@ -9,6 +10,7 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.CoroutineScope
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -143,7 +145,8 @@ class Repository : DataRepository {
                             setInitUserId(body.user.id)
                             CurrUser.status = body.user.status
                             CurrUser.id = body.user.id
-                            addDevice(body.user.id,android.os.Build.MODEL,{onSuccess()},{onFail(it)})
+                            //addDevice(body.user.id,android.os.Build.MODEL,{onSuccess()},{onFail(it)})
+                            onSuccess()
                         }
                 } else  {
                     auth.currentUser!!.delete()

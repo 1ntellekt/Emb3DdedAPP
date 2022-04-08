@@ -12,7 +12,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitInstance {
 
-    private const val BASE_URL = "https://em3ded.000webhostapp.com/api/"
+    //private const val BASE_URL = "https://em3ded.000webhostapp.com/api/"
+    private const val BASE_URL = "https://emb3dapi-5a26a.ondigitalocean.app/api/"
     //private const val BASE_URL = "http://192.168.40.126/api/"
    // private const val BASE_URL = "http://emb3dedapi.loc/api/"
 
