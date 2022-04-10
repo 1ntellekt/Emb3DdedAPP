@@ -118,6 +118,7 @@
                 app:helperText="Required number"
                 app:startIconDrawable="@drawable/ic_baseline_call_24"
                 app:endIconMode="clear_text"
+                app:counterEnabled="true"
                 app:helperTextTextColor="@color/color_purple"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

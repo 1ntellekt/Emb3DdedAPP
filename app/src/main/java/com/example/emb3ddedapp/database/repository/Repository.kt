@@ -11,9 +11,14 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.CoroutineScope
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
 
 class Repository : DataRepository {
 
@@ -25,7 +30,10 @@ class Repository : DataRepository {
             .addOnSuccessListener {
                // initDatabase()
                 //onSuccess()
-                if (getInitResetPassword(email)){
+                if (!auth.currentUser!!.isEmailVerified){
+                    //REPOSITORY.logout({},{})
+                    onFail("Verified email please!")
+                } else if (getInitResetPassword(email)){
                     resetPassword(auth.uid!!,password,{
                        setInitResetPassword(email,false)
                        loginUser(auth.uid!!,password, {onSuccess()},{onFail(it)})
@@ -111,7 +119,7 @@ class Repository : DataRepository {
                             CurrUser.number = number
                             CurrUser.id = id
                             CurrUser.email = email
-                            CurrUser.login
+                            CurrUser.login = login
                             CurrUser.status = status
                             CurrUser.uid = uid
                             CurrUser.url_profile = url_profile
@@ -140,9 +148,9 @@ class Repository : DataRepository {
             override fun onResponse(call: Call<UserAuthResponse>, response: Response<UserAuthResponse>) {
                 if (response.isSuccessful){
                         response.body()?.let { body->
-                            setAccessToken(body.token)
-                            RetrofitInstance.setAuthorizationBearer(body.token)
-                            setInitUserId(body.user.id)
+                            //setAccessToken(body.token)
+                            //RetrofitInstance.setAuthorizationBearer(body.token)
+                            //setInitUserId(body.user.id)
                             CurrUser.status = body.user.status
                             CurrUser.id = body.user.id
                             //addDevice(body.user.id,android.os.Build.MODEL,{onSuccess()},{onFail(it)})
@@ -212,8 +220,8 @@ class Repository : DataRepository {
 
     override fun addDevice(user_id: Int, nameDevice: String, onSuccess: () -> Unit, onFail: (String) -> Unit) {
             FirebaseMessaging.getInstance().token
-            .addOnSuccessListener {
-                RetrofitInstance.api.addDevice(Device(name_device =nameDevice, user_id = user_id, token = it ))
+            .addOnSuccessListener { token ->
+                RetrofitInstance.api.addDevice(Device(name_device =nameDevice, user_id = user_id, token = token ))
                     .enqueue(object : Callback<DeviceDefaultResponse>{
                         override fun onResponse(call: Call<DeviceDefaultResponse>, response: Response<DeviceDefaultResponse>) {
                             if (response.isSuccessful){
@@ -224,6 +232,7 @@ class Repository : DataRepository {
                             } else {
                                 setInitUserId(0)
                                 setAccessToken(null)
+                                logout({},{})
                                 Log.i("tagAPI","Error add device: ${response.code()} ${response.headers()}")
                                 onFail("Error add device: ${response.code()}")
                             }
@@ -231,14 +240,15 @@ class Repository : DataRepository {
                         override fun onFailure(call: Call<DeviceDefaultResponse>, t: Throwable) {
                             setInitUserId(0)
                             setAccessToken(null)
+                            logout({},{})
                             Log.i("tagAPI","Error add device: ${t.message.toString()}")
                             onFail("Error add device: ${t.message.toString()}")
                         }
                     })
             }
             .addOnFailureListener {
-                onFail("Error generated token: ${it.message.toString()}")
                 Log.e("tagDevice","Error generated token: ${it.message.toString()}")
+                onFail("Error generated token: ${it.message.toString()}")
             }
     }
 
@@ -261,7 +271,7 @@ class Repository : DataRepository {
     }
 
 
-    private fun logout(onSuccess: () -> Unit, onFail: (String) -> Unit){
+    override fun logout(onSuccess: () -> Unit, onFail: (String) -> Unit){
         RetrofitInstance.api.logout()
             .enqueue(object : Callback<StatusMsgResponse>{
                 override fun onResponse(call: Call<StatusMsgResponse>, response: Response<StatusMsgResponse>) {
@@ -489,6 +499,28 @@ class Repository : DataRepository {
             override fun onFailure(call: Call<MessageDefaultResponse>, t: Throwable) {
                 Log.i("tagAPI", "Error add message: ${t.message}")
                 onFail("Error add chat: ${t.message}")
+            }
+        })
+    }
+
+    //files
+    override fun uploadFile(file: File, fileNameDateForm:String ,onSuccess: (String) -> Unit, onFail: (String) -> Unit) {
+        val requestBody: RequestBody = file.asRequestBody("multipart/form-data".toMediaType())
+        val body: MultipartBody.Part = MultipartBody.Part.createFormData(fileNameDateForm, file.name, requestBody)
+        RetrofitInstance.api.uploadFile(body).enqueue(object : Callback<StatusMsgPath> {
+            override fun onResponse(call: Call<StatusMsgPath>, response: Response<StatusMsgPath>) {
+                if (response.isSuccessful){
+                    response.body()?.let {
+                        onSuccess(it.path)
+                    }
+                } else {
+                    Log.i("tagAPI", "Error upload file: ${response.code()}")
+                    onFail("Error upload file: ${response.code()}")
+                }
+            }
+            override fun onFailure(call: Call<StatusMsgPath>, t: Throwable) {
+                Log.i("tagAPI", "Error upload file: ${t.message}")
+                onFail("Error upload file: ${t.message}")
             }
         })
     }

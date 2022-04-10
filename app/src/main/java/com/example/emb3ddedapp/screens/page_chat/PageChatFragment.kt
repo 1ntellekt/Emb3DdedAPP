@@ -16,10 +16,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.example.emb3ddedapp.R
 import com.example.emb3ddedapp.databinding.PageChatFragmentBinding
-import com.example.emb3ddedapp.models.Chat
-import com.example.emb3ddedapp.models.ChatDefault
-import com.example.emb3ddedapp.models.CurrUser
-import com.example.emb3ddedapp.models.Message
+import com.example.emb3ddedapp.models.*
 import com.example.emb3ddedapp.notification.FireServices
 import com.example.emb3ddedapp.screens.page_chat.adapter.MessageAdapter
 import com.example.emb3ddedapp.utils.APP
@@ -40,6 +37,7 @@ class PageChatFragment : Fragment() {
     private var chatDefault:ChatDefault? = null
 
     private var myRecipientId:Int = 0
+    private var recipientUser: User? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = PageChatFragmentBinding.inflate(inflater,container,false)
@@ -55,6 +53,7 @@ class PageChatFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         chatId = arguments?.getInt("id_chat")
+        recipientUser = arguments?.getSerializable("recipientUser") as? User
         adapter = MessageAdapter(CurrUser.id,{},{},{})
         binding.apply {
             btnBack.setOnClickListener {
@@ -66,10 +65,15 @@ class PageChatFragment : Fragment() {
             btnSendMsg.setOnClickListener {
                 if (edMessage.text.toString().isNotEmpty()){
                     chatDefault?.let {
-                        viewModel.sendTextMsg(Message(chat_id = it.id, created_at = "", file_3d_msg = null,
+                        viewModel.sendTextMsg(Message(chat_id = it.id, file_3d_msg = null,
                             file_msg = null, img_msg = null, user_id_recepient = myRecipientId, user_id_sender = CurrUser.id, text_msg = edMessage.text.toString()))
+                        edMessage.setText("")
                     }
                 }
+            }
+            recipientUser?.let {
+                tvLoginUser.text = it.login
+                tvStatusUser.text = it.status
             }
         }
         mObserver = Observer { messages->

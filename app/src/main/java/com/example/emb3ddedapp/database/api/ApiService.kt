@@ -2,8 +2,8 @@ package com.example.emb3ddedapp.database.api
 
 import com.example.emb3ddedapp.models.*
 import com.example.emb3ddedapp.utils.getTokenAccess
-import com.squareup.okhttp.ResponseBody
 import okhttp3.MultipartBody
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -135,7 +135,7 @@ interface ApiService {
     fun addMessage(@Body params:Message):Call<MessageDefaultResponse>
 
     //files
-    //@Multipart
-    //@POST("putfile")
-    //fun uploadFile(@Part part:MultipartBody.Part):Call<ResponseBody>
+    @Multipart
+    @POST("putfile")
+    fun uploadFile(@Part part:MultipartBody.Part):Call<StatusMsgPath>
 }

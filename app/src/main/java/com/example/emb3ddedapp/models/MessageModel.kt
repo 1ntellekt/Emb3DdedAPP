@@ -2,7 +2,7 @@ package com.example.emb3ddedapp.models
 
 data class Message(
     val chat_id: Int,
-    val created_at: String,
+    val created_at: String? = null,
     val file_3d_msg: String? = null,
     val file_msg: String? = null,
     val id: Int = 0,

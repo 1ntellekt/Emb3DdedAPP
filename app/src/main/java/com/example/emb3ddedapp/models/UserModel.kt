@@ -1,5 +1,7 @@
 package com.example.emb3ddedapp.models
 
+import java.io.Serializable
+
 data class User(
     val id:Int,
     val login:String,
@@ -8,7 +10,7 @@ data class User(
     val number:String,
     val status:String,
     val url_profile:String?,
-)
+):Serializable
 
 //data class UserList(val users:List<User>)
 

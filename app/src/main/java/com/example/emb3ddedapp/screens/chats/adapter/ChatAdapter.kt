@@ -76,7 +76,7 @@ class ChatAdapter(
                         tvLastMessage.setTextColor(Color.GREEN)
                         tvLastMessage.text = "'A 3d file'"
                     }
-                    val dateTimeStr = getDataTimeWithFormat(created_at)
+                    val dateTimeStr = getDataTimeWithFormat(created_at!!)
                     val dateStr = dateTimeStr.substringBefore(" ")
                     val timeStr = dateTimeStr.substringAfter(" ")
                     tvDate.text = dateStr

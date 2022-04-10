@@ -1,22 +1,21 @@
 package com.example.emb3ddedapp.screens.signup
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
+import android.telephony.PhoneNumberUtils
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.widget.doBeforeTextChanged
 import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.emb3ddedapp.R
-import com.example.emb3ddedapp.databinding.SignInFragmentBinding
 import com.example.emb3ddedapp.databinding.SignUpFragmentBinding
 import com.example.emb3ddedapp.models.CurrUser
 import com.example.emb3ddedapp.utils.APP
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.common.api.ApiException
+import java.util.*
+
 
 class SignUpFragment : Fragment() {
 
@@ -43,6 +42,8 @@ class SignUpFragment : Fragment() {
 
 
     }
+
+    private var lastChar = ""
 
     override fun onStart() {
         super.onStart()

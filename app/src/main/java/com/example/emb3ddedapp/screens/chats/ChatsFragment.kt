@@ -48,7 +48,9 @@ class ChatsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         adapter = ChatAdapter(CurrUser.id){ idItem->
             val chatId = chatList[idItem].id
-            val args = Bundle().also { it.putInt("id_chat",chatId) }
+            val args = Bundle()
+            args.putInt("id_chat",chatId)
+            args.putSerializable("recipientUser",chatList[idItem].user_first)
             APP.mNavController.navigate(R.id.action_mainFragment_to_pageChatFragment,args)
         }
         binding.apply {

@@ -3,6 +3,7 @@ package com.example.emb3ddedapp.database.repository
 import com.example.emb3ddedapp.models.*
 import com.google.firebase.auth.FirebaseUser
 import retrofit2.Call
+import java.io.File
 
 interface DataRepository {
 
@@ -26,6 +27,7 @@ interface DataRepository {
     fun getCurrUser(onSuccess: () -> Unit, onFail: (String) -> Unit)
     fun resetPassword(uid: String, password: String, onSuccess: () -> Unit, onFail: (String) -> Unit)
     fun editCurrentUser(oldPassword:String?, password: String?, user: User?, onSuccess:()->Unit, onFail:(String)->Unit)
+    fun logout(onSuccess: () -> Unit,onFail: (String) -> Unit)
 
     //device
     fun addDevice(user_id:Int, nameDevice:String,onSuccess:()->Unit,onFail:(String)->Unit)
@@ -56,4 +58,6 @@ interface DataRepository {
     //message
     fun addMessage(msg:Message, onSuccess: () -> Unit, onFail: (String) -> Unit)
 
+    //files
+    fun uploadFile(file: File,fileNameDateForm:String,onSuccess: (String) -> Unit, onFail: (String) -> Unit)
 }
