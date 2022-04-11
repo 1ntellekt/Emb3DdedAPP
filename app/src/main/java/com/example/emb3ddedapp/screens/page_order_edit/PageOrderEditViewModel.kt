@@ -4,8 +4,8 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import com.example.emb3ddedapp.models.Order
-import com.example.emb3ddedapp.utils.REPOSITORY
-import com.example.emb3ddedapp.utils.showToast
+import com.example.emb3ddedapp.utils.*
+import java.io.File
 
 class PageOrderEditViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -15,6 +15,20 @@ class PageOrderEditViewModel(application: Application) : AndroidViewModel(applic
 
     fun updateOrder(order: Order,onSuccess: () -> Unit){
         REPOSITORY.updateOrder(id = order.id, order, {onSuccess()}, { showToast(it)})
+    }
+
+    fun uploadFile(file: File, onSuccess: (String) -> Unit, onFail:()->Unit){
+        showProgressDialog("Uploading image...")
+        REPOSITORY.uploadFile(file,"order_img",
+            {
+                closeProgressDialog()
+                onSuccess("$CONTENT_FILE_URL$it")
+            },
+            {
+                closeProgressDialog()
+                showToast(it)
+                onFail()
+            })
     }
 
 }

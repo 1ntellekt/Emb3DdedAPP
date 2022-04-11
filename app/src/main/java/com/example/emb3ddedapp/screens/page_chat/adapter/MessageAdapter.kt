@@ -1,6 +1,7 @@
 package com.example.emb3ddedapp.screens.page_chat.adapter
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -75,6 +76,7 @@ class MessageAdapter(
         }
 
         private fun bindMsg(isMy:Boolean, message: Message){
+            Log.i("messAdapter", "id: ${message.id} pos:$adapterPosition" )
             if (message.text_msg!=null){
 
                if (isMy){

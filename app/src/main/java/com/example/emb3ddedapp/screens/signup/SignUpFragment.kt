@@ -1,20 +1,28 @@
 package com.example.emb3ddedapp.screens.signup
 
+import android.Manifest
+import android.app.AlertDialog
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.telephony.PhoneNumberUtils
+import android.telephony.SmsManager
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.emb3ddedapp.R
+import com.example.emb3ddedapp.databinding.DialogForgotPassLayoutBinding
+import com.example.emb3ddedapp.databinding.InputCodeLayoutBinding
 import com.example.emb3ddedapp.databinding.SignUpFragmentBinding
 import com.example.emb3ddedapp.models.CurrUser
 import com.example.emb3ddedapp.utils.APP
-import java.util.*
+import com.example.emb3ddedapp.utils.showToast
 
 
 class SignUpFragment : Fragment() {
@@ -38,15 +46,6 @@ class SignUpFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-
-    }
-
-    private var lastChar = ""
-
-    override fun onStart() {
-        super.onStart()
 
         binding.apply {
 
@@ -101,10 +100,9 @@ class SignUpFragment : Fragment() {
                     edPasswordLayoutConfirm.error = "Different passwords"
                 } else if (edPasswordLayout.error.isNullOrEmpty() && edPasswordLayoutConfirm.error.isNullOrEmpty()
                     && edEmailLayout.error.isNullOrEmpty() && edLoginLayout.error.isNullOrEmpty() && edNumLayout.error.isNullOrEmpty()) {
-                        CurrUser.email = edEmail.text.toString()
-                        CurrUser.login = edLogin.text.toString()
-                        CurrUser.number = edNum.text.toString()
-
+                    CurrUser.email = edEmail.text.toString()
+                    CurrUser.login = edLogin.text.toString()
+                    CurrUser.number = edNum.text.toString()
                     viewModel.signUpEmail(edEmail.text.toString(),edPassword.text.toString()){
                         APP.mNavController.navigate(R.id.action_signUpFragment_to_signInFragment)
                     }
@@ -138,7 +136,13 @@ class SignUpFragment : Fragment() {
                         }*/
 
         }
-        
+
+    }
+
+    //private var lastChar = ""
+
+    override fun onStart() {
+        super.onStart()
     }
 
     override fun onDestroyView() {
@@ -146,6 +150,35 @@ class SignUpFragment : Fragment() {
         _binding = null
     }
 
+        /*    private fun showVerificationPhoneDialog(){
+        val alertDialog = AlertDialog.Builder(requireContext())
+        val binding: InputCodeLayoutBinding = InputCodeLayoutBinding.inflate(LayoutInflater.from(context))
+        alertDialog.setView(binding.root)
+
+        binding.apply {
+
+            alertDialog.setPositiveButton("Ok"){ dialog, which ->
+
+                if (edCodeTxt.text.toString().isNotEmpty()){
+                    if (rememberCode != edCodeTxt.text.toString()){
+                        showToast("Verify telephone number error!")
+                        this@SignUpFragment.binding.edNum.setText("")
+                    } else {
+                        viewModel.signUpEmail(this@SignUpFragment.binding.edEmail.text.toString(),this@SignUpFragment.binding.edPassword.text.toString()){
+                        APP.mNavController.navigate(R.id.action_signUpFragment_to_signInFragment)
+                        }
+                    }
+                } else {
+                    showToast("Input was empty!")
+                }
+
+            }.setNegativeButton("Cancel"){dialog, which ->
+                dialog.dismiss()
+            }
+
+        }
+        alertDialog.create().show()
+    }*/
 
         /*    private val takeGoogleAcc = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         val task = GoogleSignIn.getSignedInAccountFromIntent(it.data!!)

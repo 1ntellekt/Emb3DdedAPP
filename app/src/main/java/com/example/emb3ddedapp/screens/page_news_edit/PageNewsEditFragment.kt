@@ -20,6 +20,9 @@ import com.example.emb3ddedapp.utils.getFileFromInput
 import com.example.emb3ddedapp.utils.getName
 import com.example.emb3ddedapp.utils.showToast
 import com.google.android.material.appbar.AppBarLayout
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileNotFoundException
 import java.text.SimpleDateFormat
@@ -66,7 +69,7 @@ class PageNewsEditFragment : Fragment() {
             curNewsItem?.let {
                 edDescription.setText(it.description)
                 edTitle.setText(it.title)
-                edTag.setText(it.tag.substringBefore("#"))
+                edTag.setText(it.tag.substringAfter("#"))
                 tvHeadTitle.text = it.title
                 it.img_url?.let { url->
                     Glide.with(requireContext()).load(url).into(imgNews)
@@ -140,9 +143,18 @@ class PageNewsEditFragment : Fragment() {
 
 
     private fun clearFilesDir(){
-        if (selectedFileNames.isNotEmpty()){
-            selectedFileNames.forEach {
-                it.delete()
+//        if (selectedFileNames.isNotEmpty()){
+//            selectedFileNames.forEach {
+//                it.delete()
+//            }
+//            selectedFileNames.clear()
+//        }
+        selectedFileNames.clear()
+        CoroutineScope(Dispatchers.Default).launch{
+            requireActivity().filesDir.listFiles()?.forEach { file ->
+                if (file.isFile && !file.isHidden && file.name.startsWith("img-", ignoreCase = true)){
+                    file.delete()
+                }
             }
         }
     }

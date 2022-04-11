@@ -9,7 +9,7 @@ data class Order(
     val user_id: Int,
     val img_url: String? = null,
     val status: Int = 0,
-    val created_at: String?,
+    val created_at: String? = null,
     val user: User? = null
 ):Serializable
 

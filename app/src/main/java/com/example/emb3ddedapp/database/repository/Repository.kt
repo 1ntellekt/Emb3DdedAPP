@@ -295,6 +295,7 @@ class Repository : DataRepository {
 
     override fun signOut(onSuccess: () -> Unit, onFail: (String) -> Unit) {
         FirebaseMessaging.getInstance().token.addOnSuccessListener { token->
+                FirebaseMessaging.getInstance().deleteToken()
                 deleteDevice(token,{onSuccess()}, {onFail(it)})
         }.addOnFailureListener {
             onFail("Error generated token: ${it.message.toString()}")
@@ -448,9 +449,7 @@ class Repository : DataRepository {
                     }
                 } else {
                     Log.i("tagAPI", "Error add chat: ${response.code()} ${response.message()}")
-                    if (response.code() == 400){
-                        onFail("Chat also created, please go to 'Chats'")
-                    } else onFail("Error add chat: ${response.code()} ${response.message()}")
+                    onFail("Error add chat: ${response.code()} ${response.message()}")
                 }
             }
             override fun onFailure(call: Call<ChatDefaultResponse>, t: Throwable) {

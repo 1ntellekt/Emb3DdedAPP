@@ -8,12 +8,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.emb3ddedapp.models.ChatDefault
 import com.example.emb3ddedapp.models.ChatMessagesByChatResponse
+import com.example.emb3ddedapp.models.CurrUser
 import com.example.emb3ddedapp.models.Message
-import com.example.emb3ddedapp.utils.REPOSITORY
-import com.example.emb3ddedapp.utils.showToast
+import com.example.emb3ddedapp.utils.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
 
 class PageChatViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -46,14 +47,70 @@ class PageChatViewModel(application: Application) : AndroidViewModel(application
     fun sendTextMsg(msg:Message){
         REPOSITORY.addMessage(msg,{},{ showToast(it)})
     }
-//
-//    fun sendFileMsg(){
-//
-//    }
-//
-//    fun send3dFile(){
-//
-//    }
+
+    fun sendFileMsg(file: File, chatId: Int, recipientId:Int, onSuccess:(String)->Unit, onFail:()->Unit){
+            showProgressDialog("Uploading file...")
+            REPOSITORY.uploadFile(file,"chat_file",
+                { pathFile->
+
+                    REPOSITORY.addMessage(Message(chat_id = chatId, file_msg = "$DOWNLOAD_FILE_URL$pathFile", user_id_sender = CurrUser.id, user_id_recepient = recipientId),{
+                        closeProgressDialog()
+                        onSuccess("$DOWNLOAD_FILE_URL$pathFile")
+                    },{
+                        closeProgressDialog()
+                        showToast(it)
+                    })
+
+                },
+                {
+                    closeProgressDialog()
+                    showToast(it)
+                    onFail()
+                })
+    }
+
+    fun send3dFile(file: File, chatId: Int, recipientId:Int, onSuccess:(String)->Unit, onFail:()->Unit) {
+        showProgressDialog("Uploading 3d file...")
+        REPOSITORY.uploadFile(file,"chat_3d_file",
+            { pathFile->
+
+                REPOSITORY.addMessage(Message(chat_id = chatId, file_3d_msg = "$DOWNLOAD_FILE_URL$pathFile", user_id_sender = CurrUser.id, user_id_recepient = recipientId),{
+                    closeProgressDialog()
+                    onSuccess("$DOWNLOAD_FILE_URL$pathFile")
+                },{
+                    closeProgressDialog()
+                    showToast(it)
+                })
+
+            },
+            {
+                closeProgressDialog()
+                showToast(it)
+                onFail()
+            })
+    }
+
+    fun sendImage(file: File, chatId: Int, recipientId:Int, onSuccess:(String)->Unit, onFail:()->Unit) {
+        showProgressDialog("Uploading image...")
+        REPOSITORY.uploadFile(file,"chat_img",
+            { pathFile->
+
+                REPOSITORY.addMessage(Message(chat_id = chatId, img_msg = "$CONTENT_FILE_URL$pathFile", user_id_sender = CurrUser.id, user_id_recepient = recipientId),{
+                    closeProgressDialog()
+                    onSuccess("$DOWNLOAD_FILE_URL$pathFile")
+                },{
+                    closeProgressDialog()
+                    showToast(it)
+                })
+
+            },
+            {
+                closeProgressDialog()
+                showToast(it)
+                onFail()
+            })
+    }
+
 //
 //    fun getAccessToDownload3dFile(){
 //

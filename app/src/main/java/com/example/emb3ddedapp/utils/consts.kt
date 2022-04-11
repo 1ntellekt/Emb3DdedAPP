@@ -2,6 +2,7 @@ package com.example.emb3ddedapp.utils
 
 import android.app.ProgressDialog
 import android.content.Context.MODE_PRIVATE
+import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.OpenableColumns
 import android.widget.Toast
@@ -30,6 +31,7 @@ const val dataName = "data"
 const val DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss"
 const val DB_DATE_TIME_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 const val CONTENT_FILE_URL = "https://www.emb3ded.kz/api/getContent?file="
+const val DOWNLOAD_FILE_URL = "https://www.emb3ded.kz/api/getfile?file="
 
 fun showProgressDialog(title:String) {
     progressDialog.setTitle(title)

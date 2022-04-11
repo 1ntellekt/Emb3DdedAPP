@@ -50,7 +50,11 @@ class ChatsFragment : Fragment() {
             val chatId = chatList[idItem].id
             val args = Bundle()
             args.putInt("id_chat",chatId)
-            args.putSerializable("recipientUser",chatList[idItem].user_first)
+            if (chatList[idItem].user_first!!.id == CurrUser.id)
+            args.putSerializable("recipientUser",chatList[idItem].user_second)
+            else if (chatList[idItem].user_second!!.id == CurrUser.id){
+                args.putSerializable("recipientUser",chatList[idItem].user_first)
+            }
             APP.mNavController.navigate(R.id.action_mainFragment_to_pageChatFragment,args)
         }
         binding.apply {

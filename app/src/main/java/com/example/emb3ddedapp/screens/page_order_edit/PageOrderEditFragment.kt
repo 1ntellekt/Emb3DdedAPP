@@ -1,21 +1,30 @@
 package com.example.emb3ddedapp.screens.page_order_edit
 
+import android.app.Activity
+import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doOnTextChanged
-import androidx.navigation.NavOptions
 import com.bumptech.glide.Glide
 import com.example.emb3ddedapp.R
 import com.example.emb3ddedapp.databinding.PageOrderEditFragmentBinding
 import com.example.emb3ddedapp.models.CurrUser
 import com.example.emb3ddedapp.models.Order
 import com.example.emb3ddedapp.utils.APP
+import com.example.emb3ddedapp.utils.getFileFromInput
+import com.example.emb3ddedapp.utils.getName
 import com.example.emb3ddedapp.utils.showToast
 import com.google.android.material.appbar.AppBarLayout
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileNotFoundException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -28,7 +37,7 @@ class PageOrderEditFragment : Fragment() {
     private lateinit var viewModel: PageOrderEditViewModel
 
     private var curOrder:Order? = null
-    private var selectedImg:String? = null
+    private var selectedImgCurrOrder:String? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = PageOrderEditFragmentBinding.inflate(inflater,container,false)
@@ -67,7 +76,7 @@ class PageOrderEditFragment : Fragment() {
                 tvHeadTitle.text = it.title
                 it.img_url?.let { url->
                     Glide.with(requireContext()).load(url).into(imgOrder)
-                    selectedImg = url
+                    selectedImgCurrOrder = url
                 }
                 //tvAuthor.text = curOrder!!.user!!.login
             }
@@ -82,23 +91,43 @@ class PageOrderEditFragment : Fragment() {
             edTitle.doOnTextChanged { text, start, before, count -> edTitleLayout.error = null }
 
             btnPopMenu.setOnClickListener {
-
                 if (edTitle.text.toString().isEmpty()){
                     edTitleLayout.error = "Input title!"
                 } else if(edDescription.text.toString().isEmpty()){
                     edDescriptionLayout.error = "Input description"
                 } else {
-                    if (curOrder == null) {
-                        viewModel.addOrder(Order(title = edTitle.text.toString(),
-                            description = edDescription.text.toString(), user_id = CurrUser.id, created_at = null, img_url = selectedImg)
-                        ){ APP.mNavController.navigate(R.id.action_pageOrderEditFragment_to_mainFragment)}
+                    if (selectedFileNames.isNotEmpty()){
+                        viewModel.uploadFile(selectedFileNames.last(),{
+                            addOrEditOrder(it)
+                            clearFilesDir()
+                        },{
+                            clearFilesDir()
+                        })
                     } else {
-                        viewModel.updateOrder(Order(id = curOrder!!.id,title = edTitle.text.toString(),
-                            description = edDescription.text.toString(), user_id = CurrUser.id, created_at = null, img_url = selectedImg, status = 0)
-                        ){ APP.mNavController.navigate(R.id.action_pageOrderEditFragment_to_mainFragment)}
+                        addOrEditOrder(selectedImgCurrOrder)
                     }
                 }
+            }
 
+            btnEditOrder.setOnClickListener {
+                val intent = Intent(Intent.ACTION_GET_CONTENT)
+                intent.type = "image/*"
+                takeImgFile.launch(intent)
+            }
+
+        }
+    }
+
+    private fun addOrEditOrder(filePathUrl:String?){
+        binding.apply {
+            if (curOrder == null) {
+                viewModel.addOrder(Order(title = edTitle.text.toString(),
+                    description = edDescription.text.toString(), user_id = CurrUser.id, img_url = filePathUrl)
+                ){ APP.mNavController.navigate(R.id.action_pageOrderEditFragment_to_mainFragment)}
+            } else {
+                viewModel.updateOrder(Order(id = curOrder!!.id,title = edTitle.text.toString(),
+                    description = edDescription.text.toString(), user_id = CurrUser.id, img_url = filePathUrl)
+                ){ APP.mNavController.navigate(R.id.action_pageOrderEditFragment_to_mainFragment)}
             }
         }
     }
@@ -106,6 +135,50 @@ class PageOrderEditFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private var currentSelectedFile: File? = null
+    private val selectedFileNames = mutableListOf<File>()
+
+
+    private fun clearFilesDir(){
+//        if (selectedFileNames.isNotEmpty()){
+//            selectedFileNames.forEach {
+//                it.delete()
+//            }
+//            selectedFileNames.clear()
+//        }
+        selectedFileNames.clear()
+        CoroutineScope(Dispatchers.Default).launch{
+            requireActivity().filesDir.listFiles()?.forEach { file ->
+                if (file.isFile && !file.isHidden && file.name.startsWith("img-", ignoreCase = true)){
+                    file.delete()
+                }
+            }
+        }
+    }
+
+    private val takeImgFile = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result->
+        if(result.data!=null && result.resultCode == Activity.RESULT_OK){
+            if(result.data!!.data != null){
+                val imgURI = result.data!!.data!!
+                try {
+                    val nowDate = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
+                    val fileName = "${requireActivity().filesDir.path}/img-$nowDate-${imgURI.getName()}"
+                    currentSelectedFile = getFileFromInput(fileName,APP.contentResolver.openInputStream(imgURI))
+                    if (currentSelectedFile == null){
+                        showToast("File image not selected!")
+                    } else {
+                        selectedFileNames.add(currentSelectedFile!!)
+                        currentSelectedFile = null
+                    }
+                } catch (e: FileNotFoundException) {
+                    e.printStackTrace()
+                }
+                //val bmp = BitmapFactory.decodeStream(imageStream)
+                binding.imgOrder.setImageURI(imgURI) // To display selected image in image view
+            }
+        }
     }
 
 }
