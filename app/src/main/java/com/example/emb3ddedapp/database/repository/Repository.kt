@@ -1,16 +1,13 @@
 package com.example.emb3ddedapp.database.repository
 
-import android.os.Handler
 import android.util.Log
 import com.example.emb3ddedapp.database.api.RetrofitInstance
 import com.example.emb3ddedapp.models.*
 import com.example.emb3ddedapp.utils.*
-import com.google.firebase.auth.*
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.auth.EmailAuthProvider
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.messaging.FirebaseMessaging
-import com.google.firebase.storage.FirebaseStorage
-import kotlinx.coroutines.CoroutineScope
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -19,6 +16,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
+
 
 class Repository : DataRepository {
 
@@ -118,7 +116,7 @@ class Repository : DataRepository {
                         body.user.apply {
                             CurrUser.number = number
                             CurrUser.id = id
-                            CurrUser.email = email
+                            CurrUser.email = email!!
                             CurrUser.login = login
                             CurrUser.status = status
                             CurrUser.uid = uid
@@ -179,10 +177,10 @@ class Repository : DataRepository {
                             body.user.apply {
                                 CurrUser.id = id
                                 CurrUser.url_profile = url_profile
-                                CurrUser.uid = uid
+                                CurrUser.uid = uid!!
                                 CurrUser.status = status
                                 CurrUser.login = login
-                                CurrUser.email = email
+                                CurrUser.email = email!!
                                 CurrUser.number = number
                             }
                             onSuccess()
@@ -522,5 +520,16 @@ class Repository : DataRepository {
                 onFail("Error upload file: ${t.message}")
             }
         })
+    }
+
+    override fun reAuthenticate(email: String,password: String, oldPassword: String, onSuccess: () -> Unit, onFail: (String) -> Unit) {
+        val credential = EmailAuthProvider.getCredential(email, oldPassword)
+        auth.currentUser!!.reauthenticate(credential).addOnSuccessListener {
+            auth.currentUser!!.updatePassword(password)
+                .addOnSuccessListener {
+                    onSuccess()
+                }
+                .addOnFailureListener { onFail(it.message.toString()) }
+        }.addOnFailureListener { onFail(it.message.toString()) }
     }
 }

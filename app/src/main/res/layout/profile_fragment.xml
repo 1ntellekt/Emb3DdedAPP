@@ -21,6 +21,7 @@
 
 
     <ImageButton
+        android:id="@+id/btnEditProfilePhoto"
         android:padding="5dp"
         app:layout_constraintBottom_toBottomOf="@id/imgProfile"
         app:layout_constraintEnd_toEndOf="@id/imgProfile"
@@ -83,113 +84,121 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
-    <LinearLayout
-        android:gravity="center"
-
-        android:layout_marginEnd="15dp"
-        android:layout_marginStart="10dp"
+    <ScrollView
+        android:layout_width="match_parent"
         app:layout_constraintTop_toBottomOf="@id/imgProfile"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="0dp">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edNumberLayout"
-            app:helperTextTextColor="@color/color_purple"
-            android:layout_marginTop="5dp"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:gravity="center"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="10dp"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            app:helperText="Telephone number"
             android:layout_height="wrap_content">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edNumber"
-            android:hint="Enter telephone number..."
-            android:layout_width="match_parent"
-            android:inputType="phone"
-            android:background="@drawable/back_ed_input"
-            android:layout_height="wrap_content"/>
-        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edStatusLayout"
-            app:helperTextTextColor="@color/color_purple"
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            app:helperText="User status"
-            android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edStatus"
-                android:hint="Enter person status..."
-                android:inputType="text"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edNumberLayout"
+                app:helperTextTextColor="@color/color_purple"
+                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
-                android:background="@drawable/back_ed_input"
-                android:layout_height="wrap_content"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                app:prefixText="+7"
+                app:counterEnabled="true"
+                app:helperText="Telephone number"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edNumber"
+                    android:hint="Enter telephone number..."
+                    android:layout_width="match_parent"
+                    android:inputType="phone"
+                    android:digits="1234567890+()-"
+                    android:background="@drawable/back_ed_input"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edOldPasswordLayout"
-            app:helperTextTextColor="@color/color_purple"
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            app:helperText="Old password"
-            app:endIconMode="password_toggle"
-            android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edOldPassword"
-                android:hint="Enter old password..."
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edStatusLayout"
+                app:helperTextTextColor="@color/color_purple"
+                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
-                android:inputType="textPassword"
-                android:background="@drawable/back_ed_input"
-                android:layout_height="wrap_content"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                app:helperText="User status"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edStatus"
+                    android:hint="Enter person status..."
+                    android:inputType="text"
+                    android:layout_width="match_parent"
+                    android:background="@drawable/back_ed_input"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edNewPasswordLayout"
-            app:helperTextTextColor="@color/color_purple"
-            android:layout_marginTop="5dp"
-            app:endIconMode="password_toggle"
-            android:layout_width="match_parent"
-            app:helperText="New password"
-            android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edNewPassword"
-                android:hint="Enter new password..."
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edOldPasswordLayout"
+                app:helperTextTextColor="@color/color_purple"
+                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
-                android:inputType="textPassword"
-                android:background="@drawable/back_ed_input"
+                app:helperText="Old password"
+                app:endIconMode="password_toggle"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edOldPassword"
+                    android:hint="Enter old password..."
+                    android:layout_width="match_parent"
+                    android:inputType="textPassword"
+                    android:background="@drawable/back_ed_input"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edNewPasswordLayout"
+                app:helperTextTextColor="@color/color_purple"
+                android:layout_marginTop="5dp"
+                app:endIconMode="password_toggle"
+                android:layout_width="match_parent"
+                app:helperText="New password"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edNewPassword"
+                    android:hint="Enter new password..."
+                    android:layout_width="match_parent"
+                    android:inputType="textPassword"
+                    android:background="@drawable/back_ed_input"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnEditProfile"
+                android:layout_marginTop="10dp"
+                android:paddingStart="15dp"
+                android:textAllCaps="false"
+                android:drawableTint="@color/white"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:text="User profile update"
+                android:drawableStart="@drawable/ic_edit_person"
+                android:background="@drawable/back_btn"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-        </com.google.android.material.textfield.TextInputLayout>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnEditProfile"
-            android:layout_marginTop="10dp"
-            android:paddingStart="15dp"
-            android:textAllCaps="false"
-            android:drawableTint="@color/white"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:text="User profile update"
-            android:drawableStart="@drawable/ic_edit_person"
-            android:background="@drawable/back_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnExit"
+                android:layout_marginTop="10dp"
+                android:paddingStart="15dp"
+                android:textAllCaps="false"
+                android:drawableTint="@color/white"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:text="Exit from application"
+                android:drawableStart="@drawable/ic_baseline_exit_to_app_24"
+                android:backgroundTint="#950505"
+                android:background="@drawable/back_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnExit"
-            android:layout_marginTop="10dp"
-            android:paddingStart="15dp"
-            android:textAllCaps="false"
-            android:drawableTint="@color/white"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:text="Exit from application"
-            android:drawableStart="@drawable/ic_baseline_exit_to_app_24"
-            android:backgroundTint="#950505"
-            android:background="@drawable/back_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </ScrollView>
 
-    </LinearLayout>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

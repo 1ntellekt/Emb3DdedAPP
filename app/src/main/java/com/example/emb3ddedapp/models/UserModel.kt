@@ -5,8 +5,8 @@ import java.io.Serializable
 data class User(
     val id:Int,
     val login:String,
-    val email:String,
-    val uid:String,
+    val email:String? = null,
+    val uid:String? = null,
     val number:String,
     val status:String,
     val url_profile:String?,

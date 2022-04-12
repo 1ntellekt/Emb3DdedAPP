@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.AlertDialog
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.telephony.PhoneNumberFormattingTextWatcher
 import android.telephony.PhoneNumberUtils
 import android.telephony.SmsManager
 import android.text.Editable
@@ -49,6 +50,8 @@ class SignUpFragment : Fragment() {
 
         binding.apply {
 
+            edNum.addTextChangedListener(PhoneNumberFormattingTextWatcher("US"))
+
             edLogin.doOnTextChanged { text, start, before, count ->
                 text?.let { txt->
                     if (txt.toString().length <= 6) {
@@ -81,23 +84,37 @@ class SignUpFragment : Fragment() {
                 }
             }
 
-            edNum.doOnTextChanged { text, start, before, count -> edNumLayout.error = null }
+            edNum.doOnTextChanged { text, start, before, count ->
+                text?.let { txt->
+                    if (txt.toString().length != 13) {
+                        edNumLayout.error = "Number format not access!"
+                    } else {
+                        edNumLayout.error = null
+                    }
+                }
+            }
+
             edEmail.doOnTextChanged { text, start, before, count -> edEmailLayout.error = null }
 
             btnLogInEmail.setOnClickListener {
                 if (edEmail.text.toString().isEmpty()){
                     edEmailLayout.error = "Input email address is empty!"
+                    edEmail.requestFocus()
                 }else if (edLogin.text.toString().isEmpty()){
                     edLoginLayout.error = "Input login is empty!"
+                    edLogin.requestFocus()
                 } else if (edNum.text.toString().isEmpty()){
                     edNumLayout.error = "Input phone number is empty!"
+                    edNum.requestFocus()
                 } else if (edPassword.text.toString().isEmpty()){
                     edPasswordLayout.error = "Input password is empty!"
+                    edPassword.requestFocus()
                 } else if (edPasswordConfirm.text.toString().isEmpty()){
                     edPasswordLayoutConfirm.error = "input confirm password is empty!"
                 } else if (edPassword.text.toString() != edPasswordConfirm.text.toString()){
                     edPasswordLayout.error = "Different passwords"
                     edPasswordLayoutConfirm.error = "Different passwords"
+                    edPassword.requestFocus()
                 } else if (edPasswordLayout.error.isNullOrEmpty() && edPasswordLayoutConfirm.error.isNullOrEmpty()
                     && edEmailLayout.error.isNullOrEmpty() && edLoginLayout.error.isNullOrEmpty() && edNumLayout.error.isNullOrEmpty()) {
                     CurrUser.email = edEmail.text.toString()

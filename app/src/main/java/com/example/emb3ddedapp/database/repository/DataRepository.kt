@@ -28,6 +28,7 @@ interface DataRepository {
     fun resetPassword(uid: String, password: String, onSuccess: () -> Unit, onFail: (String) -> Unit)
     fun editCurrentUser(oldPassword:String?, password: String?, user: User?, onSuccess:()->Unit, onFail:(String)->Unit)
     fun logout(onSuccess: () -> Unit,onFail: (String) -> Unit)
+    fun reAuthenticate(email: String, password: String,oldPassword: String, onSuccess: () -> Unit, onFail: (String) -> Unit)
 
     //device
     fun addDevice(user_id:Int, nameDevice:String,onSuccess:()->Unit,onFail:(String)->Unit)

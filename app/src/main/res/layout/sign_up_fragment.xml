@@ -119,12 +119,14 @@
                 app:startIconDrawable="@drawable/ic_baseline_call_24"
                 app:endIconMode="clear_text"
                 app:counterEnabled="true"
+                app:prefixText="+7"
                 app:helperTextTextColor="@color/color_purple"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edNum"
                     android:inputType="phone"
+                    android:digits="1234567890+()-"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </com.google.android.material.textfield.TextInputLayout>

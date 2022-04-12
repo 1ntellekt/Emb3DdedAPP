@@ -54,6 +54,16 @@ class FireServices:FirebaseMessagingService() {
         const val ACTION_ORDER = "order"
         const val ACTION_CHAT = "chat_holder"
         const val ACTION_NEWS = "news"
+
+//        const val KEY_ID = "id"
+//        const val KEY_TEXT_MSG = "text_msg"
+//        const val KEY_IMG_MSG = "img_msg"
+//        const val KEY_FILE_MSG = "file_msg"
+//        const val KEY_3D_FILE_MSG = "file_3d_msg"
+//        const val KEY_CREATED_AT = "created_at"
+//        const val KEY_ID_SENDER = "user_id_sender"
+//        const val KEY_ID_RECIPIENT = "user_id_recepient"
+//        const val KEY_CHAT_ID = "chat_id"
     }
 
     private fun showNotification(title:String, body:String) {

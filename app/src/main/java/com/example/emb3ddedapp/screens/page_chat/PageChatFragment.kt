@@ -7,6 +7,8 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearSmoothScroller
+import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.emb3ddedapp.R
 import com.example.emb3ddedapp.databinding.PageChatFragmentBinding
@@ -47,9 +51,9 @@ class PageChatFragment : Fragment() {
     private lateinit var adapter:MessageAdapter
     private val messageList = mutableListOf<Message>()
     private var chatDefault:ChatDefault? = null
-
-    private var myRecipientId:Int = 0
     private var recipientUser: User? = null
+
+    private var iScrollDown = true
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = PageChatFragmentBinding.inflate(inflater,container,false)
@@ -71,15 +75,26 @@ class PageChatFragment : Fragment() {
             btnBack.setOnClickListener {
                 APP.mNavController.navigate(R.id.action_pageChatFragment_to_mainFragment)
             }
-            //recyclerView.setHasFixedSize(true)
+
+            recyclerView.setHasFixedSize(true)
             recyclerView.adapter = adapter
+
+            btnDownScroll.setOnClickListener {
+                binding.btnDownScroll.visibility = View.GONE
+                recyclerView.setOnScrollChangeListener(null)
+                iScrollDown = true
+                smoother.targetPosition = messageList.size-1
+                binding.recyclerView.layoutManager!!.startSmoothScroll(smoother)
+            }
+
             refLayout.isEnabled = false
             refLayout.setOnRefreshListener(refLayListener)
+
             btnSendMsg.setOnClickListener {
                 if (edMessage.text.toString().isNotEmpty()){
                     chatDefault?.let {
                         viewModel.sendTextMsg(Message(chat_id = it.id, file_3d_msg = null,
-                            file_msg = null, img_msg = null, user_id_recepient = myRecipientId, user_id_sender = CurrUser.id, text_msg = edMessage.text.toString()))
+                            file_msg = null, img_msg = null, user_id_recepient = recipientUser!!.id, user_id_sender = CurrUser.id, text_msg = edMessage.text.toString()))
                         edMessage.setText("")
                     }
                 }
@@ -106,17 +121,37 @@ class PageChatFragment : Fragment() {
                 messageList.clear()
                 messageList.addAll(list)
                 adapter.setData(list)
+                if (iScrollDown){
+                    smoother.targetPosition = messageList.size-1
+                    binding.recyclerView.layoutManager!!.startSmoothScroll(smoother)
+                    Handler(Looper.getMainLooper()).postDelayed({binding.recyclerView.setOnScrollChangeListener(scrollListener)},1000)
+                }
             }
         }
         cObserver = Observer {
             it?.let { chatDef ->
                 chatDefault = chatDef
-                myRecipientId = if (chatDef.user_id_first == CurrUser.id){
-                    chatDef.user_id_second
-                } else {
-                    chatDef.user_id_first
-                }
             }
+        }
+    }
+
+    private val scrollListener =
+        View.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            if (scrollY > oldScrollY) {
+                //Log.i("tag", "Scroll DOWN scrollY:$scrollY oldScrollY:$oldScrollY")
+                binding.btnDownScroll.visibility = View.GONE
+            }
+            if (scrollY < oldScrollY) {
+                //Log.i("tag", "Scroll UP scrollY:$scrollY oldScrollY:$oldScrollY")
+                binding.btnDownScroll.visibility = View.VISIBLE
+            }
+            iScrollDown = false
+            //Log.i("tag", "iScrollDown: $iScrollDown")
+        }
+
+    private val smoother = object : LinearSmoothScroller(APP.applicationContext){
+        override fun getVerticalSnapPreference(): Int {
+            return LinearSmoothScroller.SNAP_TO_END
         }
     }
 
@@ -158,9 +193,22 @@ class PageChatFragment : Fragment() {
                     //Log.d("msg","key: $key")
                     when(extras.getString(key)){
                         FireServices.ACTION_SHOW_MESSAGE -> {
-                            binding.refLayout.isEnabled = true
+                          binding.refLayout.isEnabled = true
                             refLayListener.onRefresh()
                             //viewModel.getMessagesByChatId(chatId!!)
+                            /*  val message = Message(
+                                id = extras.getInt(FireServices.KEY_ID),
+                                chat_id = extras.getInt(FireServices.KEY_CHAT_ID),
+                                text_msg = extras.getString(FireServices.KEY_TEXT_MSG),
+                                img_msg = extras.getString(FireServices.KEY_IMG_MSG),
+                                file_msg = extras.getString(FireServices.KEY_FILE_MSG),
+                                file_3d_msg = extras.getString(FireServices.KEY_3D_FILE_MSG),
+                                created_at = extras.getString(FireServices.KEY_CREATED_AT),
+                                user_id_sender = extras.getInt(FireServices.KEY_ID_SENDER),
+                                user_id_recepient = extras.getInt(FireServices.KEY_ID_RECIPIENT)
+                            )
+                            adapter.addItem(message)
+                            messageList.add(message)*/
                         }
                         else ->{
                             Log.d("msg","key error not found")}

@@ -15,12 +15,14 @@ import com.bumptech.glide.Glide
 import com.example.emb3ddedapp.R
 import com.example.emb3ddedapp.models.Message
 import com.example.emb3ddedapp.screens.listeners.AdapterListeners
+import com.example.emb3ddedapp.utils.getDataTimeWithFormat
+import com.example.emb3ddedapp.utils.showToast
 
 class MessageAdapter(
-    val user_id:Int,
-    val onItem: AdapterListeners.OnItemClick,
-    val onFile:AdapterListeners.OnFile,
-    val on3dFile: AdapterListeners.On3dFile
+    private val user_id:Int,
+    private val onItem: AdapterListeners.OnItemClick,
+    private val onFile:AdapterListeners.OnFile,
+    private val on3dFile: AdapterListeners.On3dFile
 ):RecyclerView.Adapter<MessageAdapter.MessageHolder>() {
 
     private val messageList = mutableListOf<Message>()
@@ -28,11 +30,20 @@ class MessageAdapter(
     @SuppressLint("NotifyDataSetChanged")
     fun setData(list: List<Message>){
         messageList.clear()
+        //val list1 = list.sortedBy { getDataTimeWithFormat(it.created_at!!) }
         messageList.addAll(list)
+        //Log.i("messAdapter", "setData(): ${list.map { it.id }}" )
         notifyDataSetChanged()
+        //notifyItemRangeChanged(0, itemCount)
     }
 
-    inner class MessageHolder(itemView: View) :RecyclerView.ViewHolder(itemView){
+//    @SuppressLint("NotifyDataSetChanged")
+//    fun addItem(msg:Message){
+//        messageList.add(msg)
+//        notifyDataSetChanged()
+//    }
+
+     class MessageHolder(itemView: View) :RecyclerView.ViewHolder(itemView){
 
         val layMsgMy:ConstraintLayout = itemView.findViewById(R.id.layMsgMy)
 
@@ -61,7 +72,7 @@ class MessageAdapter(
         val tvFilenamePartner:TextView = itemView.findViewById(R.id.tvFilenamePartner)
         val btnDownloadFilePartner:ImageButton = itemView.findViewById(R.id.btnDownloadFilePartner)
 
-        fun bind(message: Message){
+        /*fun bind(message: Message){
             if (message.user_id_sender == user_id){
                 // i'm sender
                 layMsgPartner.visibility = View.INVISIBLE
@@ -123,6 +134,7 @@ class MessageAdapter(
 
             }
         }
+       */
 
     }
 
@@ -132,7 +144,84 @@ class MessageAdapter(
 
     override fun onBindViewHolder(holder: MessageHolder, position: Int) {
         val message = messageList[position]
-        holder.bind(message = message)
+        //holder.bind(message = message)
+        holder.apply {
+            message.apply {
+                if (message.user_id_sender == user_id){
+                    // i'm sender
+                    layMsgPartner.visibility = View.GONE
+                    layMsgMy.visibility = View.VISIBLE
+
+                    when {
+                        text_msg != null -> {
+                            tvMsgMy.visibility = View.VISIBLE
+                            imgMsgMy.visibility = View.GONE
+                            panelFileMy.visibility = View.GONE
+                            panel3dFileMy.visibility = View.GONE
+                            tvMsgMy.text = text_msg
+                        }
+                        img_msg != null -> {
+                            imgMsgMy.visibility = View.VISIBLE
+                            tvMsgMy.visibility = View.GONE
+                            panelFileMy.visibility = View.GONE
+                            panel3dFileMy.visibility = View.GONE
+                            Glide.with(imgMsgMy.context).load(img_msg).into(imgMsgMy)
+                        }
+                        file_msg != null -> {
+                            panelFileMy.visibility = View.VISIBLE
+                            imgMsgMy.visibility = View.GONE
+                            tvMsgMy.visibility = View.GONE
+                            panel3dFileMy.visibility = View.GONE
+                            tvFilenameMy.text = file_msg
+                        }
+                        else -> {
+                            panel3dFileMy.visibility = View.VISIBLE
+                            panelFileMy.visibility = View.GONE
+                            imgMsgMy.visibility = View.GONE
+                            tvMsgMy.visibility = View.GONE
+                            tvFilename3dMy.text = file_3d_msg
+                        }
+                    }
+
+                } else if (message.user_id_recepient == user_id){
+                    //message sends to me
+                    layMsgMy.visibility = View.GONE
+                    layMsgPartner.visibility = View.VISIBLE
+
+                    when {
+                        text_msg != null -> {
+                            tvMsgPartner.visibility = View.VISIBLE
+                            imgMsgPartner.visibility = View.GONE
+                            panelFilePartner.visibility = View.GONE
+                            panel3dFilePartner.visibility = View.GONE
+                            tvMsgPartner.text = text_msg
+                        }
+                        img_msg != null -> {
+                            imgMsgPartner.visibility = View.VISIBLE
+                            tvMsgPartner.visibility = View.GONE
+                            panelFilePartner.visibility = View.GONE
+                            panel3dFilePartner.visibility = View.GONE
+                            Glide.with(imgMsgPartner.context).load(img_msg).into(imgMsgPartner)
+                        }
+                        file_msg != null -> {
+                            panelFilePartner.visibility = View.VISIBLE
+                            imgMsgPartner.visibility = View.GONE
+                            tvMsgPartner.visibility = View.GONE
+                            panel3dFilePartner.visibility = View.GONE
+                            tvFilenamePartner.text = file_msg
+                        }
+                        else -> {
+                            panel3dFilePartner.visibility = View.VISIBLE
+                            panelFilePartner.visibility = View.GONE
+                            imgMsgPartner.visibility = View.GONE
+                            tvMsgPartner.visibility = View.GONE
+                            tvFilename3dPartner.text = file_3d_msg
+                        }
+                    }
+
+                }
+            }
+        }
     }
 
     override fun onViewAttachedToWindow(holder: MessageHolder) {
@@ -177,6 +266,16 @@ class MessageAdapter(
                 true
             }
         }
+//        holder.apply {
+//            panel3dFilePartner.setOnClickListener { showToast("it's panel 3d partner") }
+//            panel3dFileMy.setOnClickListener { showToast("it's panel 3d my") }
+//            panelFilePartner.setOnClickListener { showToast("it's panel file partner") }
+//            panelFileMy.setOnClickListener { showToast("it's panel file my") }
+//            tvMsgMy.setOnClickListener { showToast("it's msg my") }
+//            tvMsgPartner.setOnClickListener { showToast("it's msg partner") }
+//            imgMsgPartner.setOnClickListener { showToast("it's img partner") }
+//            imgMsgMy.setOnClickListener { showToast("it's img my") }
+//        }
     }
 
     override fun onViewDetachedFromWindow(holder: MessageHolder) {

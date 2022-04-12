@@ -35,6 +35,7 @@ const val DOWNLOAD_FILE_URL = "https://www.emb3ded.kz/api/getfile?file="
 
 fun showProgressDialog(title:String) {
     progressDialog.setTitle(title)
+    progressDialog.setCancelable(false)
     progressDialog.show()
 }
 
