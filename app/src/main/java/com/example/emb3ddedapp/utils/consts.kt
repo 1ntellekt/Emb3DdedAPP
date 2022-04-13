@@ -32,6 +32,7 @@ const val DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss"
 const val DB_DATE_TIME_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 const val CONTENT_FILE_URL = "https://www.emb3ded.kz/api/getContent?file="
 const val DOWNLOAD_FILE_URL = "https://www.emb3ded.kz/api/getfile?file="
+const val VIEW_URL = "https://arvr.google.com/scene-viewer/1.0?file="
 
 fun showProgressDialog(title:String) {
     progressDialog.setTitle(title)

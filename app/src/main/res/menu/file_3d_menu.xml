@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/copyLink"
+        android:title="Copy link url"
+        app:showAsAction="withText"/>
+
+    <item android:id="@+id/showViewer"
+        android:title="Show 3D viewer"
+        app:showAsAction="withText"/>
+
+    <item android:id="@+id/showOnWebView"
+        android:title="Show viewer on WebView"
+        app:showAsAction="withText"/>
+
+</menu>

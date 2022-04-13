@@ -1,19 +1,19 @@
 package com.example.emb3ddedapp.screens.page_chat
 
 import android.app.Activity
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.content.*
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -34,6 +34,8 @@ import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
+import java.net.URLDecoder
+import java.net.URLEncoder
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -70,7 +72,10 @@ class PageChatFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         chatId = arguments?.getInt("id_chat")
         recipientUser = arguments?.getSerializable("recipientUser") as? User
-        adapter = MessageAdapter(CurrUser.id,{},{},{})
+        adapter = MessageAdapter(CurrUser.id,{ idItemPanel3d, viewPanel->
+            //click panel 3d
+            showPopupMenu3Dialog(messageList[idItemPanel3d], viewPanel)
+        },{},{},{})
         binding.apply {
             btnBack.setOnClickListener {
                 APP.mNavController.navigate(R.id.action_pageChatFragment_to_mainFragment)
@@ -122,8 +127,10 @@ class PageChatFragment : Fragment() {
                 messageList.addAll(list)
                 adapter.setData(list)
                 if (iScrollDown){
-                    smoother.targetPosition = messageList.size-1
-                    binding.recyclerView.layoutManager!!.startSmoothScroll(smoother)
+                    if (list.isNotEmpty()){
+                        smoother.targetPosition = messageList.size-1
+                        binding.recyclerView.layoutManager!!.startSmoothScroll(smoother)
+                    }
                     Handler(Looper.getMainLooper()).postDelayed({binding.recyclerView.setOnScrollChangeListener(scrollListener)},1000)
                 }
             }
@@ -134,6 +141,39 @@ class PageChatFragment : Fragment() {
             }
         }
     }
+
+    private fun showPopupMenu3Dialog(message: Message, view: View) {
+        val popupMenu = PopupMenu(context, view)
+        popupMenu.inflate(R.menu.file_3d_menu)
+        popupMenu.setOnMenuItemClickListener { item -> popupMenuItemClicked(item, message) }
+        popupMenu.show()
+    }
+
+    private fun popupMenuItemClicked(menuItem: MenuItem, message: Message):Boolean {
+        when(menuItem.itemId) {
+            R.id.copyLink -> {
+
+                val clipboard = APP.getSystemService(ClipboardManager::class.java)
+                val clip = ClipData.newPlainText("Copied link", "$VIEW_URL${URLEncoder.encode(message.file_3d_msg,"UTF-8")}")
+                clipboard.setPrimaryClip(clip)
+                showToast("Url copied!")
+            }
+            R.id.showViewer -> {
+                val sceneViewerIntent = Intent(Intent.ACTION_VIEW)
+                sceneViewerIntent.data =
+                Uri.parse("$VIEW_URL${message.file_3d_msg}")
+                sceneViewerIntent.setPackage(getString(R.string.scene_viewer_package))
+                startActivity(sceneViewerIntent)
+            }
+            R.id.showOnWebView -> {
+                val bundle = Bundle()
+                bundle.putString("urlModel", "${message.file_3d_msg}")
+                APP.mNavController.navigate(R.id.action_pageChatFragment_to_webViewFragment, bundle)
+            }
+        }
+        return true
+    }
+
 
     private val scrollListener =
         View.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->

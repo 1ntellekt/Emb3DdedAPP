@@ -20,7 +20,8 @@ import com.example.emb3ddedapp.utils.showToast
 
 class MessageAdapter(
     private val user_id:Int,
-    private val onItem: AdapterListeners.OnItemClick,
+    private val onItem: AdapterListeners.OnItemFile3d,
+    private val onImage:AdapterListeners.OnImage,
     private val onFile:AdapterListeners.OnFile,
     private val on3dFile: AdapterListeners.On3dFile
 ):RecyclerView.Adapter<MessageAdapter.MessageHolder>() {
@@ -254,16 +255,28 @@ class MessageAdapter(
             panel3dFileMy.setOnLongClickListener {
                 val pos = holder.adapterPosition
                 if (pos != RecyclerView.NO_POSITION){
-                    onItem.onItemClick(pos)
+                    onItem.onItemFile3dClick(pos, holder.panel3dFileMy)
                 }
                 true
             }
             panel3dFilePartner.setOnLongClickListener {
                 val pos = holder.adapterPosition
                 if (pos != RecyclerView.NO_POSITION){
-                    onItem.onItemClick(pos)
+                    onItem.onItemFile3dClick(pos,holder.panel3dFilePartner)
                 }
                 true
+            }
+            imgMsgMy.setOnClickListener {
+                val pos = holder.adapterPosition
+                if (pos != RecyclerView.NO_POSITION){
+                    onImage.onImgClick(pos)
+                }
+            }
+            imgMsgPartner.setOnClickListener {
+                val pos = holder.adapterPosition
+                if (pos != RecyclerView.NO_POSITION){
+                    onImage.onImgClick(pos)
+                }
             }
         }
 //        holder.apply {
@@ -287,6 +300,8 @@ class MessageAdapter(
             btnDownloadFilePartner.setOnClickListener(null)
             panel3dFileMy.setOnClickListener(null)
             panel3dFilePartner.setOnClickListener(null)
+            imgMsgPartner.setOnClickListener(null)
+            imgMsgMy.setOnClickListener(null)
         }
 
     }

@@ -1,5 +1,7 @@
 package com.example.emb3ddedapp.screens.listeners
 
+import android.view.View
+
 interface AdapterListeners {
 
     fun interface OnItemClick {
@@ -24,6 +26,14 @@ interface AdapterListeners {
 
     fun interface OnFile{
         fun onFileClick(position: Int)
+    }
+
+    fun interface OnImage{
+        fun onImgClick(position: Int)
+    }
+
+    fun interface OnItemFile3d {
+        fun onItemFile3dClick(position:Int, view: View)
     }
 
 }
