@@ -8,7 +8,13 @@
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/drawable/back_btn_sign.xml" value="0.2015" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/drawable/border_input_edtxt.xml" value="0.2015" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/drawable/ic_baseline_check_24.xml" value="0.2015" />
+        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/drawable/ic_baseline_link_24.xml" value="0.189" />
+        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/drawable/ic_baseline_public_24.xml" value="0.189" />
+        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/drawable/ic_baseline_remove_red_eye_24.xml" value="0.189" />
+        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/drawable/ic_baseline_save_alt_24.xml" value="0.189" />
+        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/drawable/ic_baseline_share_24.xml" value="0.189" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/drawable/ic_edit_icon_icons_com_71853.xml" value="0.2015" />
+        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout-v28/progressbar_only.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/all_news_fragment.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/all_orders_fragment.xml" value="0.36666666666666664" />
@@ -16,7 +22,9 @@
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/chats_fragment.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/dialog_forgot_pass_layout.xml" value="0.25" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/friends_fragment.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/img_layout.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/input_code_layout.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/loading_layout.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/message_item.xml" value="0.33" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/my_news_fragment.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/my_orders_fragment.xml" value="0.36666666666666664" />
@@ -31,9 +39,16 @@
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/page_news_fragment.xml" value="0.22" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/page_order_edit_fragment.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/page_order_fragment.xml" value="0.38916528468767275" />
-        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/profile_fragment.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/profile_fragment.xml" value="0.25" />
+        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/progressbar_only.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/sign_in_fragment.xml" value="0.25" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/sign_up_fragment.xml" value="0.22" />
+        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/menu/app_main_menu_tool.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/menu/chat_menu.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/menu/file_3d_menu.xml" value="0.2359375" />
+        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/menu/img_menu.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/menu/main_menu_nav.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/menu/profile_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/User/Desktop/diplom/app/src/main/res/drawable/back_btn_sign.xml" value="0.2" />
         <entry key="..\:/Users/User/Desktop/diplom/app/src/main/res/drawable/back_nav_bottom.xml" value="0.18" />
         <entry key="..\:/Users/User/Desktop/diplom/app/src/main/res/drawable/back_toggle.xml" value="0.2" />
@@ -76,7 +91,6 @@
         <entry key="..\:/works/androidWorks/Emb3DdedAPP/app/src/main/res/layout/chat_item.xml" value="0.4041666666666667" />
         <entry key="..\:/works/androidWorks/Emb3DdedAPP/app/src/main/res/layout/chat_item_layout.xml" value="0.4041666666666667" />
         <entry key="..\:/works/androidWorks/Emb3DdedAPP/app/src/main/res/layout/chats_fragment.xml" value="0.4" />
-        <entry key="..\:/works/androidWorks/Emb3DdedAPP/app/src/main/res/layout/fragment_web_view.xml" value="0.3234375" />
         <entry key="..\:/works/androidWorks/Emb3DdedAPP/app/src/main/res/layout/friends_fragment.xml" value="0.4041666666666667" />
         <entry key="..\:/works/androidWorks/Emb3DdedAPP/app/src/main/res/layout/load_fragment.xml" value="0.4041666666666667" />
         <entry key="..\:/works/androidWorks/Emb3DdedAPP/app/src/main/res/layout/main_fragment.xml" value="0.4041666666666667" />
@@ -94,12 +108,10 @@
         <entry key="..\:/works/androidWorks/Emb3DdedAPP/app/src/main/res/layout/profile_fragment.xml" value="0.264" />
         <entry key="..\:/works/androidWorks/Emb3DdedAPP/app/src/main/res/layout/sign_in_fragment.xml" value="0.4041666666666667" />
         <entry key="..\:/works/androidWorks/Emb3DdedAPP/app/src/main/res/layout/sign_up_fragment.xml" value="0.4" />
-        <entry key="..\:/works/androidWorks/Emb3DdedAPP/app/src/main/res/menu/file_3d_menu.xml" value="0.264" />
-        <entry key="..\:/works/androidWorks/Emb3DdedAPP/app/src/main/res/menu/profile_menu.xml" value="0.4005208333333333" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

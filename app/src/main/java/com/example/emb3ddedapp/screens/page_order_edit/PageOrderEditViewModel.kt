@@ -18,14 +18,11 @@ class PageOrderEditViewModel(application: Application) : AndroidViewModel(applic
     }
 
     fun uploadFile(file: File, onSuccess: (String) -> Unit, onFail:()->Unit){
-        showProgressDialog("Uploading image...")
         REPOSITORY.uploadFile(file,"order_img",
             {
-                closeProgressDialog()
                 onSuccess("$CONTENT_FILE_URL$it")
             },
             {
-                closeProgressDialog()
                 showToast(it)
                 onFail()
             })

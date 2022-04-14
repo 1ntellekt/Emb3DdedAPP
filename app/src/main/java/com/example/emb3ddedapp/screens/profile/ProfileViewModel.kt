@@ -11,26 +11,20 @@ import java.io.File
 class ProfileViewModel(application: Application) : AndroidViewModel(application) {
 
     fun signOut(onSuccess:()->Unit){
-        showProgressDialog("Exit account to sign pages")
         REPOSITORY.signOut({
-             closeProgressDialog()
              onSuccess()
         },{
-            closeProgressDialog()
             showToast(it)
         })
     }
 
     fun updateUserProfile(old_pass:String?=null,new_pass:String?=null, user: User, onSuccess: (User) -> Unit){
-        showProgressDialog("Update user profile....")
         if (old_pass == null && new_pass == null){
             REPOSITORY.editCurrentUser(oldPassword = old_pass, password = new_pass, user,
                 {
-                    closeProgressDialog()
                     onSuccess(user)
                 },
                 {
-                    closeProgressDialog()
                     showToast(it)
                 })
         } else if (old_pass != null && new_pass != null){
@@ -38,11 +32,9 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
 
             REPOSITORY.editCurrentUser(oldPassword = old_pass, password = new_pass, user,
             {
-                closeProgressDialog()
                 onSuccess(user)
             },
             {
-               closeProgressDialog()
                showToast(it)
             })
 
@@ -51,14 +43,11 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun uploadFile(file: File, onSuccess: (String) -> Unit, onFail:()->Unit){
-        showProgressDialog("Uploading image...")
         REPOSITORY.uploadFile(file,"profile_img",
             {
-                closeProgressDialog()
                 onSuccess("$CONTENT_FILE_URL$it")
             },
             {
-                closeProgressDialog()
                 showToast(it)
                 onFail()
             })

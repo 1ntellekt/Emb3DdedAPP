@@ -1,6 +1,6 @@
 package com.example.emb3ddedapp
 
-import android.app.ProgressDialog
+
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -15,7 +15,6 @@ import com.example.emb3ddedapp.databinding.ActivityMainBinding
 import com.example.emb3ddedapp.notification.FireServices
 import com.example.emb3ddedapp.utils.APP
 import com.example.emb3ddedapp.utils.REPOSITORY
-import com.example.emb3ddedapp.utils.progressDialog
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,7 +28,6 @@ class MainActivity : AppCompatActivity() {
         mNavController = Navigation.findNavController(this, R.id.fragmentNavHost)
         APP = this
         REPOSITORY = Repository()
-        progressDialog = ProgressDialog(APP)
 
         //val intentFilter = IntentFilter()
        // intentFilter.addAction(FireServices.PUSH_TAG)

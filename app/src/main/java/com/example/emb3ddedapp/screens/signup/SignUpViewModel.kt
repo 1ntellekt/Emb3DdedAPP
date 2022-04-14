@@ -6,8 +6,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.emb3ddedapp.utils.REPOSITORY
-import com.example.emb3ddedapp.utils.closeProgressDialog
-import com.example.emb3ddedapp.utils.showProgressDialog
 import com.example.emb3ddedapp.utils.showToast
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,14 +22,12 @@ class SignUpViewModel(application: Application) : AndroidViewModel(application) 
     }*/
 
     fun signUpEmail(email:String,password:String,onSuccess:()->Unit){
-            showProgressDialog("Email Sign Up....")
             REPOSITORY.singUpEmail(email,password,
                 {
-                    closeProgressDialog()
-                    onSuccess()},
+                    onSuccess()
+                },
                 {
                     showToast(it)
-                closeProgressDialog()
                 })
     }
 

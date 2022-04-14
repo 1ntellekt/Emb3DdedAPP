@@ -29,14 +29,11 @@ class PageNewsEditViewModel(application: Application) : AndroidViewModel(applica
     }
 
     fun uploadFile(file: File, onSuccess: (String) -> Unit, onFail:()->Unit){
-        showProgressDialog("Uploading image...")
         REPOSITORY.uploadFile(file,"news_img",
         {
-            closeProgressDialog()
             onSuccess("$CONTENT_FILE_URL$it")
         },
         {
-            closeProgressDialog()
             showToast(it)
             onFail()
         })

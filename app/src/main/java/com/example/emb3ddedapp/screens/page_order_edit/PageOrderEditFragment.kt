@@ -15,10 +15,7 @@ import com.example.emb3ddedapp.R
 import com.example.emb3ddedapp.databinding.PageOrderEditFragmentBinding
 import com.example.emb3ddedapp.models.CurrUser
 import com.example.emb3ddedapp.models.Order
-import com.example.emb3ddedapp.utils.APP
-import com.example.emb3ddedapp.utils.getFileFromInput
-import com.example.emb3ddedapp.utils.getName
-import com.example.emb3ddedapp.utils.showToast
+import com.example.emb3ddedapp.utils.*
 import com.google.android.material.appbar.AppBarLayout
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -163,7 +160,7 @@ class PageOrderEditFragment : Fragment() {
             if(result.data!!.data != null){
                 val imgURI = result.data!!.data!!
                 try {
-                    val nowDate = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
+                    val nowDate = SimpleDateFormat(TIME_PAT, Locale.getDefault()).format(Date())
                     val fileName = "${requireActivity().filesDir.path}/img-$nowDate-${imgURI.getName()}"
                     currentSelectedFile = getFileFromInput(fileName,APP.contentResolver.openInputStream(imgURI))
                     if (currentSelectedFile == null){

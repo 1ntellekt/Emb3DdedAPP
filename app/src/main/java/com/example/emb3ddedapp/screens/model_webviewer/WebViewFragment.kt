@@ -32,26 +32,13 @@ class WebViewFragment : Fragment() {
             val urlModel = arguments?.getString("urlModel")
             urlModel?.let { url->
                 with(webView){
-
-                    //val summary =""
-
-                val summary = "<html>\n" +
-                            "    <body>\n" +
-                            "<script type=\"module\" src=\"https://unpkg.com/@google/model-viewer/dist/model-viewer.js\"></script>\n" +
-                        "<script nomodule src=\"https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js\"></script>"+
-                            "<model-viewer ar src=\"$url\" auto-rotate camera-controls alt=\"Chair\" background-color=\"#455A64\"></model-viewer>"+
-                            "    </body>\n" +
-                            "</html>"
-
                     settings.apply {
                         javaScriptEnabled = true
                         loadWithOverviewMode = true
                     }
-                    Log.i("tagWeb", summary)
-                    loadData(summary,"text/html; charset=utf-8", "UTF-8")
+                    loadUrl(url)
                 }
             }
-
         }
     }
 

@@ -49,66 +49,58 @@ class PageChatViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun sendFileMsg(file: File, chatId: Int, recipientId:Int, onSuccess:(String)->Unit, onFail:()->Unit){
-            showProgressDialog("Uploading file...")
             REPOSITORY.uploadFile(file,"chat_file",
                 { pathFile->
 
                     REPOSITORY.addMessage(Message(chat_id = chatId, file_msg = "$DOWNLOAD_FILE_URL$pathFile", user_id_sender = CurrUser.id, user_id_recepient = recipientId),{
-                        closeProgressDialog()
                         onSuccess("$DOWNLOAD_FILE_URL$pathFile")
                     },{
-                        closeProgressDialog()
                         showToast(it)
                     })
 
                 },
                 {
-                    closeProgressDialog()
                     showToast(it)
                     onFail()
                 })
     }
 
     fun send3dFile(file: File, chatId: Int, recipientId:Int, onSuccess:(String)->Unit, onFail:()->Unit) {
-        showProgressDialog("Uploading 3d file...")
         REPOSITORY.uploadFile(file,"chat_3d_file",
             { pathFile->
 
                 REPOSITORY.addMessage(Message(chat_id = chatId, file_3d_msg = "$DOWNLOAD_FILE_URL$pathFile", user_id_sender = CurrUser.id, user_id_recepient = recipientId),{
-                    closeProgressDialog()
                     onSuccess("$DOWNLOAD_FILE_URL$pathFile")
                 },{
-                    closeProgressDialog()
                     showToast(it)
                 })
 
             },
             {
-                closeProgressDialog()
                 showToast(it)
                 onFail()
             })
     }
 
     fun sendImage(file: File, chatId: Int, recipientId:Int, onSuccess:(String)->Unit, onFail:()->Unit) {
-        showProgressDialog("Uploading image...")
         REPOSITORY.uploadFile(file,"chat_img",
             { pathFile->
 
                 REPOSITORY.addMessage(Message(chat_id = chatId, img_msg = "$CONTENT_FILE_URL$pathFile", user_id_sender = CurrUser.id, user_id_recepient = recipientId),{
-                    closeProgressDialog()
                     onSuccess("$DOWNLOAD_FILE_URL$pathFile")
                 },{
-                    closeProgressDialog()
                     showToast(it)
                 })
 
             },
             {
-                closeProgressDialog()
                 showToast(it)
                 onFail()
             })
+    }
+
+    fun update(idChat:Int, downloadFirst:Int, downloadSecond:Int){
+        REPOSITORY.updateChat(id = idChat, download_first = downloadFirst, download_second = downloadSecond, {},{ showToast(it)})
     }
 
 //

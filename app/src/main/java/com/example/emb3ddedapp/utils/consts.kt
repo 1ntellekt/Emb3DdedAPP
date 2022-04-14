@@ -1,6 +1,8 @@
 package com.example.emb3ddedapp.utils
 
+import android.app.DownloadManager
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.graphics.Bitmap
 import android.net.Uri
@@ -22,19 +24,19 @@ import java.util.*
 
 lateinit var APP:MainActivity
 lateinit var REPOSITORY:DataRepository
-lateinit var progressDialog:ProgressDialog
 lateinit var BEARER_TOKEN:String
 
 const val dataName = "data"
-//const val TIME_PAT = "HH:mm:ss"
+const val TIME_PAT = "HH:mm:ss"
 //const val DATE_PAT = "yyyy-MM-dd"
 const val DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss"
 const val DB_DATE_TIME_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 const val CONTENT_FILE_URL = "https://www.emb3ded.kz/api/getContent?file="
 const val DOWNLOAD_FILE_URL = "https://www.emb3ded.kz/api/getfile?file="
-const val VIEW_URL = "https://arvr.google.com/scene-viewer/1.0?file="
+const val VIEW_URL_ARC = "https://arvr.google.com/scene-viewer/1.0?file="
+const val VIEWER_WEB_PAGE = "https://www.emb3ded.kz/api/viewer?model_url="
 
-fun showProgressDialog(title:String) {
+/*fun showProgressDialog(title:String) {
     progressDialog.setTitle(title)
     progressDialog.setCancelable(false)
     progressDialog.show()
@@ -43,7 +45,7 @@ fun showProgressDialog(title:String) {
 fun closeProgressDialog() {
     if (progressDialog.isShowing)
         progressDialog.dismiss()
-}
+}*/
 
 fun getDataTimeWithFormat(dateTime:String):String{
     val dateFormat: DateFormat = SimpleDateFormat(DB_DATE_TIME_PATTERN, Locale.getDefault())
@@ -135,3 +137,16 @@ fun getFileFromInput(filename: String, inputStream: InputStream?): File?{
     }
     return null
 }
+
+//Download manager
+fun downloadManager(filename:String, destination:String, url:String){
+    val downloadManager = APP.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+    val req = DownloadManager.Request(Uri.parse(url))
+    req.setDestinationInExternalFilesDir(APP,destination,filename)
+    req.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+    req.setDescription("Setup a $filename")
+    downloadManager.enqueue(req)
+}
+
+fun Boolean.toInt() = if (this) 1 else 0
+

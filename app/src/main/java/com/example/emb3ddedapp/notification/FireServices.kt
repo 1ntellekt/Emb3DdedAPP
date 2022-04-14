@@ -55,6 +55,10 @@ class FireServices:FirebaseMessagingService() {
         const val ACTION_CHAT = "chat_holder"
         const val ACTION_NEWS = "news"
 
+        const val KEY_ID = "id"
+        const val KEY_D_FIRST = "download_first"
+        const val KEY_D_SECOND = "download_second"
+
 //        const val KEY_ID = "id"
 //        const val KEY_TEXT_MSG = "text_msg"
 //        const val KEY_IMG_MSG = "img_msg"

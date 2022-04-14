@@ -59,12 +59,9 @@ class SignInViewModel(application: Application) : AndroidViewModel(application) 
     */
 
     fun logInEmail(email:String,password:String,onSuccess:()->Unit){
-        showProgressDialog("Email logIn....")
         REPOSITORY.logInEmail(email,password, {
-            closeProgressDialog()
             onSuccess()
         },{
-            closeProgressDialog()
             showToast(it)
         })
     }
