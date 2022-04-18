@@ -32,8 +32,12 @@ interface AdapterListeners {
         fun onImgClick(position: Int)
     }
 
-    fun interface OnItemFile3d {
-        fun onItemFile3dClick(position:Int, view: View)
+    fun interface OnItemFile{
+        fun onItemFileClick(position:Int, view: View)
+    }
+
+    fun interface OnItemTextMsg {
+        fun onItemTextMsgClick(position:Int, view: View)
     }
 
 }

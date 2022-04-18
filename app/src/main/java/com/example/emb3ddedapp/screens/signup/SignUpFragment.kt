@@ -22,6 +22,7 @@ import com.example.emb3ddedapp.databinding.DialogForgotPassLayoutBinding
 import com.example.emb3ddedapp.databinding.InputCodeLayoutBinding
 import com.example.emb3ddedapp.databinding.SignUpFragmentBinding
 import com.example.emb3ddedapp.models.CurrUser
+import com.example.emb3ddedapp.progressdialog.MyProgressDialog
 import com.example.emb3ddedapp.utils.APP
 import com.example.emb3ddedapp.utils.showToast
 
@@ -120,7 +121,10 @@ class SignUpFragment : Fragment() {
                     CurrUser.email = edEmail.text.toString()
                     CurrUser.login = edLogin.text.toString()
                     CurrUser.number = edNum.text.toString()
+                    val myProgress = MyProgressDialog(requireContext())
+                    myProgress.load("Sign up email....")
                     viewModel.signUpEmail(edEmail.text.toString(),edPassword.text.toString()){
+                        myProgress.dismiss()
                         APP.mNavController.navigate(R.id.action_signUpFragment_to_signInFragment)
                     }
                 }

@@ -495,10 +495,45 @@ class Repository : DataRepository {
             }
             override fun onFailure(call: Call<MessageDefaultResponse>, t: Throwable) {
                 Log.i("tagAPI", "Error add message: ${t.message}")
-                onFail("Error add chat: ${t.message}")
+                onFail("Error add message: ${t.message}")
             }
         })
     }
+
+    override fun editMessage(id: Int, msg: Message, onSuccess: () -> Unit, onFail: (String) -> Unit) {
+        RetrofitInstance.api.updateMessage(id, msg).enqueue(object : Callback<StatusMsgResponse>{
+            override fun onResponse(call: Call<StatusMsgResponse>, response: Response<StatusMsgResponse>) {
+                if (response.isSuccessful){
+                        onSuccess()
+                } else {
+                    Log.i("tagAPI", "Error edit message: ${response.code()} ${response.message()}")
+                    onFail("Error edit message: ${response.code()} ${response.message()}")
+                }
+            }
+            override fun onFailure(call: Call<StatusMsgResponse>, t: Throwable) {
+                Log.i("tagAPI", "Error edit message: ${t.message}")
+                onFail("Error edit message: ${t.message}")
+            }
+        })
+    }
+
+    override fun deleteMessage(id: Int, onSuccess: () -> Unit, onFail: (String) -> Unit) {
+        RetrofitInstance.api.deleteMessage(id).enqueue(object : Callback<StatusMsgResponse>{
+            override fun onResponse(call: Call<StatusMsgResponse>, response: Response<StatusMsgResponse>) {
+                if (response.isSuccessful){
+                    onSuccess()
+                } else {
+                    Log.i("tagAPI", "Error delete message: ${response.code()} ${response.message()}")
+                    onFail("Error delete message: ${response.code()} ${response.message()}")
+                }
+            }
+            override fun onFailure(call: Call<StatusMsgResponse>, t: Throwable) {
+                Log.i("tagAPI", "Error delete message: ${t.message}")
+                onFail("Error delete message: ${t.message}")
+            }
+        })
+    }
+
 
     //files
     override fun uploadFile(file: File, fileNameDateForm:String ,onSuccess: (String) -> Unit, onFail: (String) -> Unit) {

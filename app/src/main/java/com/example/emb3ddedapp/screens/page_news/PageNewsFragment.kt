@@ -62,7 +62,7 @@ class PageNewsFragment : Fragment() {
                 tvAuthor.text = newsItem.user!!.login
                 tvDateTime.text = getDataTimeWithFormat(newsItem.created_at!!)
             }
-            btnBack.setOnClickListener { APP.mNavController.navigate(R.id.action_pageNewsFragment_to_mainFragment)}
+            btnBack.setOnClickListener { APP.mNavController.navigate(R.id.action_pageNewsFragment_to_mainFragment, Bundle().also { it.putString("nav", "news") })}
         }
     }
 

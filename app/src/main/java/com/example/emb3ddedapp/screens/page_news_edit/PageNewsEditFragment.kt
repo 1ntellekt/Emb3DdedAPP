@@ -106,7 +106,7 @@ class PageNewsEditFragment : Fragment() {
                 intent.type = "image/*"
                 takeImgFile.launch(intent)
             }
-            btnBack.setOnClickListener { APP.mNavController.navigate(R.id.action_pageNewsEditFragment_to_mainFragment) }
+            btnBack.setOnClickListener { APP.mNavController.navigate(R.id.action_pageNewsEditFragment_to_mainFragment, Bundle().also { it.putString("nav", "news") }) }
         }
     }
 
@@ -115,11 +115,11 @@ class PageNewsEditFragment : Fragment() {
             if (curNewsItem == null) {
                 viewModel.addNewsItem(NewsItem(title = edTitle.text.toString(), description = edDescription.text.toString(),
                     img_url = filePathUrl, tag = "#${edTag.text.toString()}", user_id = CurrUser.id))
-                { APP.mNavController.navigate(R.id.action_pageNewsEditFragment_to_mainFragment)}
+                { APP.mNavController.navigate(R.id.action_pageNewsEditFragment_to_mainFragment, Bundle().also { it.putString("nav", "news") })}
             } else {
                 viewModel.editNewsItem(NewsItem(id = curNewsItem!!.id,title = edTitle.text.toString(), description = edDescription.text.toString(),
                     img_url = filePathUrl, tag = edTag.text.toString(), user_id = CurrUser.id))
-                { APP.mNavController.navigate(R.id.action_pageNewsEditFragment_to_mainFragment)}
+                { APP.mNavController.navigate(R.id.action_pageNewsEditFragment_to_mainFragment, Bundle().also { it.putString("nav", "news") })}
             }
         }
     }

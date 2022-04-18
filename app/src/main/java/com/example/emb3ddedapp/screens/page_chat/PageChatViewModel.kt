@@ -99,21 +99,16 @@ class PageChatViewModel(application: Application) : AndroidViewModel(application
             })
     }
 
-    fun update(idChat:Int, downloadFirst:Int, downloadSecond:Int){
+    fun updateChat(idChat:Int, downloadFirst:Int, downloadSecond:Int){
         REPOSITORY.updateChat(id = idChat, download_first = downloadFirst, download_second = downloadSecond, {},{ showToast(it)})
     }
 
-//
-//    fun getAccessToDownload3dFile(){
-//
-//    }
-//
-//    fun downloadFile(){
-//
-//    }
-//
-//    fun download3dFile(){
-//
-//    }
+    fun editMsg(msg: Message){
+        REPOSITORY.editMessage(msg.id, msg,{}, {showToast(it)})
+    }
+
+    fun deleteMsg(msg: Message){
+        REPOSITORY.deleteMessage(msg.id, {}, { showToast(it)})
+    }
 
 }

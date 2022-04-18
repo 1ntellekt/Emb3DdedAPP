@@ -19,6 +19,7 @@ class MainFragment : Fragment() {
     get() = _binding!!
 
     private lateinit var navController:NavController
+    private var navPositionName:String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +48,16 @@ class MainFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        binding.apply {
+            navPositionName = arguments?.getString("nav")
+            navPositionName?.let { nav->
+                when(nav){
+                    "chats" -> {bottomNavMenu.selectedItemId = R.id.chatsFragment}
+                    "news" -> {bottomNavMenu.selectedItemId = R.id.newsFragment}
+                    "orders" -> {bottomNavMenu.selectedItemId = R.id.ordersFragment}
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {

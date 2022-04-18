@@ -58,6 +58,8 @@ interface DataRepository {
 
     //message
     fun addMessage(msg:Message, onSuccess: () -> Unit, onFail: (String) -> Unit)
+    fun editMessage(id: Int, msg: Message, onSuccess: () -> Unit, onFail: (String) -> Unit)
+    fun deleteMessage(id: Int, onSuccess: () -> Unit, onFail: (String) -> Unit)
 
     //files
     fun uploadFile(file: File,fileNameDateForm:String,onSuccess: (String) -> Unit, onFail: (String) -> Unit)

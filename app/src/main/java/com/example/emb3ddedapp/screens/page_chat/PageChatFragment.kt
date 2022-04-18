@@ -1,6 +1,7 @@
 package com.example.emb3ddedapp.screens.page_chat
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.*
 import android.graphics.Bitmap
@@ -26,6 +27,7 @@ import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.example.emb3ddedapp.R
+import com.example.emb3ddedapp.databinding.ChangeMsgDialogBinding
 import com.example.emb3ddedapp.databinding.PageChatFragmentBinding
 import com.example.emb3ddedapp.models.*
 import com.example.emb3ddedapp.notification.FireServices
@@ -60,6 +62,7 @@ class PageChatFragment : Fragment() {
 
     private var iScrollDown = true
     private var partnerDownload3DFiles = false
+    private var iDownloadFile = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = PageChatFragmentBinding.inflate(inflater,container,false)
@@ -76,23 +79,37 @@ class PageChatFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         chatId = arguments?.getInt("id_chat")
         recipientUser = arguments?.getSerializable("recipientUser") as? User
-        adapter = MessageAdapter(CurrUser.id,{ idItemPanel3d, viewPanel->
+        adapter = MessageAdapter(CurrUser.id,
+        { idItemPanel3d, viewPanel->
             //click panel 3d
-            showPopupMenu3Dialog(messageList[idItemPanel3d], viewPanel)
-        },{ idImgItem->
+            popupMenu3Dialog(messageList[idItemPanel3d], viewPanel)
+        },
+        { idItemPanelFile, viewPanel->
+          //click file panel
+            popupMenuFileDialog(messageList[idItemPanelFile], viewPanel)
+        },
+        { idImgItem->
           //on image click
-          showImageDialog(messageList[idImgItem].img_msg!!)
-        },{ idFileItem->
-          //file click
+          popupMenuImageDialog(messageList[idImgItem])
+        },
+        { idFileItem->
+          //file btn click
             downloadFromUrl(messageList[idFileItem].file_msg!!,"file")
-        },{ id3dFileItem->
-            //file 3d click
-            //if ()
-                downloadFromUrl(messageList[id3dFileItem].file_3d_msg!!,"3dfile")
+        },
+        { id3dFileItem->
+            //file btn 3d click
+            if (iDownloadFile || messageList[id3dFileItem].user_id_sender == CurrUser.id)
+            downloadFromUrl(messageList[id3dFileItem].file_3d_msg!!,"3dfile")
+            else showToast("No access!")
+        },
+        { idMsgText, viewTextMsg->
+            // message click
+            if (messageList[idMsgText].user_id_sender == CurrUser.id)
+            popupMenuMsgTextDialog(messageList[idMsgText], viewTextMsg)
         })
         binding.apply {
             btnBack.setOnClickListener {
-                APP.mNavController.navigate(R.id.action_pageChatFragment_to_mainFragment)
+                APP.mNavController.navigate(R.id.action_pageChatFragment_to_mainFragment, Bundle().also { it.putString("nav", "chats") })
             }
 
             recyclerView.setHasFixedSize(true)
@@ -163,10 +180,89 @@ class PageChatFragment : Fragment() {
         }
     }
 
+    private fun popupMenuMsgTextDialog(message: Message, viewTextMsg: View) {
+        val popupMenu = PopupMenu(context, viewTextMsg)
+        popupMenu.inflate(R.menu.msg_menu)
+        popupMenu.setOnMenuItemClickListener { item -> showPopupMenuMsgClicked(item, message) }
+        try {
+            val fieldPopup = PopupMenu::class.java.getDeclaredField("mPopup")
+            fieldPopup.isAccessible = true
+            val mPopup = fieldPopup.get(popupMenu)
+            mPopup.javaClass.getDeclaredMethod("setForceShowIcon", Boolean::class.java).invoke(mPopup, true)
+        }catch (e:Exception){
+            Log.e("tag", e.message.toString())
+        }finally {
+            popupMenu.show()
+        }
+    }
+
+    private fun showPopupMenuMsgClicked(menuItem: MenuItem, message: Message):Boolean {
+        when(menuItem.itemId){
+            R.id.deleteMsg -> {
+                viewModel.deleteMsg(message)
+            }
+            R.id.editMsg -> {
+                changeTextMsgDialog(message)
+            }
+        }
+        return true
+    }
+
+    private fun changeTextMsgDialog(message: Message) {
+        val alertDialogBuilder = AlertDialog.Builder(requireContext())
+        val binding: ChangeMsgDialogBinding = ChangeMsgDialogBinding.inflate(LayoutInflater.from(requireContext()))
+        alertDialogBuilder.setView(binding.root)
+        binding.edMessage.setText(message.text_msg!!)
+        alertDialogBuilder
+            .setPositiveButton("Ok"){ dialog, which ->
+                if (binding.edMessage.text.toString().isEmpty()){
+                    showToast("Input text message is null!")
+                } else {
+                    viewModel.editMsg(message.copy(text_msg = binding.edMessage.text.toString()))
+                }
+            }
+            .setNegativeButton("Cancel"){ dialog, which->
+                dialog.dismiss()
+            }.create().show()
+    }
+
+
+    private fun popupMenuFileDialog(message: Message, viewPanel: View) {
+        val popupMenu = PopupMenu(context, viewPanel)
+        popupMenu.inflate(R.menu.file_menu)
+        popupMenu.setOnMenuItemClickListener { item -> showPopupMenuFileClicked(item, message) }
+        try {
+            val fieldPopup = PopupMenu::class.java.getDeclaredField("mPopup")
+            fieldPopup.isAccessible = true
+            val mPopup = fieldPopup.get(popupMenu)
+            mPopup.javaClass.getDeclaredMethod("setForceShowIcon", Boolean::class.java).invoke(mPopup, true)
+        }catch (e:Exception){
+            Log.e("tag", e.message.toString())
+        }finally {
+            if (CurrUser.id != message.user_id_sender){
+                val item = popupMenu.menu.findItem(R.id.deleteFile)
+                item.isVisible = false
+            }
+            popupMenu.show()
+        }
+    }
+
+    private fun showPopupMenuFileClicked(menuItem: MenuItem, message: Message):Boolean {
+        when(menuItem.itemId){
+            R.id.downloadFile -> {
+                downloadFromUrl(message.file_msg!!,"file")
+            }
+            R.id.deleteFile -> {
+                viewModel.deleteMsg(message)
+            }
+        }
+        return true
+    }
+
     private fun popupMenuChat(it: View) {
         val popupMenu = PopupMenu(context, it)
         popupMenu.inflate(R.menu.chat_menu)
-        popupMenu.setOnMenuItemClickListener { item -> popupMenuChatClicked(item) }
+        popupMenu.setOnMenuItemClickListener { item -> showPopupMenuChatClicked(item) }
         try {
             val fieldPopup = PopupMenu::class.java.getDeclaredField("mPopup")
             fieldPopup.isAccessible = true
@@ -181,7 +277,7 @@ class PageChatFragment : Fragment() {
         }
     }
 
-    private fun popupMenuChatClicked(menuItem: MenuItem):Boolean {
+    private fun showPopupMenuChatClicked(menuItem: MenuItem):Boolean {
         when(menuItem.itemId){
             R.id.setAccess ->{
                 //menuItem.isChecked = iDownload3DFiles
@@ -190,12 +286,12 @@ class PageChatFragment : Fragment() {
 
                 partnerDownload3DFiles = !partnerDownload3DFiles
 
-                when (recipientUser!!.id) {
+                when (CurrUser.id) {
                     chatDefault!!.user_id_first -> {
-                        viewModel.update(idChat = chatId!!, downloadFirst = partnerDownload3DFiles.toInt(), downloadSecond = chatDefault!!.download_second)
+                        viewModel.updateChat(idChat = chatId!!, downloadFirst = partnerDownload3DFiles.toInt(), downloadSecond = chatDefault!!.download_second)
                     }
                     chatDefault!!.user_id_second -> {
-                        viewModel.update(idChat = chatId!!, downloadFirst = chatDefault!!.download_first, downloadSecond = partnerDownload3DFiles.toInt())
+                        viewModel.updateChat(idChat = chatId!!, downloadFirst = chatDefault!!.download_first, downloadSecond = partnerDownload3DFiles.toInt())
                     }
                 }
 
@@ -205,10 +301,10 @@ class PageChatFragment : Fragment() {
         return true
     }
 
-    private fun showPopupMenu3Dialog(message: Message, view: View) {
+    private fun popupMenu3Dialog(message: Message, view: View) {
         val popupMenu = PopupMenu(context, view)
         popupMenu.inflate(R.menu.file_3d_menu)
-        popupMenu.setOnMenuItemClickListener { item -> popupMenuItemClicked(item, message) }
+        popupMenu.setOnMenuItemClickListener { item -> showPopupMenuItemClicked(item, message) }
         try {
             val fieldPopup = PopupMenu::class.java.getDeclaredField("mPopup")
             fieldPopup.isAccessible = true
@@ -217,11 +313,15 @@ class PageChatFragment : Fragment() {
         }catch (e:Exception){
             Log.e("tag", e.message.toString())
         }finally {
+            if (CurrUser.id != message.user_id_sender){
+                val item = popupMenu.menu.findItem(R.id.delete3d)
+                item.isVisible = false
+            }
             popupMenu.show()
         }
     }
 
-    private fun popupMenuItemClicked(menuItem: MenuItem, message: Message):Boolean {
+    private fun showPopupMenuItemClicked(menuItem: MenuItem, message: Message):Boolean {
         when(menuItem.itemId) {
             R.id.copyLink -> {
                 val clipboard = APP.getSystemService(ClipboardManager::class.java)
@@ -249,11 +349,19 @@ class PageChatFragment : Fragment() {
                 intent.putExtra(Intent.EXTRA_TEXT, shareBody)
                 startActivity(Intent.createChooser(intent, "Choose APP"))
             }
+            R.id.delete3d -> {
+                viewModel.deleteMsg(message)
+            }
+            R.id.download3d -> {
+                if (iDownloadFile || message.user_id_sender == CurrUser.id)
+                downloadFromUrl(message.file_3d_msg!!,"3dfile")
+                else showToast("No access!")
+            }
         }
         return true
     }
 
-    private fun showImageDialog(url:String) {
+    private fun popupMenuImageDialog(message: Message) {
         val dialog = context?.let { Dialog(it) }
         dialog?.let {
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -262,11 +370,11 @@ class PageChatFragment : Fragment() {
             val imgMess = dialog.findViewById<ImageView>(R.id.imgMsg)
 
             //dialog.dismiss()
-            Glide.with(imgMess.context).load(url).into(imgMess)
+            Glide.with(imgMess.context).load(message.img_msg!!).into(imgMess)
             imgMess.setOnLongClickListener {
                 val popupMenu = PopupMenu(imgMess.context, imgMess)
                 popupMenu.inflate(R.menu.img_menu)
-                popupMenu.setOnMenuItemClickListener { item -> popupMenuImgClicked(item,url) }
+                popupMenu.setOnMenuItemClickListener { item -> showPopupMenuImgClicked(item,message) }
                 try {
                     val fieldPopup = PopupMenu::class.java.getDeclaredField("mPopup")
                     fieldPopup.isAccessible = true
@@ -275,6 +383,10 @@ class PageChatFragment : Fragment() {
                 }catch (e:Exception){
                     Log.e("tag", e.message.toString())
                 }finally {
+                    if (CurrUser.id != message.user_id_sender){
+                        val item = popupMenu.menu.findItem(R.id.deleteImg)
+                        item.isVisible = false
+                    }
                     popupMenu.show()
                 }
                 true
@@ -291,21 +403,25 @@ class PageChatFragment : Fragment() {
         }
     }
 
-    private fun popupMenuImgClicked(menuItem: MenuItem, url: String):Boolean {
+    private fun showPopupMenuImgClicked(menuItem: MenuItem, message: Message):Boolean {
         when(menuItem.itemId){
             R.id.shareImg -> {
                 val intent = Intent(Intent.ACTION_SEND)
                 intent.type = "text/plain"
                 intent.putExtra(Intent.EXTRA_SUBJECT, "share")
-                intent.putExtra(Intent.EXTRA_TEXT, url)
+                intent.putExtra(Intent.EXTRA_TEXT, message.img_msg)
                 startActivity(Intent.createChooser(intent, "Choose APP"))
             }
             R.id.downloadImg -> {
-                downloadFromUrl(url,"img")
+                downloadFromUrl(message.img_msg!!,"img")
+            }
+            R.id.deleteImg -> {
+                viewModel.deleteMsg(message)
             }
         }
         return true
     }
+
 
     private fun downloadFromUrl(url: String, name: String) {
         val nowDate = SimpleDateFormat(TIME_PAT, Locale.getDefault()).format(Date())
@@ -397,9 +513,10 @@ class PageChatFragment : Fragment() {
                         }
                         FireServices.ACTION_CHAT -> {
 
-                            val id = extras.getInt(FireServices.KEY_ID)
-                            val downloadFirst = extras.getInt(FireServices.KEY_D_FIRST)
-                            val downloadSecond = extras.getInt(FireServices.KEY_D_SECOND)
+                            val id = extras.getString(FireServices.KEY_ID)!!.toInt()
+                            val downloadFirst = extras.getString(FireServices.KEY_D_FIRST)!!.toInt()
+                            val downloadSecond = extras.getString(FireServices.KEY_D_SECOND)!!.toInt()
+ //                           iDownloadFile = (CurrUser.id == chatDefault!!.user_id_first && downloadFirst ==1) || (CurrUser.id == chatDefault!!.user_id_second && downloadSecond == 1)
                             chatDefault?.let {
                                 if (id == it.id){
                                     setDownloadFlag(it.user_id_first,it.user_id_second, downloadFirst, downloadSecond)
@@ -417,8 +534,14 @@ class PageChatFragment : Fragment() {
         }
     }
 
-    private fun setDownloadFlag(first_id:Int, second_id:Int, fistBool:Int, secondBool:Int){
-        partnerDownload3DFiles = (recipientUser!!.id == first_id && fistBool == 1) || (recipientUser!!.id == second_id && secondBool == 1)
+    private fun setDownloadFlag(first_id:Int, second_id:Int, firstBool:Int, secondBool:Int){
+        partnerDownload3DFiles = (CurrUser.id == first_id && firstBool == 1) || (CurrUser.id == second_id && secondBool == 1)
+        //iDownloadFile = (CurrUser.id == first_id && firstBool ==1) || (CurrUser.id == second_id && secondBool == 1)
+        if (recipientUser!!.id == first_id){
+            iDownloadFile = (firstBool == 1)
+        } else if (recipientUser!!.id == second_id) {
+            iDownloadFile = (secondBool == 1)
+        }
     }
 
     private var currentSelectedFile: File? = null

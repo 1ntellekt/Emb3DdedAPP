@@ -1,7 +1,6 @@
 package com.example.emb3ddedapp.screens.page_chat.adapter
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,15 +14,15 @@ import com.bumptech.glide.Glide
 import com.example.emb3ddedapp.R
 import com.example.emb3ddedapp.models.Message
 import com.example.emb3ddedapp.screens.listeners.AdapterListeners
-import com.example.emb3ddedapp.utils.getDataTimeWithFormat
-import com.example.emb3ddedapp.utils.showToast
 
 class MessageAdapter(
     private val user_id:Int,
-    private val onItem: AdapterListeners.OnItemFile3d,
+    private val onItem3dFile: AdapterListeners.OnItemFile,
+    private val onItemFile: AdapterListeners.OnItemFile,
     private val onImage:AdapterListeners.OnImage,
     private val onFile:AdapterListeners.OnFile,
-    private val on3dFile: AdapterListeners.On3dFile
+    private val on3dFile: AdapterListeners.On3dFile,
+    private val onTextMsg: AdapterListeners.OnItemTextMsg
 ):RecyclerView.Adapter<MessageAdapter.MessageHolder>() {
 
     private val messageList = mutableListOf<Message>()
@@ -159,6 +158,13 @@ class MessageAdapter(
                             imgMsgMy.visibility = View.GONE
                             panelFileMy.visibility = View.GONE
                             panel3dFileMy.visibility = View.GONE
+                            layMsgMy.setOnLongClickListener {
+                                val pos = holder.adapterPosition
+                                if (pos != RecyclerView.NO_POSITION){
+                                    onTextMsg.onItemTextMsgClick(pos, layMsgMy)
+                                }
+                                true
+                            }
                             tvMsgMy.text = text_msg
                         }
                         img_msg != null -> {
@@ -195,6 +201,13 @@ class MessageAdapter(
                             imgMsgPartner.visibility = View.GONE
                             panelFilePartner.visibility = View.GONE
                             panel3dFilePartner.visibility = View.GONE
+                            layMsgPartner.setOnLongClickListener {
+                                val pos = holder.adapterPosition
+                                if (pos != RecyclerView.NO_POSITION){
+                                    onTextMsg.onItemTextMsgClick(pos, layMsgPartner)
+                                }
+                                true
+                            }
                             tvMsgPartner.text = text_msg
                         }
                         img_msg != null -> {
@@ -255,14 +268,28 @@ class MessageAdapter(
             panel3dFileMy.setOnLongClickListener {
                 val pos = holder.adapterPosition
                 if (pos != RecyclerView.NO_POSITION){
-                    onItem.onItemFile3dClick(pos, holder.panel3dFileMy)
+                    onItem3dFile.onItemFileClick(pos, holder.panel3dFileMy)
                 }
                 true
             }
             panel3dFilePartner.setOnLongClickListener {
                 val pos = holder.adapterPosition
                 if (pos != RecyclerView.NO_POSITION){
-                    onItem.onItemFile3dClick(pos,holder.panel3dFilePartner)
+                    onItem3dFile.onItemFileClick(pos,holder.panel3dFilePartner)
+                }
+                true
+            }
+            panelFileMy.setOnLongClickListener {
+                val pos = holder.adapterPosition
+                if (pos != RecyclerView.NO_POSITION){
+                    onItemFile.onItemFileClick(pos, holder.panelFileMy)
+                }
+                true
+            }
+            panelFilePartner.setOnLongClickListener {
+                val pos = holder.adapterPosition
+                if (pos != RecyclerView.NO_POSITION){
+                    onItemFile.onItemFileClick(pos, holder.panelFilePartner)
                 }
                 true
             }
@@ -298,10 +325,14 @@ class MessageAdapter(
             btnDownloadFileMy.setOnClickListener(null)
             btn3dDownloadPartner.setOnClickListener(null)
             btnDownloadFilePartner.setOnClickListener(null)
-            panel3dFileMy.setOnClickListener(null)
-            panel3dFilePartner.setOnClickListener(null)
+            panel3dFileMy.setOnLongClickListener(null)
+            panel3dFilePartner.setOnLongClickListener(null)
+            panelFileMy.setOnLongClickListener(null)
+            panelFilePartner.setOnLongClickListener(null)
             imgMsgPartner.setOnClickListener(null)
             imgMsgMy.setOnClickListener(null)
+            layMsgMy.setOnLongClickListener(null)
+            layMsgPartner.setOnLongClickListener(null)
         }
 
     }

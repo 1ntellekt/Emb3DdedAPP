@@ -2,22 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/shareImg"
-        android:title="Share"
-        android:icon="@drawable/ic_baseline_share_24"
+    <item android:id="@+id/editMsg"
+        android:title="Edit"
+        android:iconTint="@color/black"
+        android:icon="@drawable/ic_baseline_edit_24"
         app:showAsAction="withText"/>
 
-    <item android:id="@+id/downloadImg"
-        android:title="Download"
-        android:icon="@drawable/ic_baseline_save_alt_24"
-        app:showAsAction="withText"/>
-
-    <item android:id="@+id/deleteImg"
+    <item android:id="@+id/deleteMsg"
         android:title="Delete"
         android:iconTint="@color/black"
         android:icon="@drawable/ic_baseline_delete_24"
         app:showAsAction="withText"/>
-
-
 
 </menu>

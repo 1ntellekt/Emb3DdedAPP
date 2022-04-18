@@ -134,6 +134,12 @@ interface ApiService {
    // @Headers("Accept:application/json", "Content-Type:application/json", "X-Requested-With:XMLHttpRequest","Authorization: Bearer cGx82W6TXYbnlkQGyZxAp3ZBjC7rJwdTUfsXSPiY")
     fun addMessage(@Body params:Message):Call<MessageDefaultResponse>
 
+    @POST("messages/{id}?_method=PUT")
+    fun updateMessage(@Path("id") id: Int, @Body params: Message):Call<StatusMsgResponse>
+
+    @POST("messages/{id}?_method=DELETE")
+    fun deleteMessage(@Path("id") id:Int):Call<StatusMsgResponse>
+
     //files
     @Multipart
     @POST("putfile")

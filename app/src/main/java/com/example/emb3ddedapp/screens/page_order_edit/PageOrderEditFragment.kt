@@ -81,7 +81,7 @@ class PageOrderEditFragment : Fragment() {
             tvAuthor.text = CurrUser.login
 
             btnBack.setOnClickListener {
-                APP.mNavController.navigate(R.id.action_pageOrderEditFragment_to_mainFragment)
+                APP.mNavController.navigate(R.id.action_pageOrderEditFragment_to_mainFragment, Bundle().also { it.putString("nav", "orders") })
             }
 
             edDescription.doOnTextChanged { text, start, before, count -> edDescriptionLayout.error = null}
@@ -120,11 +120,11 @@ class PageOrderEditFragment : Fragment() {
             if (curOrder == null) {
                 viewModel.addOrder(Order(title = edTitle.text.toString(),
                     description = edDescription.text.toString(), user_id = CurrUser.id, img_url = filePathUrl)
-                ){ APP.mNavController.navigate(R.id.action_pageOrderEditFragment_to_mainFragment)}
+                ){ APP.mNavController.navigate(R.id.action_pageOrderEditFragment_to_mainFragment, Bundle().also { it.putString("nav", "orders") })}
             } else {
                 viewModel.updateOrder(Order(id = curOrder!!.id,title = edTitle.text.toString(),
                     description = edDescription.text.toString(), user_id = CurrUser.id, img_url = filePathUrl)
-                ){ APP.mNavController.navigate(R.id.action_pageOrderEditFragment_to_mainFragment)}
+                ){APP.mNavController.navigate(R.id.action_pageOrderEditFragment_to_mainFragment, Bundle().also { it.putString("nav", "orders") })}
             }
         }
     }

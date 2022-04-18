@@ -65,12 +65,14 @@ class PageOrderFragment : Fragment() {
                 }
                 btnMsg.setOnClickListener {
                     viewModel.createChat(CurrUser.id, order.user.id){ createdChat->
-                        val args = Bundle().also { it.putInt("id_chat", createdChat.id) }
+                        val args = Bundle()
+                        args.putInt("id_chat", createdChat.id)
+                        args.putSerializable("recipientUser", curOrder!!.user)
                         APP.mNavController.navigate(R.id.action_pageOrderFragment_to_pageChatFragment, args)
                     }
                 }
             }
-            btnBack.setOnClickListener { APP.mNavController.navigate(R.id.action_pageOrderFragment_to_mainFragment) }
+            btnBack.setOnClickListener { APP.mNavController.navigate(R.id.action_pageOrderFragment_to_mainFragment, Bundle().also { it.putString("nav", "orders") }) }
         }
     }
 

@@ -56,7 +56,7 @@ class AllOrdersFragment : Fragment() {
             recyclerView.setHasFixedSize(true)
             recyclerView.adapter = adapter
             btnFilter.setOnClickListener {  }
-            btnNewFirst.setOnClickListener {
+/*            btnNewFirst.setOnClickListener {
                 val list = ordersList.sortedByDescending { getDataTimeWithFormat(it.created_at!!)}
                 adapter.setData(list)
                 btnOldFirst.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
@@ -67,7 +67,7 @@ class AllOrdersFragment : Fragment() {
                 adapter.setData(list)
                 btnOldFirst.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_active)
                 btnNewFirst.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
-            }
+            }*/
             refLayout.setOnRefreshListener(refLayListener)
         }
         mObserver = Observer { list->

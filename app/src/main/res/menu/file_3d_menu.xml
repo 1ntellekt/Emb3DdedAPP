@@ -23,4 +23,15 @@
         app:showAsAction="withText"
         />
 
+    <item android:id="@+id/download3d"
+        android:title="Download"
+        android:icon="@drawable/ic_baseline_save_alt_24"
+        app:showAsAction="withText"/>
+
+    <item android:id="@+id/delete3d"
+        android:title="Delete"
+        android:iconTint="@color/black"
+        android:icon="@drawable/ic_baseline_delete_24"
+        app:showAsAction="withText"/>
+
 </menu>

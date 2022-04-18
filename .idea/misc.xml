@@ -17,14 +17,16 @@
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout-v28/progressbar_only.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/all_news_fragment.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/all_orders_fragment.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/all_orders_fragment.xml" value="0.33" />
+        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/change_msg_dialog.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/chat_item_layout.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/chats_fragment.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/chats_fragment.xml" value="0.2" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/dialog_forgot_pass_layout.xml" value="0.25" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/friends_fragment.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/img_layout.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/input_code_layout.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/loading_layout.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/main_fragment.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/message_item.xml" value="0.33" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/my_news_fragment.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/my_orders_fragment.xml" value="0.36666666666666664" />
@@ -43,11 +45,14 @@
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/progressbar_only.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/sign_in_fragment.xml" value="0.25" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/sign_up_fragment.xml" value="0.22" />
+        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/menu-v26/img_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/menu/app_main_menu_tool.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/menu/chat_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/menu/file_3d_menu.xml" value="0.2359375" />
-        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/menu/img_menu.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/menu/file_menu.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/menu/img_menu.xml" value="0.33" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/menu/main_menu_nav.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/menu/msg_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/menu/profile_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/User/Desktop/diplom/app/src/main/res/drawable/back_btn_sign.xml" value="0.2" />
         <entry key="..\:/Users/User/Desktop/diplom/app/src/main/res/drawable/back_nav_bottom.xml" value="0.18" />

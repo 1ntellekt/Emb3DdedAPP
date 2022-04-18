@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.emb3ddedapp.R
 import com.example.emb3ddedapp.databinding.DialogForgotPassLayoutBinding
 import com.example.emb3ddedapp.databinding.SignInFragmentBinding
+import com.example.emb3ddedapp.progressdialog.MyProgressDialog
 import com.example.emb3ddedapp.utils.APP
 import com.example.emb3ddedapp.utils.showToast
 
@@ -59,7 +60,10 @@ class SignInFragment : Fragment() {
             btnLogInEmail.setOnClickListener {
                 if (edPasswordLayout.error.isNullOrEmpty() && edEmail.text.toString().isNotEmpty() && edPassword.text.toString().isNotEmpty()){
                     //log in email
+                    val myProgress = MyProgressDialog(requireContext())
+                    myProgress.load("Log in email....")
                     viewModel.logInEmail(edEmail.text.toString(),edPassword.text.toString()) {
+                        myProgress.dismiss()
                         APP.mNavController.navigate(R.id.action_signInFragment_to_mainFragment)
                     }
                 } else if (edEmail.text.toString().isEmpty()){

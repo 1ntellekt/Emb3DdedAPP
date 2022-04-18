@@ -12,27 +12,25 @@
         android:layout_gravity="center_horizontal"
         android:textColor="@color/white"
         android:layout_width="match_parent"
-        android:text="Enter email address for reset password"
+        android:text="Enter new text message"
         android:textAlignment="center"
-        android:textSize="24sp"
+        android:textSize="25sp"
         android:layout_height="wrap_content"/>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/edEmailLayout"
+        android:id="@+id/edLayoutMessage"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:hint="Enter email..."
-        app:helperText="Required email address"
-        app:startIconDrawable="@drawable/ic_baseline_alternate_email_24"
+        android:hint="Enter message..."
         app:endIconMode="clear_text"
-        app:helperTextTextColor="@color/color_purple"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edEmail"
+            android:id="@+id/edMessage"
+            android:minHeight="90dp"
             android:inputType="textPersonName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
