@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.emb3ddedapp.R
@@ -20,6 +21,7 @@ import com.example.emb3ddedapp.models.NewsItem
 import com.example.emb3ddedapp.notification.FireServices
 import com.example.emb3ddedapp.screens.news.adapter.NewsAdapter
 import com.example.emb3ddedapp.utils.APP
+import java.util.*
 
 class AllNewsFragment : Fragment() {
 
@@ -55,6 +57,15 @@ class AllNewsFragment : Fragment() {
             recyclerView.setHasFixedSize(true)
             recyclerView.adapter = adapter
             refLayout.setOnRefreshListener(refLayListener)
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return false
+                }
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    filterNews(newText)
+                    return true
+                }
+            })
         }
         mObserver = Observer { list->
             list?.let {
@@ -62,6 +73,17 @@ class AllNewsFragment : Fragment() {
                 newsList.addAll(it)
                 adapter.setData(it)
             }
+        }
+    }
+
+    private fun filterNews(newText: String?) {
+        if (newText != null){
+            adapter.setData(newsList.filter {
+                it.title.contains(newText.lowercase(Locale.getDefault()), ignoreCase = true)
+              ||it.tag.contains(newText.lowercase(Locale.getDefault()), ignoreCase = true)
+            })
+        } else {
+            adapter.setData(newsList)
         }
     }
 

@@ -52,6 +52,7 @@
             android:layout_height="wrap_content"/>
 
         <TextView
+            android:textColor="@color/color_grey"
             android:id="@+id/tvLastMessage"
             tools:text="Last message from chat..."
             android:singleLine="true"

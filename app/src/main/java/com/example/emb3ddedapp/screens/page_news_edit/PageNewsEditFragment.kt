@@ -118,7 +118,7 @@ class PageNewsEditFragment : Fragment() {
                 { APP.mNavController.navigate(R.id.action_pageNewsEditFragment_to_mainFragment, Bundle().also { it.putString("nav", "news") })}
             } else {
                 viewModel.editNewsItem(NewsItem(id = curNewsItem!!.id,title = edTitle.text.toString(), description = edDescription.text.toString(),
-                    img_url = filePathUrl, tag = edTag.text.toString(), user_id = CurrUser.id))
+                    img_url = filePathUrl, tag = "#${edTag.text.toString()}", user_id = CurrUser.id))
                 { APP.mNavController.navigate(R.id.action_pageNewsEditFragment_to_mainFragment, Bundle().also { it.putString("nav", "news") })}
             }
         }

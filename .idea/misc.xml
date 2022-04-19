@@ -7,6 +7,7 @@
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/drawable/back_btn_2.xml" value="0.2015" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/drawable/back_btn_sign.xml" value="0.2015" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/drawable/border_input_edtxt.xml" value="0.2015" />
+        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/drawable/filter_background_1.xml" value="0.208" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/drawable/ic_baseline_check_24.xml" value="0.2015" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/drawable/ic_baseline_link_24.xml" value="0.189" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/drawable/ic_baseline_public_24.xml" value="0.189" />
@@ -20,8 +21,10 @@
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/all_orders_fragment.xml" value="0.33" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/change_msg_dialog.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/chat_item_layout.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/chats_fragment.xml" value="0.2" />
+        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/chats_fragment.xml" value="0.33" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/dialog_forgot_pass_layout.xml" value="0.25" />
+        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/filter_chats_layout.xml" value="0.25" />
+        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/filter_orders_layout.xml" value="0.25" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/friends_fragment.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/img_layout.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/input_code_layout.xml" value="0.36666666666666664" />
@@ -34,7 +37,7 @@
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/new_item_layout_2.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/news_fragment.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/order_item_layout_1.xml" value="0.25" />
-        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/order_item_layout_2.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/order_item_layout_2.xml" value="0.33" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/orders_fragment.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/page_chat_fragment.xml" value="0.33" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/page_news_edit_fragment.xml" value="0.25" />
@@ -53,6 +56,7 @@
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/menu/img_menu.xml" value="0.33" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/menu/main_menu_nav.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/menu/msg_menu.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/menu/orders_filter_menu.xml" value="0.2" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/menu/profile_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/User/Desktop/diplom/app/src/main/res/drawable/back_btn_sign.xml" value="0.2" />
         <entry key="..\:/Users/User/Desktop/diplom/app/src/main/res/drawable/back_nav_bottom.xml" value="0.18" />

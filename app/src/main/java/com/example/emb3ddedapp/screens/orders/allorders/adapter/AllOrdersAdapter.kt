@@ -43,10 +43,15 @@ class AllOrdersAdapter(private val onItemListener:AdapterListeners.OnItemClick):
         val order = ordersList[position]
         holder.apply {
             tvAuthor.text = "Order author: ${ order.user!!.login }"
-            tvShortDescription.text = "${order.description.take(120)}...."
-            order.img_url?.let { url->
-                Glide.with(imgOrder.context).load(url).into(imgOrder)
+            tvShortDescription.text = "${order.description.take(170)}...."
+            if (order.img_url == null){
+                imgOrder.setImageResource(R.drawable.order_img)
+            } else {
+                Glide.with(imgOrder.context).load(order.img_url).into(imgOrder)
             }
+//            order.img_url?.let { url->
+//
+//            }
             tvDateTime.text = getDataTimeWithFormat(order.created_at!!)
         }
     }

@@ -123,10 +123,12 @@ class SignUpFragment : Fragment() {
                     CurrUser.number = edNum.text.toString()
                     val myProgress = MyProgressDialog(requireContext())
                     myProgress.load("Sign up email....")
-                    viewModel.signUpEmail(edEmail.text.toString(),edPassword.text.toString()){
+                    viewModel.signUpEmail(edEmail.text.toString(),edPassword.text.toString(),{
                         myProgress.dismiss()
                         APP.mNavController.navigate(R.id.action_signUpFragment_to_signInFragment)
-                    }
+                    },{
+                        myProgress.dismiss()
+                    })
                 }
             }
 

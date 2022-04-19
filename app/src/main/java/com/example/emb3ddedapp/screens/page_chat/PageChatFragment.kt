@@ -48,9 +48,9 @@ import java.util.*
 class PageChatFragment : Fragment() {
 
     private lateinit var viewModel: PageChatViewModel
-    private var _binding:PageChatFragmentBinding? = null
-    private val binding:PageChatFragmentBinding
-    get() = _binding!!
+    //private var _binding:PageChatFragmentBinding? = null
+    private lateinit var binding:PageChatFragmentBinding
+    //get() = _binding!!
 
     private var chatId:Int? = null
     private lateinit var mObserver: Observer<List<Message>?>
@@ -65,7 +65,7 @@ class PageChatFragment : Fragment() {
     private var iDownloadFile = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = PageChatFragmentBinding.inflate(inflater,container,false)
+        binding = PageChatFragmentBinding.inflate(inflater,container,false)
         return binding.root
     }
 
@@ -482,7 +482,7 @@ class PageChatFragment : Fragment() {
         viewModel.messagesList.removeObserver(mObserver)
         viewModel.chatDef.removeObserver(cObserver)
         requireActivity().unregisterReceiver(broadcastReceiver)
-        _binding = null
+        //_binding = null
     }
 
     private val broadcastReceiver = object : BroadcastReceiver() {

@@ -62,10 +62,12 @@ class SignInFragment : Fragment() {
                     //log in email
                     val myProgress = MyProgressDialog(requireContext())
                     myProgress.load("Log in email....")
-                    viewModel.logInEmail(edEmail.text.toString(),edPassword.text.toString()) {
+                    viewModel.logInEmail(edEmail.text.toString(),edPassword.text.toString(),{
                         myProgress.dismiss()
                         APP.mNavController.navigate(R.id.action_signInFragment_to_mainFragment)
-                    }
+                    }, {
+                        myProgress.dismiss()
+                    })
                 } else if (edEmail.text.toString().isEmpty()){
                     edEmailLayout.error = "Input email address!"
                 } else if (edPassword.text.toString().isEmpty()){

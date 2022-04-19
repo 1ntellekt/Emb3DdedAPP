@@ -18,8 +18,8 @@ import com.example.emb3ddedapp.utils.REPOSITORY
 
 class MainActivity : AppCompatActivity() {
 
-    private var binding: ActivityMainBinding?=null
-    lateinit var mNavController:NavController
+    private var binding: ActivityMainBinding? = null
+    lateinit var mNavController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,13 +30,13 @@ class MainActivity : AppCompatActivity() {
         REPOSITORY = Repository()
 
         //val intentFilter = IntentFilter()
-       // intentFilter.addAction(FireServices.PUSH_TAG)
-       // registerReceiver(broadcastReceiver,intentFilter)
+        // intentFilter.addAction(FireServices.PUSH_TAG)
+        // registerReceiver(broadcastReceiver,intentFilter)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-       // unregisterReceiver(broadcastReceiver)
+        // unregisterReceiver(broadcastReceiver)
         binding = null
     }
 

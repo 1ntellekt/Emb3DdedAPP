@@ -1,26 +1,31 @@
 package com.example.emb3ddedapp.screens.chats
 
+import android.app.Dialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
+import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.emb3ddedapp.R
 import com.example.emb3ddedapp.databinding.ChatsFragmentBinding
+import com.example.emb3ddedapp.databinding.FilterChatsLayoutBinding
 import com.example.emb3ddedapp.models.Chat
 import com.example.emb3ddedapp.models.CurrUser
 import com.example.emb3ddedapp.notification.FireServices
 import com.example.emb3ddedapp.screens.chats.adapter.ChatAdapter
 import com.example.emb3ddedapp.utils.APP
+import java.util.*
 
 class ChatsFragment : Fragment() {
 
@@ -63,13 +68,63 @@ class ChatsFragment : Fragment() {
             recyclerView.addItemDecoration(decoration)
             recyclerView.adapter = adapter
             refLayout.setOnRefreshListener(refLayListener)
+            btnFilter.setOnClickListener {
+                dialogFilterChats()
+            }
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return false
+                }
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    filterChats(newText)
+                    return true
+                }
+            })
         }
         mObserver = Observer { list->
-            list?.let {
+            list?.let { list1->
+                val chats = if (sortByFirstNewDate){
+                    list1.sortedByDescending {it.last_message?.created_at}
+                } else {
+                    list1.sortedBy {it.last_message?.created_at}
+                }
+
+                val chats1 = if (sortByLoginAlpha) {
+                    chats
+//                        .filterNot { it.user_id_first == CurrUser.id }
+//                        .filter { it.user_id_second != CurrUser.id }
+                        .sortedBy { it.user_first?.login }
+                        .sortedBy { it.user_second?.login }
+                } else {
+                    chats
+//                        .filterNot { it.user_id_first == CurrUser.id }
+//                          .filter { (it.user_id_second != CurrUser.id && it.user_id_first == CurrUser.id)
+//                                  || (it.user_id_first != CurrUser.id && it.user_id_second == CurrUser.id) }
+                        .sortedByDescending { it.user_first?.login }
+                        .sortedByDescending { it.user_second?.login }
+                }
                 chatList.clear()
-                chatList.addAll(it)
-                adapter.setData(it)
+                chatList.addAll(chats1)
+                adapter.setData(chats1)
             }
+        }
+    }
+
+    private fun filterChats(newText: String?) {
+        if (newText != null){
+            adapter.setData(
+                chatList
+//                .filterNot { it.user_id_first == CurrUser.id }
+//                .filterNot { it.user_id_second == CurrUser.id }
+                .filter {
+                    (it.user_id_second != CurrUser.id && it.user_id_first == CurrUser.id
+                    && it.user_second?.login!!.contains(newText.lowercase(Locale.getDefault()), ignoreCase = true))
+                    || (it.user_id_first != CurrUser.id && it.user_id_second == CurrUser.id
+                    && it.user_first?.login!!.contains(newText.lowercase(Locale.getDefault()), ignoreCase = true))
+                }
+            )
+        } else {
+            adapter.setData(chatList)
         }
     }
 
@@ -111,6 +166,72 @@ class ChatsFragment : Fragment() {
                     }
                 }
             }
+        }
+    }
+
+    //filters
+    private var sortByLoginAlpha = true
+    private var sortByFirstNewDate = true
+
+    private fun dialogFilterChats(){
+        val dialog = context?.let { Dialog(it) }
+        dialog?.let { dia->
+            dia.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            val binding: FilterChatsLayoutBinding = FilterChatsLayoutBinding.inflate(dia.layoutInflater)
+            dia.setContentView(binding.root)
+
+            binding.apply {
+
+                if (sortByFirstNewDate){
+                    btnFirstNew.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_active)
+                    btnFirstOld.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
+                } else {
+                    btnFirstOld.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_active)
+                    btnFirstNew.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
+                }
+
+                if (sortByLoginAlpha){
+                    btnAlpha.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_active)
+                    btnReverseAlpha.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
+                } else {
+                    btnReverseAlpha.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_active)
+                    btnAlpha.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
+                }
+
+                btnFirstNew.setOnClickListener {
+                    if (sortByFirstNewDate) return@setOnClickListener
+                    sortByFirstNewDate = true
+                    btnFirstNew.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_active)
+                    btnFirstOld.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
+                }
+                btnFirstOld.setOnClickListener {
+                    if (!sortByFirstNewDate) return@setOnClickListener
+                    sortByFirstNewDate = false
+                    btnFirstOld.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_active)
+                    btnFirstNew.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
+                }
+                btnAlpha.setOnClickListener {
+                    if (sortByLoginAlpha) return@setOnClickListener
+                    sortByLoginAlpha = true
+                    btnAlpha.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_active)
+                    btnReverseAlpha.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
+                }
+                btnReverseAlpha.setOnClickListener {
+                    if (!sortByLoginAlpha) return@setOnClickListener
+                    sortByLoginAlpha = false
+                    btnReverseAlpha.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_active)
+                    btnAlpha.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
+                }
+            }
+
+            dia.show()
+            dia.window?.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            dia.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dia.window?.attributes?.windowAnimations = R.style.DialogAnimation
+            dia.window?.setGravity(Gravity.TOP)
         }
     }
 

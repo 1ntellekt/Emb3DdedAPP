@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/filter_background_1"
+    android:paddingBottom="20dp"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tvHeadTitleRad"
+        android:text="Filter options"
+        android:textAlignment="center"
+        android:layout_margin="5dp"
+        android:textSize="20sp"
+        android:textColor="@color/btn_active"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+    <TextView
+        android:id="@+id/tvDate"
+        app:layout_constraintTop_toBottomOf="@id/tvHeadTitleRad"
+        android:text="Sort by Date"
+        app:layout_constraintEnd_toStartOf="@id/tvHeadTitleRad"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:textColor="@color/black"
+        android:textStyle="italic"
+        android:textSize="19sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:id="@+id/panelDateFilter"
+        app:layout_constraintTop_toBottomOf="@id/tvDate"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnFirstNew"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:text="First new"
+            android:textSize="16sp"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:background="@drawable/back_btn_2"
+            android:layout_height="wrap_content"/>
+
+        <RelativeLayout
+            android:layout_width="5dp"
+            android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnFirstOld"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:text="First old"
+            android:backgroundTint="@color/btn_inactive"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:background="@drawable/back_btn_2"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tvSearch"
+        app:layout_constraintTop_toBottomOf="@id/panelDateFilter"
+        android:text="Sort by login name"
+        app:layout_constraintStart_toStartOf="@id/tvDate"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:textColor="@color/black"
+        android:textStyle="italic"
+        android:textSize="17sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:id="@+id/panelSearchFilter"
+        app:layout_constraintTop_toBottomOf="@id/tvSearch"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnAlpha"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:text="In alphabetical"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:background="@drawable/back_btn_2"
+            android:layout_height="wrap_content"/>
+
+        <RelativeLayout
+            android:layout_width="5dp"
+            android:layout_height="match_parent"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnReverseAlpha"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:text="In reverse alphabetical"
+            android:backgroundTint="@color/btn_inactive"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:background="@drawable/back_btn_2"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

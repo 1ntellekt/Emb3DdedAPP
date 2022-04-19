@@ -21,13 +21,14 @@ class SignUpViewModel(application: Application) : AndroidViewModel(application) 
             { showToast(it) })
     }*/
 
-    fun signUpEmail(email:String,password:String,onSuccess:()->Unit){
+    fun signUpEmail(email:String,password:String,onSuccess:()->Unit, onFail: () -> Unit){
             REPOSITORY.singUpEmail(email,password,
                 {
                     onSuccess()
                 },
                 {
                     showToast(it)
+                    onFail()
                 })
     }
 

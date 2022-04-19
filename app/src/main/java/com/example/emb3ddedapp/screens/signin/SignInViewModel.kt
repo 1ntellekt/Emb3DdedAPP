@@ -58,11 +58,12 @@ class SignInViewModel(application: Application) : AndroidViewModel(application) 
     }
     */
 
-    fun logInEmail(email:String,password:String,onSuccess:()->Unit){
+    fun logInEmail(email:String,password:String,onSuccess:()->Unit, onFail:()->Unit){
         REPOSITORY.logInEmail(email,password, {
             onSuccess()
         },{
             showToast(it)
+            onFail()
         })
     }
 

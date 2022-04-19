@@ -1,11 +1,13 @@
 package com.example.emb3ddedapp.screens.chats.adapter
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.emb3ddedapp.R
@@ -48,14 +50,18 @@ class ChatAdapter(
             if (chat.user_first!!.id == user_id){
                 //user second
                 tvLogin.text = chat.user_second!!.login
-                chat.user_second.url_profile?.let { url->
-                    Glide.with(imgChatPerson.context).load(url).into(imgChatPerson)
+                if (chat.user_second.url_profile == null){
+                    imgChatPerson.setImageResource(R.drawable.ic_person)
+                } else {
+                    Glide.with(imgChatPerson.context).load(chat.user_second.url_profile).into(imgChatPerson)
                 }
             } else {
                 //user first
                 tvLogin.text = chat.user_first.login
-                chat.user_first.url_profile?.let { url->
-                    Glide.with(imgChatPerson.context).load(url).into(imgChatPerson)
+                if (chat.user_first.url_profile == null){
+                    imgChatPerson.setImageResource(R.drawable.ic_person)
+                } else {
+                    Glide.with(imgChatPerson.context).load(chat.user_first.url_profile).into(imgChatPerson)
                 }
             }
 
@@ -66,14 +72,15 @@ class ChatAdapter(
                 chat.last_message.apply {
                     if (text_msg != null){
                         tvLastMessage.text = text_msg
+                        tvLastMessage.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.color_grey))
                     } else if (img_msg != null) {
-                        tvLastMessage.setTextColor(Color.GREEN)
+                        tvLastMessage.setTextColor(Color.MAGENTA)
                         tvLastMessage.text = "'A picture'"
                     } else if (file_msg != null){
-                        tvLastMessage.setTextColor(Color.GREEN)
+                        tvLastMessage.setTextColor(Color.MAGENTA)
                         tvLastMessage.text = "'A file'"
                     } else if (file_3d_msg != null){
-                        tvLastMessage.setTextColor(Color.GREEN)
+                        tvLastMessage.setTextColor(Color.MAGENTA)
                         tvLastMessage.text = "'A 3d file'"
                     }
                     val dateTimeStr = getDataTimeWithFormat(created_at!!)

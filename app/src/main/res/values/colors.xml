@@ -17,5 +17,6 @@
     <color name="color_btn_inactive">#84799D</color>
     <color name="color_back_chat">#FBF6F6</color>
     <color name="color_pages_grey">#DFDBDB</color>
+    <color name="color_grey">#585858</color>
 
 </resources>
