@@ -70,6 +70,12 @@ dependencies {
     //circle imgView
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
+    //Drawing canvas
+    implementation 'com.github.Miihir79:DrawingCanvas:1.1.2'
+
+    //Color picker
+    implementation 'com.github.Dhaval2404:ColorPicker:2.3'
+
     //Firebase d-s
     implementation 'com.firebaseui:firebase-ui-auth:8.0.0'
     implementation 'com.google.firebase:firebase-auth-ktx:21.0.1'

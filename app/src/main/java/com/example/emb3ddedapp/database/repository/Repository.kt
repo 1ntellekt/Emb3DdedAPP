@@ -8,7 +8,9 @@ import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.messaging.FirebaseMessaging
+import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -537,7 +539,12 @@ class Repository : DataRepository {
 
     //files
     override fun uploadFile(file: File, fileNameDateForm:String ,onSuccess: (String) -> Unit, onFail: (String) -> Unit) {
-        val requestBody: RequestBody = file.asRequestBody("multipart/form-data".toMediaType())
+
+        val requestBody = if (file.name.endsWith(".jpg") || file.name.endsWith(".png") || file.name.endsWith(".jpeg")){
+            file.asRequestBody("image/*".toMediaType())
+        } else {
+            file.asRequestBody("multipart/form-data".toMediaType())
+        }
         val body: MultipartBody.Part = MultipartBody.Part.createFormData(fileNameDateForm, file.name, requestBody)
         RetrofitInstance.api.uploadFile(body).enqueue(object : Callback<StatusMsgPath> {
             override fun onResponse(call: Call<StatusMsgPath>, response: Response<StatusMsgPath>) {

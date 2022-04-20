@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.mihir.drawingcanvas.drawingView
+        android:id="@+id/drawing_view"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/panelDraw"
+        android:layout_alignParentTop="true" />
+
+    <LinearLayout
+        android:id="@+id/panelDraw"
+        android:weightSum="6"
+        android:layout_marginBottom="5dp"
+        android:layout_above="@id/seekBrush"
+        android:backgroundTint="@color/black"
+        android:background="@drawable/back_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_weight="0.125"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+        <ImageButton
+            android:id="@+id/btnUndo"
+            android:src="@drawable/ic_baseline_undo_24"
+            android:layout_weight="1"
+            android:background="@color/fui_transparent"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            app:tint="@color/white" />
+
+        <RelativeLayout
+            android:layout_weight="0.25"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+        <ImageButton
+            android:id="@+id/btnClean"
+            android:src="@drawable/ic_baseline_cleaning_services_24"
+            android:layout_weight="1"
+            app:tint="@color/white"
+            android:background="@color/fui_transparent"
+            android:layout_width="0dp"
+            android:layout_height="60dp"/>
+
+        <RelativeLayout
+            android:layout_weight="0.25"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+        <ImageButton
+            android:id="@+id/btnColorPick"
+            android:src="@drawable/ic_baseline_colorize_24"
+            android:layout_weight="1"
+            app:tint="@color/white"
+            android:background="@color/fui_transparent"
+            android:layout_width="0dp"
+            android:layout_height="60dp"/>
+
+        <RelativeLayout
+            android:layout_weight="0.25"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+        <ImageButton
+            android:id="@+id/btnRedo"
+            android:src="@drawable/ic_baseline_redo_24"
+            android:layout_weight="1"
+            android:background="@color/fui_transparent"
+            android:layout_width="0dp"
+            app:tint="@color/white"
+            android:layout_height="60dp"/>
+
+        <RelativeLayout
+            android:layout_weight="0.125"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+        <ImageButton
+            android:id="@+id/btnSendDrawing"
+            android:src="@drawable/ic_baseline_send_24"
+            android:layout_weight="1"
+            android:background="@color/fui_transparent"
+            android:layout_width="0dp"
+            app:tint="@color/white"
+            android:layout_height="60dp"/>
+
+        <RelativeLayout
+            android:layout_weight="0.125"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+    <SeekBar
+        android:id="@+id/seekBrush"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"/>
+
+
+</RelativeLayout>

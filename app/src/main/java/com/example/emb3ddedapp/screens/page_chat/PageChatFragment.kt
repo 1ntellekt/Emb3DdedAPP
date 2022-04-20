@@ -18,8 +18,10 @@ import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import android.widget.PopupMenu
+import android.widget.SeekBar
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.drawToBitmap
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -28,15 +30,19 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.example.emb3ddedapp.R
 import com.example.emb3ddedapp.databinding.ChangeMsgDialogBinding
+import com.example.emb3ddedapp.databinding.DialogDrawLayoutBinding
 import com.example.emb3ddedapp.databinding.PageChatFragmentBinding
 import com.example.emb3ddedapp.models.*
 import com.example.emb3ddedapp.notification.FireServices
 import com.example.emb3ddedapp.progressdialog.MyProgressDialog
 import com.example.emb3ddedapp.screens.page_chat.adapter.MessageAdapter
 import com.example.emb3ddedapp.utils.*
+import com.github.dhaval2404.colorpicker.ColorPickerDialog
+import com.github.dhaval2404.colorpicker.model.ColorShape
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
@@ -294,12 +300,77 @@ class PageChatFragment : Fragment() {
                         viewModel.updateChat(idChat = chatId!!, downloadFirst = chatDefault!!.download_first, downloadSecond = partnerDownload3DFiles.toInt())
                     }
                 }
-
+            }
+            R.id.drawCanvasDialog -> {
+                dialogDrawCanvas()
             }
         }
 
         return true
     }
+
+
+    private fun dialogDrawCanvas() {
+        val dialog = context?.let { Dialog(it) }
+        dialog?.let { dia->
+            dia.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            val binding:DialogDrawLayoutBinding = DialogDrawLayoutBinding.inflate(dia.layoutInflater)
+            dia.setContentView(binding.root)
+
+            binding.apply {
+                btnClean.setOnClickListener { drawingView.clearDrawingBoard() }
+                btnRedo.setOnClickListener { drawingView.redo() }
+                btnUndo.setOnClickListener { drawingView.undo() }
+                btnColorPick.setOnClickListener {
+                    // Kotlin Code
+                    ColorPickerDialog
+                        .Builder(dia.context)        				// Pass Activity Instance
+                        .setTitle("Pick Theme")           	// Default "Choose Color"
+                        .setColorShape(ColorShape.SQAURE)   // Default ColorShape.CIRCLE
+                        .setDefaultColor(R.color.black)     // Pass Default Color
+                        .setColorListener { color, colorHex ->
+                            drawingView.setBrushColor(color)
+                        }
+                        .show()
+                }
+                seekBrush.max = 50
+                drawingView.setSizeForBrush(5)
+                seekBrush.progress = 5
+                seekBrush.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+                    override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                        drawingView.setSizeForBrush(progress)
+                    }
+                    override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+                    override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+                })
+                btnSendDrawing.setOnClickListener {
+                    //send bitmap as image message
+                    val bmp = drawingView.drawToBitmap()
+                    val nowDate = SimpleDateFormat(TIME_PAT, Locale.getDefault()).format(Date())
+                    val file = File(requireActivity().filesDir.path,"img-$nowDate.jpg")
+                    val bos = ByteArrayOutputStream()
+                    bmp.compress(Bitmap.CompressFormat.JPEG, 100, bos)
+                    val bitmapData = bos.toByteArray()
+                    val fos = FileOutputStream(file)
+                    fos.write(bitmapData)
+                    fos.flush()
+                    fos.close()
+                    viewModel.sendImage(file, chatId!!, recipientUser!!.id,{clearFilesDir()},{clearFilesDir()})
+                    dia.dismiss()
+                }
+            }
+
+            dia.show()
+            dia.window?.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            dia.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dia.window?.attributes?.windowAnimations = R.style.DialogAnimation
+            dia.window?.setGravity(Gravity.BOTTOM)
+        }
+    }
+
 
     private fun popupMenu3Dialog(message: Message, view: View) {
         val popupMenu = PopupMenu(context, view)
@@ -409,7 +480,7 @@ class PageChatFragment : Fragment() {
                 val intent = Intent(Intent.ACTION_SEND)
                 intent.type = "text/plain"
                 intent.putExtra(Intent.EXTRA_SUBJECT, "share")
-                intent.putExtra(Intent.EXTRA_TEXT, message.img_msg)
+                intent.putExtra(Intent.EXTRA_TEXT,URLEncoder.encode(message.img_msg,"UTF-8"))
                 startActivity(Intent.createChooser(intent, "Choose APP"))
             }
             R.id.downloadImg -> {
@@ -611,16 +682,19 @@ class PageChatFragment : Fragment() {
         }
     }
 
-    private val takePhoto  = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result->
+    private val takePhoto  = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result->
         if(result.resultCode== AppCompatActivity.RESULT_OK &&result.data!=null){
             val bundle:Bundle = result.data!!.extras!!
-            val nowDate = SimpleDateFormat(TIME_PAT, Locale.getDefault()).format(Date())
             val bmp: Bitmap = bundle.get("data") as Bitmap
+            val nowDate = SimpleDateFormat(TIME_PAT, Locale.getDefault()).format(Date())
             val file = File(requireActivity().filesDir.path,"img-$nowDate.jpg")
-            val fOut = FileOutputStream(file)
-            bmp.compress(Bitmap.CompressFormat.JPEG, 100, fOut)
-            fOut.flush()
-            fOut.close()
+            val bos = ByteArrayOutputStream()
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100, bos)
+            val bitmapData = bos.toByteArray()
+            val fos = FileOutputStream(file)
+            fos.write(bitmapData)
+            fos.flush()
+            fos.close()
             //selectedFileNames.add(file)
             viewModel.sendImage(file, chatId!!, recipientUser!!.id,{clearFilesDir()},{clearFilesDir()})
         }

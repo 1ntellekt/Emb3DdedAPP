@@ -6,6 +6,8 @@
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/drawable/back_btn.xml" value="0.2015" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/drawable/back_btn_2.xml" value="0.2015" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/drawable/back_btn_sign.xml" value="0.2015" />
+        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/drawable/background_draw_canvas.xml" value="0.208" />
+        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/drawable/background_draw_cnavas.xml" value="0.208" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/drawable/border_input_edtxt.xml" value="0.2015" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/drawable/filter_background_1.xml" value="0.208" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/drawable/ic_baseline_check_24.xml" value="0.2015" />
@@ -22,6 +24,7 @@
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/change_msg_dialog.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/chat_item_layout.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/chats_fragment.xml" value="0.33" />
+        <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/dialog_draw_layout.xml" value="0.2713541666666667" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/dialog_forgot_pass_layout.xml" value="0.25" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/filter_chats_layout.xml" value="0.25" />
         <entry key="..\:/Users/User/Desktop/Emb3DdedAPP/app/src/main/res/layout/filter_orders_layout.xml" value="0.25" />
