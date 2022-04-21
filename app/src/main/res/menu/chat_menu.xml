@@ -9,4 +9,10 @@
         android:title="Draw canvas"
         app:showAsAction="withText"/>
 
+    <item android:id="@+id/scanQRCode"
+        android:title="Scan QR code"
+        android:icon="@drawable/ic_baseline_qr_code_scanner_24"
+        app:showAsAction="withText"
+        />
+
 </menu>

@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'kotlin-android'
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
 }
@@ -75,6 +76,11 @@ dependencies {
 
     //Color picker
     implementation 'com.github.Dhaval2404:ColorPicker:2.3'
+
+    //QR code generator
+    implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
+
+    implementation 'com.github.yuriy-budiyev:code-scanner:2.1.2'
 
     //Firebase d-s
     implementation 'com.firebaseui:firebase-ui-auth:8.0.0'

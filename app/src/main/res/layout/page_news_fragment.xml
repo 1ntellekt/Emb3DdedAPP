@@ -104,6 +104,7 @@
 
             <TextView
                 android:id="@+id/tvTitle"
+                android:fontFamily="@font/roboto_bold"
                 android:text="Title news example"
                 android:layout_margin="10dp"
                 android:textSize="22sp"
@@ -133,6 +134,7 @@
                     android:id="@+id/tvDateTime"
                     android:layout_marginStart="5dp"
                     android:text="20/02/2022 10:30"
+                    android:fontFamily="@font/roboto_italic"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -143,6 +145,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tvTitle"
                 app:layout_constraintStart_toEndOf="@id/panelTime"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:fontFamily="@font/roboto_italic"
                 android:layout_marginStart="25dp"
                 android:textSize="19sp"
                 android:textColor="@color/color_blue"
@@ -152,6 +155,7 @@
 
             <TextView
                 android:id="@+id/tvDescription"
+                android:fontFamily="@font/roboto_regular"
                 android:text="@string/test_large_text"
                 android:textSize="17sp"
                 app:layout_constraintTop_toBottomOf="@id/tvTag"
@@ -178,6 +182,7 @@
                 <TextView
                     android:layout_marginStart="8dp"
                     android:id="@+id/tvAuthor"
+                    android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/black"
                     android:text="1ntellekt"
                     android:textSize="17sp"

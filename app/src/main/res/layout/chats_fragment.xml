@@ -70,8 +70,9 @@
 
               <TextView
                     android:text="Chats"
+                    android:fontFamily="@font/roboto_bold"
                     android:layout_gravity="center_vertical"
-                    android:textColor="@color/black"
+                    android:textColor="@color/color_head_txt"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -85,6 +86,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            android:backgroundTint="@color/btn_active"
             android:src="@drawable/ic_equalizer_filter_filtering_mixer_sorting_icon_123287"
             android:background="@drawable/back_btn"
             android:layout_width="48dp"

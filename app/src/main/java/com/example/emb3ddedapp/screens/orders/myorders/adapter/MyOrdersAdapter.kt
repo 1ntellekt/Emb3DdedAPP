@@ -46,6 +46,7 @@ class MyOrdersAdapter(
         val tvShortDescription: TextView = itemView.findViewById(R.id.tvShortDescription)
         val tvAuthor: TextView = itemView.findViewById(R.id.tvAuthor)
         val tvDateTime: TextView = itemView.findViewById(R.id.tvDateTime)
+        val tvTitle: TextView = itemView.findViewById(R.id.tvTitle)
 
         val btnDone:ImageButton = itemView.findViewById(R.id.btnDone)
         val btnEdit:ImageButton = itemView.findViewById(R.id.btnEdit)
@@ -60,7 +61,8 @@ class MyOrdersAdapter(
         val order = ordersList[position]
         holder.apply {
             tvAuthor.text = "Order author: ${ order.user!!.login }"
-            tvShortDescription.text = "${order.description.take(270)}...."
+            tvTitle.text = "${order.title.take(30)}...."
+            tvShortDescription.text = "${order.description.take(190)}...."
             order.img_url?.let { url->
                 Glide.with(imgOrder.context).load(url).into(imgOrder)
             }

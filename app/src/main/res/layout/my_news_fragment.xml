@@ -35,7 +35,7 @@
         android:layout_marginEnd="15dp"
         android:contentDescription="add my news"
         android:layout_marginBottom="15dp"
-        android:backgroundTint="@color/color_btn"
+        android:backgroundTint="@color/color_btn_2"
         android:src="@drawable/ic_icons8newadd"
         app:tint="@color/white"
         android:layout_width="wrap_content"

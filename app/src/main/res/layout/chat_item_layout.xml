@@ -40,6 +40,7 @@
 
         <TextView
             android:id="@+id/tvLogin"
+            android:fontFamily="@font/roboto_black"
             tools:text="Name login"
             android:textSize="18sp"
             android:textColor="@color/color_btn"
@@ -54,6 +55,7 @@
         <TextView
             android:textColor="@color/color_grey"
             android:id="@+id/tvLastMessage"
+            android:fontFamily="@font/roboto_regular"
             tools:text="Last message from chat..."
             android:singleLine="true"
             android:marqueeRepeatLimit="marquee_forever"
@@ -68,6 +70,7 @@
     <TextView
         android:id="@+id/tvDate"
         tools:text="20/02/2022"
+        android:fontFamily="@font/roboto_italic"
         android:textColor="@color/black"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -79,6 +82,7 @@
     <TextView
         android:id="@+id/tvTime"
         tools:text="10:30"
+        android:fontFamily="@font/roboto_italic"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

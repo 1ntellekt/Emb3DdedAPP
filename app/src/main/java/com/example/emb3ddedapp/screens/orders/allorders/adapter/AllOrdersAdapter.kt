@@ -31,6 +31,7 @@ class AllOrdersAdapter(private val onItemListener:AdapterListeners.OnItemClick):
         val imgOrder:ShapeableImageView = itemView.findViewById(R.id.imgOrder)
         val tvShortDescription:TextView = itemView.findViewById(R.id.tvShortDescription)
         val tvAuthor:TextView = itemView.findViewById(R.id.tvAuthor)
+        val tvTitle:TextView = itemView.findViewById(R.id.tvTitle)
         val tvDateTime:TextView = itemView.findViewById(R.id.tvDateTime)
     }
 
@@ -43,7 +44,8 @@ class AllOrdersAdapter(private val onItemListener:AdapterListeners.OnItemClick):
         val order = ordersList[position]
         holder.apply {
             tvAuthor.text = "Order author: ${ order.user!!.login }"
-            tvShortDescription.text = "${order.description.take(170)}...."
+            tvTitle.text = "${order.title.take(20)}...."
+            tvShortDescription.text = "${order.description.take(190)}...."
             if (order.img_url == null){
                 imgOrder.setImageResource(R.drawable.order_img)
             } else {

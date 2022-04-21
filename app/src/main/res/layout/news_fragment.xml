@@ -13,12 +13,12 @@
         android:layout_height="wrap_content"
         app:tabTextColor="@color/color_btn"
         app:tabSelectedTextColor="@color/white"
-        app:tabIndicatorColor="@color/color_btn"
+        app:tabIndicatorColor="@color/color_purple"
         app:tabIndicatorHeight="4dp"
-        app:tabIndicatorGravity="bottom"
+        app:tabIndicatorGravity="stretch"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:background="@color/color_purple"
+        android:background="@drawable/back_tab"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.viewpager2.widget.ViewPager2

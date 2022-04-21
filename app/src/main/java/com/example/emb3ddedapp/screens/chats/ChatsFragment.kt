@@ -231,7 +231,7 @@ class ChatsFragment : Fragment() {
             )
             dia.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             dia.window?.attributes?.windowAnimations = R.style.DialogAnimation
-            dia.window?.setGravity(Gravity.TOP)
+            dia.window?.setGravity(Gravity.BOTTOM)
         }
     }
 

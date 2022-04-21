@@ -39,6 +39,7 @@ class NewsAdapter(
     class NewsHolder(itemView: View) :RecyclerView.ViewHolder(itemView){
         val tvShortDescription:TextView = itemView.findViewById(R.id.tvShortDescription)
         val tvTag:TextView = itemView.findViewById(R.id.tvTag)
+        val tvTitle:TextView = itemView.findViewById(R.id.tvTitle)
         val tvAuthor:TextView = itemView.findViewById(R.id.tvAuthor)
         val imgNews:ShapeableImageView = itemView.findViewById(R.id.imgNews)
         val btnEdit:ImageButton = itemView.findViewById(R.id.btnEdit)
@@ -58,7 +59,8 @@ class NewsAdapter(
                 Glide.with(imgNews.context).load(url).into(imgNews)
             }
 
-            tvShortDescription.text = "${newsItem.description.take(250)}...."
+            tvTitle.text = "${newsItem.title.take(20)}...."
+            tvShortDescription.text = "${newsItem.description.take(200)}...."
 
             if (showDelEdit){
                 btnDel.visibility = View.VISIBLE

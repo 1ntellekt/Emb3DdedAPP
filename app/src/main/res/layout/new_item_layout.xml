@@ -6,8 +6,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginStart="5dp"
     android:layout_marginEnd="5dp"
-    android:layout_marginTop="10dp"
-    android:layout_marginBottom="10dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
     app:cardCornerRadius="7dp"
     android:elevation="4dp"
     app:cardBackgroundColor="@color/white"
@@ -25,6 +25,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/roundImgView"
+            android:background="@color/background_color_3"
             android:src="@drawable/news_img"/>
 
         <ImageButton
@@ -62,10 +63,22 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/tvTitle"
+                tools:text = "Title new"
+                android:textStyle="bold"
+                android:textSize="19sp"
+                android:fontFamily="@font/roboto_bold"
+                android:textColor="@color/color_head_txt"
+                android:layout_marginBottom="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
                 android:id="@+id/tvShortDescription"
+                android:fontFamily="@font/roboto_regular"
                 tools:text="It is a long established fact that a reader will
 be distracted by the readable content of
-a page when looking at its layout. werkflajfgkklgblkfkldfklvbfglkfldkvdflkvdfdlkdkkkfffffffffffffffffffffffffffffffffffffflsdjflsdkfvjdklvjdfvklfjvflvjdfklgjzdfklgzdfjlgjdgklkvldfjfkldgjdfklgjdflklfkvbjdflkgjdfklgjdflkgdjlgdjgl"
+a page when looking at its layout. dfvklfjvflvjdfklgjzdfklgzdfjlgjdgklkvldfjfkldgjd......"
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -75,6 +88,7 @@ a page when looking at its layout. werkflajfgkklgblkfkldfklvbfglkfldkvdflkvdfdlk
 
         <TextView
             android:id="@+id/tvTag"
+            android:fontFamily="@font/roboto_italic"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvContentLayout"
             app:layout_constraintEnd_toStartOf="@id/imgNews"
@@ -87,15 +101,16 @@ a page when looking at its layout. werkflajfgkklgblkfkldfklvbfglkfldkvdflkvdfdlk
 
         <TextView
             app:layout_constraintTop_toBottomOf="@id/imgNews"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/imgNews"
             app:layout_constraintEnd_toEndOf="parent"
+            android:fontFamily="@font/roboto_black"
             android:id="@+id/tvAuthor"
             android:textSize="17sp"
             android:layout_marginTop="5dp"
             android:textAlignment="center"
             android:textStyle="bold"
             tools:text="Author name: 1ntellekt"
-            android:textColor="@color/color_purple"
+            android:textColor="@color/color_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
 

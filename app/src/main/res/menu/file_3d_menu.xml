@@ -22,6 +22,11 @@
         android:title="Share"
         app:showAsAction="withText"
         />
+    <item android:id="@+id/generateQR"
+        android:icon="@drawable/ic_baseline_qr_code_24"
+        android:title="Generate QR"
+        app:showAsAction="withText"
+        />
 
     <item android:id="@+id/download3d"
         android:title="Download"

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/transparent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".screens.mainfrag.MainFragment">
 
@@ -33,6 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="10dp"
+                android:fontFamily="@font/roboto_regular"
                 android:text="@string/app_name"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
@@ -60,10 +62,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_height="wrap_content"
         app:menu="@menu/main_menu_nav"
+        android:backgroundTint="@android:color/transparent"
         android:background="@drawable/back_nav_bottom"
         app:itemIconTint="@color/nav_bot_selected_color"
         app:itemTextColor="@color/nav_bot_selected_color"
-        app:labelVisibilityMode="labeled"
+        app:labelVisibilityMode="selected"
         app:layout_constraintBottom_toBottomOf="parent"
         />
 

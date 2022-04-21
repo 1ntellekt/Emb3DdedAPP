@@ -8,10 +8,11 @@
 
     <TextView
         android:padding="5dp"
-        android:background="@color/color_btn"
+        android:background="#5734AA"
         android:layout_gravity="center_horizontal"
         android:textColor="@color/white"
         android:layout_width="match_parent"
+        android:fontFamily="@font/roboto_regular"
         android:text="Enter email address for reset password"
         android:textAlignment="center"
         android:textSize="24sp"

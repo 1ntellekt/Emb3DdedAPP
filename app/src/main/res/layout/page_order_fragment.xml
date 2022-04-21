@@ -105,6 +105,7 @@
                 android:id="@+id/tvTitle"
                 android:text="Title order example"
                 android:layout_margin="10dp"
+                android:fontFamily="@font/roboto_bold"
                 android:textSize="22sp"
                 android:textColor="@color/black"
                 android:textStyle="bold"
@@ -132,6 +133,7 @@
                     android:id="@+id/tvDateTime"
                     android:layout_marginStart="5dp"
                     android:text="20/02/2022 10:30"
+                    android:fontFamily="@font/roboto_italic"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -142,6 +144,7 @@
                 android:textSize="17sp"
                 app:layout_constraintTop_toBottomOf="@id/tvAuthor"
                 android:layout_margin="15dp"
+                android:fontFamily="@font/roboto_regular"
                 android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -168,6 +171,7 @@
             <TextView
                 app:layout_constraintStart_toEndOf="@id/panell"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:fontFamily="@font/roboto_regular"
                 app:layout_constraintTop_toTopOf="@id/panell"
                 app:layout_constraintBottom_toBottomOf="@id/panell"
                 android:id="@+id/tvAuthor"

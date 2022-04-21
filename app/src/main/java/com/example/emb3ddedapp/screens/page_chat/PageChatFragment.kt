@@ -32,13 +32,21 @@ import com.example.emb3ddedapp.R
 import com.example.emb3ddedapp.databinding.ChangeMsgDialogBinding
 import com.example.emb3ddedapp.databinding.DialogDrawLayoutBinding
 import com.example.emb3ddedapp.databinding.PageChatFragmentBinding
-import com.example.emb3ddedapp.models.*
+import com.example.emb3ddedapp.models.ChatDefault
+import com.example.emb3ddedapp.models.CurrUser
+import com.example.emb3ddedapp.models.Message
+import com.example.emb3ddedapp.models.User
 import com.example.emb3ddedapp.notification.FireServices
 import com.example.emb3ddedapp.progressdialog.MyProgressDialog
 import com.example.emb3ddedapp.screens.page_chat.adapter.MessageAdapter
 import com.example.emb3ddedapp.utils.*
 import com.github.dhaval2404.colorpicker.ColorPickerDialog
 import com.github.dhaval2404.colorpicker.model.ColorShape
+import com.google.zxing.BarcodeFormat
+import com.journeyapps.barcodescanner.BarcodeEncoder
+import com.journeyapps.barcodescanner.ScanContract
+import com.journeyapps.barcodescanner.ScanIntentResult
+import com.journeyapps.barcodescanner.ScanOptions
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -304,11 +312,40 @@ class PageChatFragment : Fragment() {
             R.id.drawCanvasDialog -> {
                 dialogDrawCanvas()
             }
+            R.id.scanQRCode -> {
+                scanQRCode()
+            }
         }
 
         return true
     }
 
+    private fun scanQRCode() {
+/*        val options = ScanOptions().apply {
+            setDesiredBarcodeFormats(ScanOptions.QR_CODE)
+            setPrompt("Scan a barcode")
+            setCameraId(0) // Use a specific camera of the device
+            setBeepEnabled(false)
+            setOrientationLocked(false)
+            setBarcodeImageEnabled(true)
+        }
+        barcodeLauncher.launch(options)*/
+
+    }
+
+/*    private val barcodeLauncher = registerForActivityResult(ScanContract()) { result: ScanIntentResult ->
+        if (result.contents == null) {
+            showToast("Cancelled")
+        } else {
+            if (result.contents.startsWith(VIEWER_WEB_PAGE)){
+                val bundle = Bundle()
+                bundle.putString("urlModel", result.contents)
+                APP.mNavController.navigate(R.id.action_pageChatFragment_to_webViewFragment, bundle)
+            } else {
+                showToast("Scanned: ${result.contents}")
+            }
+        }
+    }*/
 
     private fun dialogDrawCanvas() {
         val dialog = context?.let { Dialog(it) }
@@ -428,6 +465,9 @@ class PageChatFragment : Fragment() {
                 downloadFromUrl(message.file_3d_msg!!,"3dfile")
                 else showToast("No access!")
             }
+            R.id.generateQR -> {
+                qrGenerateDialog(message)
+            }
         }
         return true
     }
@@ -474,6 +514,37 @@ class PageChatFragment : Fragment() {
         }
     }
 
+    private fun qrGenerateDialog(message: Message){
+        val dialog = context?.let { Dialog(it) }
+        dialog?.let {
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog.setContentView(R.layout.img_layout)
+
+            val imgMess = dialog.findViewById<ImageView>(R.id.imgMsg)
+            imgMess.layoutParams.height = 600
+            imgMess.layoutParams.width = 600
+            imgMess.requestLayout()
+            try {
+                val barcodeEncoder = BarcodeEncoder()
+                val bitmap = barcodeEncoder.encodeBitmap("$VIEWER_WEB_PAGE${URLEncoder.encode(message.file_3d_msg, "UTF-8")}",
+                    BarcodeFormat.QR_CODE, 600, 600)
+                    imgMess.setImageBitmap(bitmap)
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+                Log.e("tagQR", "Error generated QR: ${e.message.toString()}")
+            }
+
+            dialog.show()
+            dialog.window?.setLayout(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
+            dialog.window?.setGravity(Gravity.CENTER_VERTICAL)
+        }
+    }
+
     private fun showPopupMenuImgClicked(menuItem: MenuItem, message: Message):Boolean {
         when(menuItem.itemId){
             R.id.shareImg -> {
@@ -493,13 +564,11 @@ class PageChatFragment : Fragment() {
         return true
     }
 
-
     private fun downloadFromUrl(url: String, name: String) {
         val nowDate = SimpleDateFormat(TIME_PAT, Locale.getDefault()).format(Date())
         val extension = url.substringAfterLast(".")
         downloadManager("$name-$nowDate.$extension", DIRECTORY_DOWNLOADS,url)
     }
-
 
     private val scrollListener = View.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             if (scrollY > oldScrollY) {

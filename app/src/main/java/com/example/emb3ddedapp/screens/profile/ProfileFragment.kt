@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.provider.MediaStore
 import android.telephony.PhoneNumberFormattingTextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -183,7 +184,16 @@ class ProfileFragment : Fragment() {
         val popupMenu = PopupMenu(context, binding.btnEditProfilePhoto)
         popupMenu.inflate(R.menu.profile_menu)
         popupMenu.setOnMenuItemClickListener { item -> popupMenuItemClicked(item) }
-        popupMenu.show()
+        try {
+            val fieldPopup = PopupMenu::class.java.getDeclaredField("mPopup")
+            fieldPopup.isAccessible = true
+            val mPopup = fieldPopup.get(popupMenu)
+            mPopup.javaClass.getDeclaredMethod("setForceShowIcon", Boolean::class.java).invoke(mPopup, true)
+        }catch (e:Exception){
+            Log.e("tag", e.message.toString())
+        }finally {
+            popupMenu.show()
+        }
     }
 
     private fun popupMenuItemClicked(menuItem: MenuItem):Boolean {
@@ -208,7 +218,7 @@ class ProfileFragment : Fragment() {
             edNumber.setText(CurrUser.number)
             edStatus.setText(CurrUser.status)
             CurrUser.url_profile?.let {
-                Glide.with(this@ProfileFragment).load(it).into(imgProfile)
+                Glide.with(imgProfile.context).load(it).into(imgProfile)
             }
             edNewPassword.setText("")
             edOldPassword.setText("")
