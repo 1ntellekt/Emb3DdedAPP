@@ -23,6 +23,11 @@
     </style>
 
 
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/grey_700</item>
+        <item name="colorControlActivated">@color/yellow</item>
+    </style>
+
     <style name="expandedBarTextStyle" parent="Theme.Emb3DdedAPP">
         <item name="android:textSize">0sp</item>
         <item name="android:textColor">@android:color/transparent</item>

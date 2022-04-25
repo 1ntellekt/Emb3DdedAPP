@@ -14,6 +14,7 @@ import com.example.emb3ddedapp.databinding.PageNewsFragmentBinding
 import com.example.emb3ddedapp.models.NewsItem
 import com.example.emb3ddedapp.utils.APP
 import com.example.emb3ddedapp.utils.getDataTimeWithFormat
+import com.example.emb3ddedapp.utils.showToast
 import com.google.android.material.appbar.AppBarLayout
 
 
@@ -61,6 +62,9 @@ class PageNewsFragment : Fragment() {
                 tvTitle.text = newsItem.title
                 tvAuthor.text = newsItem.user!!.login
                 tvDateTime.text = getDataTimeWithFormat(newsItem.created_at!!)
+                newsItem.user.url_profile?.let { url->
+                    Glide.with(imgPerson.context).load(url).into(imgPerson)
+                }
             }
             btnBack.setOnClickListener { APP.mNavController.navigate(R.id.action_pageNewsFragment_to_mainFragment, Bundle().also { it.putString("nav", "news") })}
         }

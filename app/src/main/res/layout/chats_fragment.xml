@@ -69,7 +69,7 @@
         android:layout_height="wrap_content">
 
               <TextView
-                    android:text="Chats"
+                    android:text="@string/chats_head_tv"
                     android:fontFamily="@font/roboto_bold"
                     android:layout_gravity="center_vertical"
                     android:textColor="@color/color_head_txt"
@@ -98,7 +98,7 @@
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
-        app:queryHint="Enter the login..."
+        app:queryHint="@string/hint_search_view_chats"
         app:layout_constraintTop_toBottomOf="@id/headPanel"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

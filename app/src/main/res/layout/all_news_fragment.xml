@@ -11,7 +11,7 @@
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
-        app:queryHint="Enter the name or tag of the entry..."
+        app:queryHint="@string/hint_search_view_news"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

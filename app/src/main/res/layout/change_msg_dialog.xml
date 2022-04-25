@@ -13,7 +13,7 @@
         android:textColor="@color/white"
         android:layout_width="match_parent"
         android:fontFamily="@font/roboto_regular"
-        android:text="Enter new text message"
+        android:text="@string/enter_new_text_message_dia_tv"
         android:textAlignment="center"
         android:textSize="25sp"
         android:layout_height="wrap_content"/>
@@ -25,7 +25,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:hint="Enter message..."
+        android:hint="@string/enter_message_hint"
         app:endIconMode="clear_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

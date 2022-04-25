@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_dark_back_color_2"
+    android:background="#2E5A9E"
     tools:context=".screens.load.LoadFragment">
 
 

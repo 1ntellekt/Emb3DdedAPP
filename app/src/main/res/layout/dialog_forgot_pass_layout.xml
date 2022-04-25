@@ -13,9 +13,9 @@
         android:textColor="@color/white"
         android:layout_width="match_parent"
         android:fontFamily="@font/roboto_regular"
-        android:text="Enter email address for reset password"
+        android:text="@string/enter_email_address_for_reset_password_dia_tv"
         android:textAlignment="center"
-        android:textSize="24sp"
+        android:textSize="22sp"
         android:layout_height="wrap_content"/>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -25,7 +25,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:hint="Enter email..."
+        android:hint="@string/enter_email_hint"
         app:helperText="Required email address"
         app:startIconDrawable="@drawable/ic_baseline_alternate_email_24"
         app:endIconMode="clear_text"

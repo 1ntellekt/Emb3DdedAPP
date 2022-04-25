@@ -11,7 +11,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_marginTop="10dp"
@@ -37,7 +37,8 @@
             android:background="@drawable/back_btn"
             android:src="@drawable/ic_baseline_edit_24"
             android:layout_width="50dp"
-            android:layout_height="50dp"/>
+            android:layout_height="50dp"
+            android:contentDescription="Edit photo profile" />
 
 
         <TextView
@@ -78,7 +79,7 @@
                 android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edLogin"
-                    android:hint="Enter login..."
+                    android:hint="@string/enter_login_hint"
                     android:inputType="textPersonName"
                     android:layout_width="match_parent"
                     android:background="@drawable/back_ed_input"
@@ -98,7 +99,7 @@
                 android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edNumber"
-                    android:hint="Enter telephone number..."
+                    android:hint="@string/enter_telephone_number_hint"
                     android:layout_width="match_parent"
                     android:inputType="phone"
                     android:digits="1234567890+()-"
@@ -116,7 +117,7 @@
                 android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edStatus"
-                    android:hint="Enter person status..."
+                    android:hint="@string/enter_person_status_hint"
                     android:inputType="text"
                     android:layout_width="match_parent"
                     android:background="@drawable/back_ed_input"
@@ -133,7 +134,7 @@
                 android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edOldPassword"
-                    android:hint="Enter old password..."
+                    android:hint="@string/enter_old_password_hint"
                     android:layout_width="match_parent"
                     android:inputType="textPassword"
                     android:background="@drawable/back_ed_input"
@@ -150,7 +151,7 @@
                 android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edNewPassword"
-                    android:hint="Enter new password..."
+                    android:hint="@string/enter_new_password_hint"
                     android:layout_width="match_parent"
                     android:inputType="textPassword"
                     android:background="@drawable/back_ed_input"
@@ -166,11 +167,12 @@
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:fontFamily="@font/roboto_regular"
-                android:text="User profile update"
+                android:text="@string/user_profile_update_btn"
                 android:drawableStart="@drawable/ic_edit_person"
                 android:background="@drawable/back_btn"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                tools:ignore="RtlSymmetry" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnExit"
@@ -182,12 +184,13 @@
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:fontFamily="@font/roboto_regular"
-                android:text="Exit from account"
+                android:text="@string/exit_from_account_btn"
                 android:drawableStart="@drawable/ic_baseline_exit_to_app_24"
                 android:backgroundTint="#950505"
                 android:background="@drawable/back_btn"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                tools:ignore="RtlSymmetry" />
 
         </LinearLayout>
 

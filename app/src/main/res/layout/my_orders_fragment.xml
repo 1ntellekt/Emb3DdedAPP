@@ -42,7 +42,7 @@
         android:id="@+id/tvHint"
         android:textSize="38sp"
         android:fontFamily="@font/roboto_black"
-        android:text="No orders"
+        android:text="@string/no_orders_page_hint"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

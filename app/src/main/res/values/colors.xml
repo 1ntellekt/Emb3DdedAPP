@@ -2,16 +2,16 @@
 <resources>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#003A93</color>
+    <color name="purple_700">#FF000000</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="background_color">#F1F8FA</color>
+    <color name="background_color">#f2f4f6</color>
     <color name="background_color_2">#DEDFE3</color>
-    <color name="color_purple">#133CCD</color>
-    <color name="color_btn_auth">#27114E</color>
+    <color name="color_purple">#0d3f67</color>
+    <color name="color_btn_auth">#6b48ff</color>
     <color name="color_dark_back_color">#68637E</color>
     <color name="color_dark_back_color_2">#837B8E</color>
     <color name="color_blue">#0090FF</color>
@@ -26,6 +26,8 @@
     <color name="partner_msg_color">#C1DBEF</color>
     <color name="color_head_txt">#0E2C5A</color>
     <color name="background_color_3">#DDE3FB</color>
+    <color name="teal">#00BCD4</color>
+    <color name="yellow">#FF9800</color>
 
     <!--    <color name="background_color">#DEDFE3</color>-->
 <!--    <color name="color_purple">#5943BD</color>-->

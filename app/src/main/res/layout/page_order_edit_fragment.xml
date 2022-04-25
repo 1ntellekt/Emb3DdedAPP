@@ -32,7 +32,8 @@
                 android:background="@color/white"
                 android:layout_width="match_parent"
                 app:layout_collapseMode="parallax"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:contentDescription="Img order" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -119,7 +120,7 @@
                     android:id="@+id/edTitleLayout"
                     android:layout_marginTop="5dp"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:hint="Enter title of the order...."
+                    android:hint="@string/enter_title_of_the_order_hint"
                     app:helperText="Required title of the order"
                     app:endIconMode="clear_text"
                     app:counterEnabled="true"
@@ -138,7 +139,7 @@
                     android:id="@+id/edDescriptionLayout"
                     android:layout_marginTop="10dp"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:hint="Enter description of the order...."
+                    android:hint="@string/enter_description_of_the_order_hint"
                     app:helperText="Required description of the order"
                     app:endIconMode="clear_text"
                     app:counterEnabled="true"

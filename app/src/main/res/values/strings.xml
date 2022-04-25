@@ -2,6 +2,50 @@
     <string name="app_name">Emb3DdedAPP</string>
     <string name="scene_viewer_package">com.google.android.googlequicksearchbox</string>
     <string name="test_large_text">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English.</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="log_in_to_account_txt_tv">Log in to account</string>
+    <string name="log_in_with_email_btn">Log in with Email</string>
+    <string name="forgot_password_tv"><u>Forgot password?</u></string>
+    <string name="sign_up_tv"><u>Sign Up</u></string>
+    <string name="have_you_an_account_tv">Have you an account?</string>
+    <string name="enter_email_hint">Enter email...</string>
+    <string name="enter_password_hint">Enter password...</string>
+    <string name="sign_up_to_account_tv">Sign Up to account</string>
+    <string name="enter_login_hint">Enter login...</string>
+    <string name="enter_telephone_number_hint">Enter telephone number...</string>
+    <string name="confirm_your_password_hint">Confirm your password...</string>
+    <string name="sign_up_with_email_btn">Sign Up with Email</string>
+    <string name="enter_person_status_hint">Enter person status...</string>
+    <string name="enter_old_password_hint">Enter old password...</string>
+    <string name="enter_new_password_hint">Enter new password...</string>
+    <string name="user_profile_update_btn">User profile update</string>
+    <string name="exit_from_account_btn">Exit from account</string>
+    <string name="enter_title_of_the_order_hint">Enter title of the order....</string>
+    <string name="enter_description_of_the_order_hint">Enter description of the order....</string>
+    <string name="enter_title_of_the_news_hint">Enter title of the news....</string>
+    <string name="enter_tag_of_the_news_hint">Enter tag of the news....</string>
+    <string name="enter_description_of_the_news_hint">Enter description of the news....</string>
+    <string name="no_orders_page_hint">No orders</string>
+    <string name="loading_txt_tv">Loading...!!</string>
+    <string name="filter_options_tv">Filter options</string>
+    <string name="sort_by_date_tv">Sort by Date</string>
+    <string name="search_text_in_view_tv">Search text in view</string>
+    <string name="first_new_tv">First new</string>
+    <string name="first_old_tv">First old</string>
+    <string name="search_by_author_s_name_tv">Search by author\'s name</string>
+    <string name="search_by_title_tv">Search by title</string>
+    <string name="sort_by_login_name_tv">Sort by login name</string>
+    <string name="in_alphabetical_tv">In alphabetical</string>
+    <string name="in_reverse_alphabetical_tv">In reverse alphabetical</string>
+    <string name="enter_email_address_for_reset_password_dia_tv">Enter email address for reset password</string>
+    <string name="chats_head_tv">Chats</string>
+    <string name="enter_new_text_message_dia_tv">Enter new text message</string>
+    <string name="enter_message_hint">Enter message...</string>
+    <string name="orders_head_tv">Orders</string>
+    <string name="hint_search_view_orders">Enter the name author...</string>
+    <string name="hint_search_view_chats">Enter the login...</string>
+    <string name="hint_search_view_news">Enter the name or tag of the entry...</string>
+
 </resources>
