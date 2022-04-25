@@ -67,7 +67,14 @@ class PageNewsFragment : Fragment() {
                 }
             }
             btnBack.setOnClickListener { APP.mNavController.navigate(R.id.action_pageNewsFragment_to_mainFragment, Bundle().also { it.putString("nav", "news") })}
+            btnSetRating.setOnClickListener {
+                dialogRating()
+            }
         }
+    }
+
+    private fun dialogRating() {
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
