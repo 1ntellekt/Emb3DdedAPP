@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.emb3ddedapp.R
 import com.example.emb3ddedapp.databinding.FragmentWebViewBinding
+import com.example.emb3ddedapp.utils.APP
 
 
 class WebViewFragment : Fragment() {
@@ -29,6 +30,9 @@ class WebViewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
+//            btnBack.setOnClickListener {
+//                APP.mNavController.navigate(R.id.action_webViewFragment_to_pageChatFragment)
+//            }
             val urlModel = arguments?.getString("urlModel")
             urlModel?.let { url->
                 with(webView){

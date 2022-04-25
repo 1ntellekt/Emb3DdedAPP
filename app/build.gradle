@@ -80,7 +80,11 @@ dependencies {
     //QR code generator
     implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
 
+    //QR Scanner
     implementation 'com.github.yuriy-budiyev:code-scanner:2.1.2'
+
+    //Rating bar
+    implementation 'com.github.shallcheek:RatingBar:v1.0'
 
     //Firebase d-s
     implementation 'com.firebaseui:firebase-ui-auth:8.0.0'

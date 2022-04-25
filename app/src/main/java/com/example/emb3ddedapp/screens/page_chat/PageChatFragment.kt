@@ -1,9 +1,12 @@
 package com.example.emb3ddedapp.screens.page_chat
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.*
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -21,6 +24,7 @@ import android.widget.PopupMenu
 import android.widget.SeekBar
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.drawToBitmap
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -42,6 +46,7 @@ import com.example.emb3ddedapp.screens.page_chat.adapter.MessageAdapter
 import com.example.emb3ddedapp.utils.*
 import com.github.dhaval2404.colorpicker.ColorPickerDialog
 import com.github.dhaval2404.colorpicker.model.ColorShape
+import com.google.android.material.snackbar.Snackbar
 import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import com.journeyapps.barcodescanner.ScanContract
@@ -330,7 +335,30 @@ class PageChatFragment : Fragment() {
             setBarcodeImageEnabled(true)
         }
         barcodeLauncher.launch(options)*/
+            when{
+               ContextCompat.checkSelfPermission(requireContext(),Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED->{
+                    requestCameraPermission.launch(Manifest.permission.CAMERA)
+               }
+               shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)-> {
+                    //snackbar
+                   Snackbar.make(requireView().findViewById(android.R.id.content),
+                       "We need your permission for use scanner", Snackbar.LENGTH_LONG).setAction("Ok") {
+                           APP.mNavController.navigate(R.id.action_pageChatFragment_to_scanFragment)
+                       }.show()
 
+               }
+               else -> {
+                   APP.mNavController.navigate(R.id.action_pageChatFragment_to_scanFragment)
+               }
+            }
+    }
+
+    private val requestCameraPermission = registerForActivityResult(ActivityResultContracts.RequestPermission()){
+            if (it){
+
+            }else {
+                showToast("Permission denied!")
+            }
     }
 
 /*    private val barcodeLauncher = registerForActivityResult(ScanContract()) { result: ScanIntentResult ->

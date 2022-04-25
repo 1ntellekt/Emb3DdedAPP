@@ -41,21 +41,25 @@ class ScanFragment : Fragment() {
             // ex. listOf(BarcodeFormat.QR_CODE)
             codeScanner.autoFocusMode = AutoFocusMode.SAFE // or CONTINUOUS
             codeScanner.scanMode = ScanMode.SINGLE // or CONTINUOUS or PREVIEW
-            codeScanner.isAutoFocusEnabled = true // Whether to enable auto focus or not
+            codeScanner.isAutoFocusEnabled = false // Whether to enable auto focus or not
             codeScanner.isFlashEnabled = false // Whether to enable flash or not
 
             // Callbacks
             codeScanner.decodeCallback = DecodeCallback { result->
-                        if (result.text.startsWith(VIEWER_WEB_PAGE)){
-                            val bundle = Bundle()
-                            bundle.putString("urlModel", result.text)
-                           // APP.mNavController.navigate(R.id.action_pageChatFragment_to_webViewFragment, bundle)
-                        } else {
-                            showToast("Scanned: ${result.text}")
-                        }
+                activity?.runOnUiThread {
+                    if (result.text.startsWith(VIEWER_WEB_PAGE)){
+                        val bundle = Bundle()
+                        bundle.putString("urlModel", result.text)
+                        APP.mNavController.navigate(R.id.action_scanFragment_to_webViewFragment, bundle)
+                    } else {
+                        showToast("Scanned: ${result.text}")
+                    }
+                }
             }
             codeScanner.errorCallback = ErrorCallback { // or ErrorCallback.SUPPRESS
-                        showToast("Camera initialization error: ${it.message}")
+                activity?.runOnUiThread{
+                    showToast("Camera initialization error: ${it.message}")
+                }
             }
 
             scannerView.setOnClickListener {

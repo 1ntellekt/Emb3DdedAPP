@@ -114,6 +114,9 @@
             app:destination="@id/webViewFragment"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_pageChatFragment_to_scanFragment"
+            app:destination="@id/scanFragment" />
     </fragment>
     <fragment
         android:id="@+id/pageNewsFragment"
@@ -176,5 +179,17 @@
             app:exitAnim="@android:anim/slide_out_right"
             app:launchSingleTop="true"
             app:popUpTo="@id/nav_app" />
+    </fragment>
+    <fragment
+        android:id="@+id/scanFragment"
+        android:name="com.example.emb3ddedapp.screens.scanner_view.ScanFragment"
+        android:label="scan_fragment"
+        tools:layout="@layout/scan_fragment" >
+        <action
+            android:id="@+id/action_scanFragment_to_pageChatFragment"
+            app:destination="@id/pageChatFragment" />
+        <action
+            android:id="@+id/action_scanFragment_to_webViewFragment"
+            app:destination="@id/webViewFragment" />
     </fragment>
 </navigation>
