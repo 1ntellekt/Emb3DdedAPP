@@ -574,4 +574,42 @@ class Repository : DataRepository {
                 .addOnFailureListener { onFail(it.message.toString()) }
         }.addOnFailureListener { onFail(it.message.toString()) }
     }
+
+    override fun addUppMark(rating: Rating, onSuccess: () -> Unit, onFail: (String) -> Unit) {
+        RetrofitInstance.api.addUpMark(rating).enqueue(object : Callback<StatusMsgResponse>{
+            override fun onResponse(call: Call<StatusMsgResponse>, response: Response<StatusMsgResponse>) {
+                if (response.isSuccessful){
+                   response.body()?.let {
+                       onSuccess()
+                   }
+                } else {
+                    Log.i("tagAPI", "Error add or up mark: ${response.code()}")
+                    onFail("Error add or up mark: ${response.code()}")
+                }
+            }
+            override fun onFailure(call: Call<StatusMsgResponse>, t: Throwable) {
+                Log.i("tagAPI", "Error add or up mark: ${t.message}")
+                onFail("Error add or up mark: ${t.message}")
+            }
+        })
+    }
+
+    override fun getUserMark(news_items_id:Int,onSuccess: (Double) -> Unit, onFail: (String) -> Unit) {
+        RetrofitInstance.api.getUserMark(user_id = CurrUser.id, news_items_id).enqueue(object : Callback<RatingDefaultResponse>{
+            override fun onResponse(call: Call<RatingDefaultResponse>, response: Response<RatingDefaultResponse>) {
+                if (response.isSuccessful){
+                    response.body()?.let { body->
+                        onSuccess(body.you_mark!!.mark)
+                    }
+                } else {
+                    Log.i("tagAPI", "Error get mark: ${response.code()}")
+                    onFail("Error get mark: ${response.code()}")
+                }
+            }
+            override fun onFailure(call: Call<RatingDefaultResponse>, t: Throwable) {
+                Log.i("tagAPI", "Error get mark: ${t.message}")
+                onFail("Error get mark: ${t.message}")
+            }
+        })
+    }
 }

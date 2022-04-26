@@ -10,6 +10,7 @@ data class NewsItem(
     val img_url: String? = null,
     val tag: String,
     val created_at: String? = null,
+    val avgMark:Double? = null,
     val user: User? = null
 ):Serializable
 

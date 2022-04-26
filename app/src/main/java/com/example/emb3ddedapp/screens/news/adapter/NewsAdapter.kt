@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.emb3ddedapp.R
 import com.example.emb3ddedapp.models.NewsItem
 import com.example.emb3ddedapp.screens.listeners.AdapterListeners
+import com.example.emb3ddedapp.utils.getDataTimeWithFormat
 import com.google.android.material.imageview.ShapeableImageView
 
 class NewsAdapter(
@@ -44,6 +46,9 @@ class NewsAdapter(
         val imgNews:ShapeableImageView = itemView.findViewById(R.id.imgNews)
         val btnEdit:ImageButton = itemView.findViewById(R.id.btnEdit)
         val btnDel:ImageButton = itemView.findViewById(R.id.btnDel)
+        val ratPanel:LinearLayout = itemView.findViewById(R.id.ratPanel)
+        val tvRating:TextView = itemView.findViewById(R.id.tvRating)
+        val tvDateTime:TextView = itemView.findViewById(R.id.tvDateTime)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsHolder {
@@ -59,12 +64,22 @@ class NewsAdapter(
                 Glide.with(imgNews.context).load(url).into(imgNews)
             }
 
+            tvDateTime.text = getDataTimeWithFormat(newsItem.created_at!!)
+
             tvTitle.text = "${newsItem.title.take(20)}...."
             tvShortDescription.text = "${newsItem.description.take(200)}...."
 
             if (showDelEdit){
                 btnDel.visibility = View.VISIBLE
                 btnEdit.visibility = View.VISIBLE
+                ratPanel.visibility = View.GONE
+            } else {
+                ratPanel.visibility = View.VISIBLE
+               tvRating.text = if (newsItem.avgMark == null){
+                    "0.0"
+                }else {
+                    "${newsItem.avgMark}"
+                }
             }
         }
     }

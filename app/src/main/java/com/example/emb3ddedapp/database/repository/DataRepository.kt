@@ -63,4 +63,8 @@ interface DataRepository {
 
     //files
     fun uploadFile(file: File,fileNameDateForm:String,onSuccess: (String) -> Unit, onFail: (String) -> Unit)
+
+    //rating
+    fun addUppMark(rating: Rating, onSuccess: () -> Unit, onFail: (String) -> Unit)
+    fun getUserMark(news_items_id:Int,onSuccess: (Double) -> Unit, onFail: (String) -> Unit)
 }

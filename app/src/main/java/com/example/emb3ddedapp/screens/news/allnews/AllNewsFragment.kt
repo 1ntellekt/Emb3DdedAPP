@@ -1,23 +1,29 @@
 package com.example.emb3ddedapp.screens.news.allnews
 
+import android.app.Dialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
+import android.view.*
+import android.widget.RatingBar
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.emb3ddedapp.R
 import com.example.emb3ddedapp.databinding.AllNewsFragmentBinding
+import com.example.emb3ddedapp.databinding.DialogRatingSetLayoutBinding
+import com.example.emb3ddedapp.databinding.FilterNewsLayoutBinding
 import com.example.emb3ddedapp.models.CurrUser
 import com.example.emb3ddedapp.models.NewsItem
+import com.example.emb3ddedapp.models.Rating
 import com.example.emb3ddedapp.notification.FireServices
 import com.example.emb3ddedapp.screens.news.adapter.NewsAdapter
 import com.example.emb3ddedapp.utils.APP
@@ -66,6 +72,9 @@ class AllNewsFragment : Fragment() {
                     return true
                 }
             })
+            btnFilter.setOnClickListener {
+                showFilterNewsDialog()
+            }
         }
         mObserver = Observer { list->
             list?.let {
@@ -73,6 +82,56 @@ class AllNewsFragment : Fragment() {
                 newsList.addAll(it)
                 adapter.setData(it)
             }
+        }
+    }
+
+    //filters
+    private var sortByFirstNewDate = true
+
+    private fun showFilterNewsDialog() {
+        val dialog = context?.let { Dialog(it) }
+        dialog?.let { dia->
+            dia.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            val binding: FilterNewsLayoutBinding = FilterNewsLayoutBinding.inflate(dia.layoutInflater)
+            dia.setContentView(binding.root)
+
+            binding.apply {
+                if (sortByFirstNewDate){
+                    btnFirstNew.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_active)
+                    btnFirstOld.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
+                } else {
+                    btnFirstOld.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_active)
+                    btnFirstNew.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
+                }
+
+                btnFirstNew.setOnClickListener {
+                    if (sortByFirstNewDate) return@setOnClickListener
+                    sortByFirstNewDate = true
+                    btnFirstNew.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_active)
+                    btnFirstOld.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
+                }
+                btnFirstOld.setOnClickListener {
+                    if (!sortByFirstNewDate) return@setOnClickListener
+                    sortByFirstNewDate = false
+                    btnFirstOld.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_active)
+                    btnFirstNew.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
+                }
+
+                ratingBar.onRatingBarChangeListener =
+                    RatingBar.OnRatingBarChangeListener { ratingBar, rating, fromUser ->
+
+                    }
+
+            }
+
+            dia.show()
+            dia.window?.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            dia.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dia.window?.attributes?.windowAnimations = R.style.DialogAnimation
+            dia.window?.setGravity(Gravity.BOTTOM)
         }
     }
 

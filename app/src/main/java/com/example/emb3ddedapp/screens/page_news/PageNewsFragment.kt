@@ -1,21 +1,37 @@
 package com.example.emb3ddedapp.screens.page_news
 
+import android.app.Dialog
+import android.graphics.Bitmap
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.opengl.Visibility
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.SeekBar
 import androidx.core.content.ContextCompat
+import androidx.core.view.drawToBitmap
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.emb3ddedapp.R
+import com.example.emb3ddedapp.databinding.DialogDrawLayoutBinding
+import com.example.emb3ddedapp.databinding.DialogRatingSetLayoutBinding
 import com.example.emb3ddedapp.databinding.PageNewsFragmentBinding
+import com.example.emb3ddedapp.models.CurrUser
 import com.example.emb3ddedapp.models.NewsItem
+import com.example.emb3ddedapp.models.Rating
 import com.example.emb3ddedapp.utils.APP
+import com.example.emb3ddedapp.utils.TIME_PAT
 import com.example.emb3ddedapp.utils.getDataTimeWithFormat
 import com.example.emb3ddedapp.utils.showToast
+import com.github.dhaval2404.colorpicker.ColorPickerDialog
+import com.github.dhaval2404.colorpicker.model.ColorShape
 import com.google.android.material.appbar.AppBarLayout
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class PageNewsFragment : Fragment() {
@@ -74,7 +90,34 @@ class PageNewsFragment : Fragment() {
     }
 
     private fun dialogRating() {
+        val dialog = context?.let { Dialog(it) }
+        dialog?.let { dia->
+            dia.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            val binding: DialogRatingSetLayoutBinding = DialogRatingSetLayoutBinding.inflate(dia.layoutInflater)
+            dia.setContentView(binding.root)
 
+            viewModel.getMark(currNewsItem!!.id){
+                binding.tvRating.visibility = View.VISIBLE
+                binding.ratingBar.rating = it.toFloat()
+            }
+
+            binding.apply {
+                btnOk.setOnClickListener {
+                    viewModel.addMark(Rating(user_id = CurrUser.id, news_items_id = currNewsItem!!.id, mark = ratingBar.rating.toDouble())){
+                        dia.dismiss()
+                    }
+                }
+            }
+
+            dia.show()
+            dia.window?.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            dia.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dia.window?.attributes?.windowAnimations = R.style.DialogAnimation
+            dia.window?.setGravity(Gravity.BOTTOM)
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

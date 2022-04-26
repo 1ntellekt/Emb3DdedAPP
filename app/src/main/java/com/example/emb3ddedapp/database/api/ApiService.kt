@@ -144,4 +144,13 @@ interface ApiService {
     @Multipart
     @POST("putfile")
     fun uploadFile(@Part part:MultipartBody.Part):Call<StatusMsgPath>
+
+    // Rating set
+    @POST("mark")
+    fun addUpMark(@Body params:Rating):Call<StatusMsgResponse>
+
+    // Get rating
+    @GET("mark")
+    fun getUserMark(@Query("user_id") user_id:Int, @Query("news_items_id") news_items_id:Int):Call<RatingDefaultResponse>
+
 }
