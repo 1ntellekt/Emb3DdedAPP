@@ -594,12 +594,12 @@ class Repository : DataRepository {
         })
     }
 
-    override fun getUserMark(news_items_id:Int,onSuccess: (Double) -> Unit, onFail: (String) -> Unit) {
+    override fun getUserMark(news_items_id:Int,onSuccess: (Rating) -> Unit, onFail: (String) -> Unit) {
         RetrofitInstance.api.getUserMark(user_id = CurrUser.id, news_items_id).enqueue(object : Callback<RatingDefaultResponse>{
             override fun onResponse(call: Call<RatingDefaultResponse>, response: Response<RatingDefaultResponse>) {
                 if (response.isSuccessful){
                     response.body()?.let { body->
-                        onSuccess(body.you_mark!!.mark)
+                        onSuccess(body.you_mark!!)
                     }
                 } else {
                     Log.i("tagAPI", "Error get mark: ${response.code()}")
@@ -611,5 +611,9 @@ class Repository : DataRepository {
                 onFail("Error get mark: ${t.message}")
             }
         })
+    }
+
+    override fun getMarksByNewsId(news_items_id: Int): Call<MarksByNewsItemResponse> {
+        return RetrofitInstance.api.getAllMarksByNewsItemId(news_items_id)
     }
 }

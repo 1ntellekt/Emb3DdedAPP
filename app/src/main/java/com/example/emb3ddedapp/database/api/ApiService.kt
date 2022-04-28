@@ -153,4 +153,7 @@ interface ApiService {
     @GET("mark")
     fun getUserMark(@Query("user_id") user_id:Int, @Query("news_items_id") news_items_id:Int):Call<RatingDefaultResponse>
 
+    @GET("marks")
+    fun getAllMarksByNewsItemId(@Query("news_items_id") news_items_id:Int):Call<MarksByNewsItemResponse>
+
 }

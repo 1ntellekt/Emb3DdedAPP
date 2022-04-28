@@ -19,11 +19,8 @@ import androidx.lifecycle.Observer
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.emb3ddedapp.R
 import com.example.emb3ddedapp.databinding.AllNewsFragmentBinding
-import com.example.emb3ddedapp.databinding.DialogRatingSetLayoutBinding
 import com.example.emb3ddedapp.databinding.FilterNewsLayoutBinding
-import com.example.emb3ddedapp.models.CurrUser
 import com.example.emb3ddedapp.models.NewsItem
-import com.example.emb3ddedapp.models.Rating
 import com.example.emb3ddedapp.notification.FireServices
 import com.example.emb3ddedapp.screens.news.adapter.NewsAdapter
 import com.example.emb3ddedapp.utils.APP
@@ -77,16 +74,23 @@ class AllNewsFragment : Fragment() {
             }
         }
         mObserver = Observer { list->
-            list?.let {
+            list?.let { list1->
+                val news = if (sortByFirstNewDate){
+                    list1.sortedByDescending {it.created_at!!}.filter { it.avgMark != null && it.avgMark >= minRating }
+                } else {
+                    list1.sortedBy {it.created_at!!}.filter { it.avgMark != null && it.avgMark >= minRating }
+                }
+
                 newsList.clear()
-                newsList.addAll(it)
-                adapter.setData(it)
+                newsList.addAll(news)
+                adapter.setData(news)
             }
         }
     }
 
     //filters
     private var sortByFirstNewDate = true
+    private var minRating = 0.0
 
     private fun showFilterNewsDialog() {
         val dialog = context?.let { Dialog(it) }
@@ -104,6 +108,8 @@ class AllNewsFragment : Fragment() {
                     btnFirstNew.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
                 }
 
+                ratingBar.rating = minRating.toFloat()
+
                 btnFirstNew.setOnClickListener {
                     if (sortByFirstNewDate) return@setOnClickListener
                     sortByFirstNewDate = true
@@ -119,7 +125,7 @@ class AllNewsFragment : Fragment() {
 
                 ratingBar.onRatingBarChangeListener =
                     RatingBar.OnRatingBarChangeListener { ratingBar, rating, fromUser ->
-
+                        minRating = rating.toDouble()
                     }
 
             }

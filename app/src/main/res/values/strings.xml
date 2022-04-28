@@ -49,5 +49,6 @@
     <string name="hint_search_view_news">Enter the name or tag of the entry...</string>
     <string name="you_already_set_rating_for_this_article_tv"><u>You already set rating for this article!</u></string>
     <string name="set_rating_of_article_tv">Set rating of article</string>
+    <string name="enter_your_comment_hint">Enter your comment....</string>
 
 </resources>

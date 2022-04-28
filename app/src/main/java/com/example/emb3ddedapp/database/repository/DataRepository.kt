@@ -66,5 +66,6 @@ interface DataRepository {
 
     //rating
     fun addUppMark(rating: Rating, onSuccess: () -> Unit, onFail: (String) -> Unit)
-    fun getUserMark(news_items_id:Int,onSuccess: (Double) -> Unit, onFail: (String) -> Unit)
+    fun getUserMark(news_items_id:Int,onSuccess: (Rating) -> Unit, onFail: (String) -> Unit)
+    fun getMarksByNewsId(news_items_id: Int):Call<MarksByNewsItemResponse>
 }

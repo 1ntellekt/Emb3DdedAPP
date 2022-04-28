@@ -35,6 +35,36 @@
                     android:layout_height="match_parent"
                     android:contentDescription="Img news item" />
 
+            <LinearLayout
+                android:id="@+id/ratPanel"
+                app:layout_collapseMode="parallax"
+                android:background="@drawable/back_btn_sign"
+                android:backgroundTint="@color/color_purple"
+                android:padding="2dp"
+                android:paddingStart="6dp"
+                android:paddingEnd="6dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="bottom"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content">
+                <ImageView
+                    app:tint="@color/yellow"
+                    android:src="@drawable/ic_baseline_star_rate_24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/tvRating"
+                    android:layout_marginStart="5dp"
+                    android:fontFamily="@font/roboto_italic"
+                    android:textColor="@color/yellow"
+                    tools:text="5.0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
@@ -167,7 +197,7 @@
 
             <LinearLayout
                 android:id="@+id/panel_author"
-                app:layout_constraintStart_toStartOf="@id/tvDescription"
+                app:layout_constraintEnd_toEndOf="@id/tvDescription"
                 app:layout_constraintTop_toBottomOf="@id/tvDescription"
                 android:orientation="horizontal"
                 android:layout_marginTop="5dp"
@@ -194,6 +224,15 @@
                     android:layout_height="wrap_content"/>
 
             </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_margin="5dp"
+                app:layout_constraintTop_toBottomOf="@id/panel_author"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/comment_item_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

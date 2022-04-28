@@ -58,7 +58,10 @@ class PageOrderFragment : Fragment() {
                 tvDateTime.text = getDataTimeWithFormat(order.created_at!!)
                 tvTitle.text = order.title
                 order.img_url?.let { url->
-                    Glide.with(requireContext()).load(url).into(imgOrder)
+                    Glide.with(imgOrder.context).load(url).into(imgOrder)
+                }
+                order.user.url_profile?.let { url->
+                    Glide.with(imgPerson.context).load(url).into(imgPerson)
                 }
                 btnCallPhone.setOnClickListener {
                     //call to order's owner

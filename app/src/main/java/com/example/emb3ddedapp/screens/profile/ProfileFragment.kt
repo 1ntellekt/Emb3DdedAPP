@@ -200,7 +200,7 @@ class ProfileFragment : Fragment() {
         when(menuItem.itemId){
             R.id.takeImageFile ->{
                 val intent = Intent(Intent.ACTION_GET_CONTENT)
-                intent.type = "*/*"
+                intent.type = "image/*"
                 takeImgFile.launch(intent)
             }
             R.id.takePhotoCamera -> {
