@@ -1,7 +1,6 @@
 package com.example.emb3ddedapp.screens.signin
 
 import android.app.AlertDialog
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.emb3ddedapp.R
 import com.example.emb3ddedapp.databinding.DialogForgotPassLayoutBinding
 import com.example.emb3ddedapp.databinding.SignInFragmentBinding
-import com.example.emb3ddedapp.progressdialog.MyProgressDialog
+import com.example.emb3ddedapp.utils.progressdialog.MyProgressDialog
 import com.example.emb3ddedapp.utils.APP
 import com.example.emb3ddedapp.utils.showToast
 

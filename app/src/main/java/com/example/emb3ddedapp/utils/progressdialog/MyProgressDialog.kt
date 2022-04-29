@@ -1,4 +1,4 @@
-package com.example.emb3ddedapp.progressdialog
+package com.example.emb3ddedapp.utils.progressdialog
 
 import android.app.AlertDialog
 import android.content.Context

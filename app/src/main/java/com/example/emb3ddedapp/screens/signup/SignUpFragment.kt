@@ -1,30 +1,18 @@
 package com.example.emb3ddedapp.screens.signup
 
-import android.Manifest
-import android.app.AlertDialog
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.telephony.PhoneNumberFormattingTextWatcher
-import android.telephony.PhoneNumberUtils
-import android.telephony.SmsManager
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.emb3ddedapp.R
-import com.example.emb3ddedapp.databinding.DialogForgotPassLayoutBinding
-import com.example.emb3ddedapp.databinding.InputCodeLayoutBinding
 import com.example.emb3ddedapp.databinding.SignUpFragmentBinding
 import com.example.emb3ddedapp.models.CurrUser
-import com.example.emb3ddedapp.progressdialog.MyProgressDialog
+import com.example.emb3ddedapp.utils.progressdialog.MyProgressDialog
 import com.example.emb3ddedapp.utils.APP
-import com.example.emb3ddedapp.utils.showToast
 
 
 class SignUpFragment : Fragment() {

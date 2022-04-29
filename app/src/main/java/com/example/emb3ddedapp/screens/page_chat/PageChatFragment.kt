@@ -1,7 +1,6 @@
 package com.example.emb3ddedapp.screens.page_chat
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
@@ -41,7 +40,7 @@ import com.example.emb3ddedapp.models.CurrUser
 import com.example.emb3ddedapp.models.Message
 import com.example.emb3ddedapp.models.User
 import com.example.emb3ddedapp.notification.FireServices
-import com.example.emb3ddedapp.progressdialog.MyProgressDialog
+import com.example.emb3ddedapp.utils.progressdialog.MyProgressDialog
 import com.example.emb3ddedapp.screens.page_chat.adapter.MessageAdapter
 import com.example.emb3ddedapp.utils.*
 import com.github.dhaval2404.colorpicker.ColorPickerDialog
@@ -49,9 +48,6 @@ import com.github.dhaval2404.colorpicker.model.ColorShape
 import com.google.android.material.snackbar.Snackbar
 import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
-import com.journeyapps.barcodescanner.ScanContract
-import com.journeyapps.barcodescanner.ScanIntentResult
-import com.journeyapps.barcodescanner.ScanOptions
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
