@@ -3,6 +3,8 @@ plugins {
     id 'kotlin-android'
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
+    id 'kotlin-parcelize'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -85,6 +87,17 @@ dependencies {
 
     //Rating bar
     implementation 'com.github.shallcheek:RatingBar:v1.0'
+
+    // Room components
+    implementation "androidx.room:room-runtime:2.4.2"
+    kapt "androidx.room:room-compiler:2.4.2"
+    implementation "androidx.room:room-ktx:2.4.2"
+    androidTestImplementation "androidx.room:room-testing:2.4.2"
+
+    // Coroutines
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.5.30"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2"
 
     //Firebase d-s
     implementation 'com.firebaseui:firebase-ui-auth:8.0.0'
