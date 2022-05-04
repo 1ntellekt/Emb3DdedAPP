@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.emb3ddedapp.models.Chat
 import com.example.emb3ddedapp.models.ChatsByUserResponse
+import com.example.emb3ddedapp.utils.IS_CONNECT_INTERNET
 import com.example.emb3ddedapp.utils.REPOSITORY
 import retrofit2.Call
 import retrofit2.Callback
@@ -17,6 +18,7 @@ class ChatsViewModel(application: Application) : AndroidViewModel(application) {
         val chatsList:MutableLiveData<List<Chat>?> = MutableLiveData()
 
         fun getChatsByUser(user_id:Int) {
+            if (IS_CONNECT_INTERNET)
             REPOSITORY.getChatsByUserId(user_id)
             .enqueue(object : Callback<ChatsByUserResponse>{
                 override fun onResponse(call: Call<ChatsByUserResponse>, response: Response<ChatsByUserResponse>) {

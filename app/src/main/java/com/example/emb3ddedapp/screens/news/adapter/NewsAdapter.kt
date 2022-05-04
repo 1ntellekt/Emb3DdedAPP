@@ -23,7 +23,7 @@ class NewsAdapter(
     private val onDeleteListener:AdapterListeners.OnDeleteClick?,
 ):RecyclerView.Adapter<NewsAdapter.NewsHolder>() {
 
-    private val newsList = mutableListOf<NewsItem>()
+     val newsList = mutableListOf<NewsItem>()
 
     @SuppressLint("NotifyDataSetChanged")
     fun setData(list: List<NewsItem>){

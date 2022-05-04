@@ -14,12 +14,16 @@ class UserLocalRepository(private val userDao: UserDao) {
         userDao.deleteUser(userEntity)
     }
 
-    suspend fun getUserById(id:Int):LiveData<UserEntity?>{
+    fun getUserById(id:Int):LiveData<UserEntity>{
         return userDao.getUserById(id)
     }
 
-    suspend fun getAllUsers():LiveData<List<UserEntity>?>{
+     fun getAllUsers():LiveData<List<UserEntity>>{
         return userDao.getAllUsers()
+    }
+
+    suspend fun deleteAll(){
+        userDao.deleteAll()
     }
 
 }

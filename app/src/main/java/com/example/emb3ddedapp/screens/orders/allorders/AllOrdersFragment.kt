@@ -23,6 +23,7 @@ import com.example.emb3ddedapp.models.Order
 import com.example.emb3ddedapp.notification.FireServices
 import com.example.emb3ddedapp.screens.orders.allorders.adapter.AllOrdersAdapter
 import com.example.emb3ddedapp.utils.*
+import com.example.emb3ddedapp.utils.warning_dialog.DialogWarningConnection
 import java.util.*
 
 class AllOrdersFragment : Fragment() {
@@ -125,6 +126,10 @@ class AllOrdersFragment : Fragment() {
         //showToast("ALLOrders")
         //Log.i("tagLife", "onStart() on AllOrders")
 
+        if (!IS_CONNECT_INTERNET){
+            val dialog = DialogWarningConnection(requireContext())
+            dialog.showDialog()
+        }
 
         val intentFilter = IntentFilter()
          intentFilter.addAction(FireServices.PUSH_TAG)

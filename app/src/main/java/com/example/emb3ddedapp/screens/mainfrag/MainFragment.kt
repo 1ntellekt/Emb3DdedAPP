@@ -1,5 +1,8 @@
 package com.example.emb3ddedapp.screens.mainfrag
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.view.*
@@ -11,6 +14,8 @@ import androidx.navigation.ui.NavigationUI
 import com.example.emb3ddedapp.R
 import com.example.emb3ddedapp.databinding.MainFragmentBinding
 import com.example.emb3ddedapp.utils.APP
+import com.example.emb3ddedapp.utils.IS_CONNECT_INTERNET
+import com.example.emb3ddedapp.utils.warning_dialog.DialogWarningConnection
 
 class MainFragment : Fragment() {
 
@@ -48,6 +53,13 @@ class MainFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+
+       // if (!IS_CONNECT_INTERNET){
+            //showWarningDialog()
+//            val dialog = DialogWarningConnection(requireContext())
+//            dialog.showDialog()
+       // }
+
         binding.apply {
             navPositionName = arguments?.getString("nav")
             navPositionName?.let { nav->

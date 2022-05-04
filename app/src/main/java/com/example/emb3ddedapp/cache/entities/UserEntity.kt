@@ -7,7 +7,7 @@ import java.io.Serializable
 
 @Entity(tableName = "Users")
 data class UserEntity(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     var id:Int=0,
     @ColumnInfo(name = "login")
     var login: String,
@@ -21,4 +21,4 @@ data class UserEntity(
     var status:String ="",
     @ColumnInfo(name = "url_profile")
     var url_profile:String? = null
-):Serializable
+)

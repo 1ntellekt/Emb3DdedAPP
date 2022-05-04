@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.emb3ddedapp.models.Order
 import com.example.emb3ddedapp.models.OrdersByUserResponse
+import com.example.emb3ddedapp.utils.IS_CONNECT_INTERNET
 import com.example.emb3ddedapp.utils.REPOSITORY
 import retrofit2.Call
 import retrofit2.Callback
@@ -17,6 +18,7 @@ class AllOrdersViewModel(application: Application) : AndroidViewModel(applicatio
     val allOrdersList:MutableLiveData<List<Order>?> = MutableLiveData()
 
     fun getAllOrders(){
+        if (IS_CONNECT_INTERNET)
         REPOSITORY.getAllOrders().enqueue(object : Callback<OrdersByUserResponse>{
             override fun onResponse(call: Call<OrdersByUserResponse>, response: Response<OrdersByUserResponse>) {
                 if (response.isSuccessful){

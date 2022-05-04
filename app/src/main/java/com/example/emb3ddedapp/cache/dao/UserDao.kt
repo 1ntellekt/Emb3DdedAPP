@@ -11,12 +11,15 @@ interface UserDao {
     suspend fun addUser(userEntity: UserEntity)
 
     @Query("SELECT * FROM Users")
-    suspend fun getAllUsers():LiveData<List<UserEntity>?>
+    fun getAllUsers():LiveData<List<UserEntity>>
 
     @Query("SELECT * FROM Users Where id = :id")
-    suspend fun getUserById(id:Int):LiveData<UserEntity?>
+    fun getUserById(id:Int):LiveData<UserEntity>
 
     @Delete
     suspend fun deleteUser(userEntity: UserEntity)
+
+    @Query("DELETE FROM Users")
+    suspend fun deleteAll()
 
 }

@@ -24,6 +24,8 @@ import com.example.emb3ddedapp.models.NewsItem
 import com.example.emb3ddedapp.notification.FireServices
 import com.example.emb3ddedapp.screens.news.adapter.NewsAdapter
 import com.example.emb3ddedapp.utils.APP
+import com.example.emb3ddedapp.utils.IS_CONNECT_INTERNET
+import com.example.emb3ddedapp.utils.warning_dialog.DialogWarningConnection
 import java.util.*
 
 class AllNewsFragment : Fragment() {
@@ -162,7 +164,10 @@ class AllNewsFragment : Fragment() {
         viewModel.allNewsList.observe(this,mObserver)
         viewModel.getAllNews()
 
-
+        if (!IS_CONNECT_INTERNET){
+            val dialog = DialogWarningConnection(requireContext())
+            dialog.showDialog()
+        }
 
         val intentFilter = IntentFilter()
         intentFilter.addAction(FireServices.PUSH_TAG)

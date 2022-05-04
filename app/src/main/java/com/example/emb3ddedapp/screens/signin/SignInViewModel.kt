@@ -5,8 +5,15 @@ import android.app.ProgressDialog
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.emb3ddedapp.cache.database.LocalDB
+import com.example.emb3ddedapp.cache.entities.UserEntity
+import com.example.emb3ddedapp.cache.repository.UserLocalRepository
+import com.example.emb3ddedapp.models.CurrUser
 import com.example.emb3ddedapp.utils.*
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class SignInViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -58,8 +65,27 @@ class SignInViewModel(application: Application) : AndroidViewModel(application) 
     }
     */
 
+    private val repository:UserLocalRepository
+
+    init {
+        val userDao = LocalDB.getLocalDB(application).userDao()
+        repository = UserLocalRepository(userDao)
+    }
+
+    private fun addLocalUser(){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.addUser(userEntity = UserEntity(
+                id = getInitUserId(),
+                login = CurrUser.login, email = CurrUser.email,
+                uid = CurrUser.uid, number = CurrUser.number,
+                status = CurrUser.status, url_profile = CurrUser.url_profile)
+            )
+        }
+    }
+
     fun logInEmail(email:String,password:String,onSuccess:()->Unit, onFail:()->Unit){
         REPOSITORY.logInEmail(email,password, {
+            addLocalUser()
             onSuccess()
         },{
             showToast(it)

@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.emb3ddedapp.models.NewsByUserResponse
 import com.example.emb3ddedapp.models.NewsItem
+import com.example.emb3ddedapp.utils.IS_CONNECT_INTERNET
 import com.example.emb3ddedapp.utils.REPOSITORY
 import com.example.emb3ddedapp.utils.showToast
 import retrofit2.Call
@@ -18,6 +19,7 @@ class MyNewsViewModel(application: Application) : AndroidViewModel(application) 
     val myNewsList:MutableLiveData<List<NewsItem>?> = MutableLiveData()
 
     fun getNewsByUserId(user_id:Int){
+        if (IS_CONNECT_INTERNET)
         REPOSITORY.getNewsByUserId(user_id).enqueue(object : Callback<NewsByUserResponse>{
             override fun onResponse(call: Call<NewsByUserResponse>, response: Response<NewsByUserResponse>) {
                 if (response.isSuccessful){

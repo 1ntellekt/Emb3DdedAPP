@@ -36,6 +36,8 @@ const val DOWNLOAD_FILE_URL = "https://www.emb3ded.kz/api/getfile?file="
 const val VIEW_URL_ARC = "https://arvr.google.com/scene-viewer/1.0?file="
 const val VIEWER_WEB_PAGE = "https://www.emb3ded.kz/api/viewer?model_url="
 
+var IS_CONNECT_INTERNET = false
+
 /*fun showProgressDialog(title:String) {
     progressDialog.setTitle(title)
     progressDialog.setCancelable(false)

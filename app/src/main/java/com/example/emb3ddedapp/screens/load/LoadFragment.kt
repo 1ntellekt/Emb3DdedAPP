@@ -6,9 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import com.example.emb3ddedapp.R
+import com.example.emb3ddedapp.cache.entities.UserEntity
 import com.example.emb3ddedapp.database.api.RetrofitInstance
 import com.example.emb3ddedapp.databinding.LoadFragmentBinding
+import com.example.emb3ddedapp.models.CurrUser
 import com.example.emb3ddedapp.utils.APP
 import com.example.emb3ddedapp.utils.getInitUserId
 import com.example.emb3ddedapp.utils.getTokenAccess
@@ -21,9 +24,7 @@ class LoadFragment : Fragment() {
 
     private lateinit var binding:LoadFragmentBinding
 
-    companion object {
-        fun newInstance() = LoadFragment()
-    }
+    private lateinit var mObserver: Observer<UserEntity>
 
     private lateinit var viewModel: LoadViewModel
 
@@ -38,12 +39,24 @@ class LoadFragment : Fragment() {
         // TODO: Use the ViewModel
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        mObserver = Observer { userEntity ->
+                CurrUser.status = userEntity.status
+                CurrUser.email = userEntity.email
+                CurrUser.login = userEntity.login
+                CurrUser.number = userEntity.number
+                CurrUser.uid = userEntity.uid
+                CurrUser.url_profile = userEntity.url_profile
+                APP.mNavController.navigate(R.id.action_loadFragment_to_mainFragment)
+        }
+    }
+
     override fun onStart() {
         super.onStart()
 
         if (getInitUserId() > 0){
             RetrofitInstance.setAuthorizationBearer(getTokenAccess()!!)
-            viewModel.getDataForCurrentUser {
                 CoroutineScope(Dispatchers.Main).launch {
                     binding.logoLoad.animate().apply {
                         duration = 1000
@@ -64,9 +77,12 @@ class LoadFragment : Fragment() {
                         }
                     }.start()
                     delay(2500)
-                    APP.mNavController.navigate(R.id.action_loadFragment_to_mainFragment)
+                    viewModel.getDataForCurrentUser({
+                        APP.mNavController.navigate(R.id.action_loadFragment_to_mainFragment)
+                    }) {
+                        viewModel.userLive.observe(this@LoadFragment,mObserver)
+                    }
                 }
-            }
         } else {
             CoroutineScope(Dispatchers.Main).launch {
                 binding.logoLoad.animate().apply {
@@ -91,6 +107,11 @@ class LoadFragment : Fragment() {
                 APP.mNavController.navigate(R.id.action_loadFragment_to_signInFragment)
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.userLive.removeObserver(mObserver)
     }
 
 }
