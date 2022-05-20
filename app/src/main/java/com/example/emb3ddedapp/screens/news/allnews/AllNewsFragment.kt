@@ -78,9 +78,9 @@ class AllNewsFragment : Fragment() {
         mObserver = Observer { list->
             list?.let { list1->
                 val news = if (sortByFirstNewDate){
-                    list1.sortedByDescending {it.created_at!!}.filter { it.avgMark != null && it.avgMark >= minRating }
+                    list1.sortedByDescending {it.created_at!!}.filter { it.avgMark >= minRating }
                 } else {
-                    list1.sortedBy {it.created_at!!}.filter { it.avgMark != null && it.avgMark >= minRating }
+                    list1.sortedBy {it.created_at!!}.filter { it.avgMark >= minRating }
                 }
 
                 newsList.clear()

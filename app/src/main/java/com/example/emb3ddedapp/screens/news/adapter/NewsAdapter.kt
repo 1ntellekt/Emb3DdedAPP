@@ -75,11 +75,12 @@ class NewsAdapter(
                 ratPanel.visibility = View.GONE
             } else {
                 ratPanel.visibility = View.VISIBLE
-               tvRating.text = if (newsItem.avgMark == null){
-                    "0.0"
-                }else {
-                    "${newsItem.avgMark}"
-                }
+//               tvRating.text = if (newsItem.avgMark == null){
+//                    "0.0"
+//                }else {
+//                    "${newsItem.avgMark}"
+//                }
+                tvRating.text = "${newsItem.avgMark}"
             }
         }
     }

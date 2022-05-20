@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var mNavController: NavController
 
     private lateinit var broadcastReceiver:ConnectionReceiver
+    private lateinit var intentFilter:IntentFilter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,19 +35,25 @@ class MainActivity : AppCompatActivity() {
         REPOSITORY = Repository()
 
         broadcastReceiver = ConnectionReceiver()
-        val intentFilter = IntentFilter()
+         intentFilter = IntentFilter()
          intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION)
          registerReceiver(broadcastReceiver,intentFilter)
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        //unregisterReceiver(broadcastReceiver)
         binding = null
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onPause() {
+        super.onPause()
         unregisterReceiver(broadcastReceiver)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        registerReceiver(broadcastReceiver,intentFilter)
     }
 
 /*    private val broadcastReceiver = object : BroadcastReceiver(){
