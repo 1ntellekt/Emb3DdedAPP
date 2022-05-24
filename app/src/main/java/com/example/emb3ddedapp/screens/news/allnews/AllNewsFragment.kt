@@ -40,21 +40,16 @@ class AllNewsFragment : Fragment() {
     private lateinit var mObserver: Observer<List<NewsItem>?>
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
         _binding = AllNewsFragmentBinding.inflate(inflater,container,false)
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(AllNewsViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this)[AllNewsViewModel::class.java]
         adapter = NewsAdapter(false,{ idItem->
-            val newsItem = newsList[idItem]
+            val newsItem = adapter.currentList[idItem]
             val args = Bundle().also { it.putSerializable("news_item", newsItem)}
             APP.mNavController.navigate(R.id.action_mainFragment_to_pageNewsFragment, args)
         },null,null)
@@ -85,7 +80,7 @@ class AllNewsFragment : Fragment() {
 
                 newsList.clear()
                 newsList.addAll(news)
-                adapter.setData(news)
+                adapter.submitList(news)
             }
         }
     }
@@ -126,7 +121,7 @@ class AllNewsFragment : Fragment() {
                 }
 
                 ratingBar.onRatingBarChangeListener =
-                    RatingBar.OnRatingBarChangeListener { ratingBar, rating, fromUser ->
+                    RatingBar.OnRatingBarChangeListener { _, rating, _ ->
                         minRating = rating.toDouble()
                     }
 
@@ -145,12 +140,12 @@ class AllNewsFragment : Fragment() {
 
     private fun filterNews(newText: String?) {
         if (newText != null){
-            adapter.setData(newsList.filter {
+            adapter.submitList(newsList.filter {
                 it.title.contains(newText.lowercase(Locale.getDefault()), ignoreCase = true)
               ||it.tag.contains(newText.lowercase(Locale.getDefault()), ignoreCase = true)
             })
         } else {
-            adapter.setData(newsList)
+            adapter.submitList(newsList)
         }
     }
 
@@ -161,23 +156,30 @@ class AllNewsFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        viewModel.allNewsList.observe(this,mObserver)
+        viewModel.allNewsList.observe(viewLifecycleOwner,mObserver)
         viewModel.getAllNews()
 
         if (!IS_CONNECT_INTERNET){
             val dialog = DialogWarningConnection(requireContext())
             dialog.showDialog()
         }
+    }
 
+    override fun onResume() {
+        super.onResume()
         val intentFilter = IntentFilter()
         intentFilter.addAction(FireServices.PUSH_TAG)
         requireActivity().registerReceiver(broadcastReceiver,intentFilter)
     }
 
+    override fun onPause() {
+        super.onPause()
+        requireActivity().unregisterReceiver(broadcastReceiver)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         viewModel.allNewsList.removeObserver(mObserver)
-        requireActivity().unregisterReceiver(broadcastReceiver)
         _binding = null
     }
 

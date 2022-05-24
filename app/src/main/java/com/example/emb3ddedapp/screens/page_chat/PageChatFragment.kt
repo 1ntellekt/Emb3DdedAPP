@@ -1,6 +1,7 @@
 package com.example.emb3ddedapp.screens.page_chat
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
@@ -71,7 +72,6 @@ class PageChatFragment : Fragment() {
     private lateinit var mObserver: Observer<List<Message>?>
     private lateinit var cObserver: Observer<ChatDefault?>
     private lateinit var adapter:MessageAdapter
-    private val messageList = mutableListOf<Message>()
     private var chatDefault:ChatDefault? = null
     private var recipientUser: User? = null
 
@@ -79,48 +79,47 @@ class PageChatFragment : Fragment() {
     private var partnerDownload3DFiles = false
     private var iDownloadFile = false
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        chatId = arguments?.getInt("id_chat")
+        recipientUser = arguments?.getSerializable("recipientUser") as? User
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = PageChatFragmentBinding.inflate(inflater,container,false)
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(PageChatViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        chatId = arguments?.getInt("id_chat")
-        recipientUser = arguments?.getSerializable("recipientUser") as? User
+        viewModel = ViewModelProvider(this)[PageChatViewModel::class.java]
         adapter = MessageAdapter(CurrUser.id,
         { idItemPanel3d, viewPanel->
             //click panel 3d
-            popupMenu3Dialog(messageList[idItemPanel3d], viewPanel)
+            popupMenu3Dialog(adapter.currentList[idItemPanel3d], viewPanel)
         },
         { idItemPanelFile, viewPanel->
           //click file panel
-            popupMenuFileDialog(messageList[idItemPanelFile], viewPanel)
+            popupMenuFileDialog(adapter.currentList[idItemPanelFile], viewPanel)
         },
         { idImgItem->
           //on image click
-          popupMenuImageDialog(messageList[idImgItem])
+          popupMenuImageDialog(adapter.currentList[idImgItem])
         },
         { idFileItem->
           //file btn click
-            downloadFromUrl(messageList[idFileItem].file_msg!!,"file")
+            downloadFromUrl(adapter.currentList[idFileItem].file_msg!!,"file")
         },
         { id3dFileItem->
             //file btn 3d click
-            if (iDownloadFile || messageList[id3dFileItem].user_id_sender == CurrUser.id)
-            downloadFromUrl(messageList[id3dFileItem].file_3d_msg!!,"3dfile")
+            if (iDownloadFile || adapter.currentList[id3dFileItem].user_id_sender == CurrUser.id)
+            downloadFromUrl(adapter.currentList[id3dFileItem].file_3d_msg!!,"3dfile")
             else showToast("No access!")
         },
         { idMsgText, viewTextMsg->
             // message click
-            if (messageList[idMsgText].user_id_sender == CurrUser.id)
-            popupMenuMsgTextDialog(messageList[idMsgText], viewTextMsg)
+            if (adapter.currentList[idMsgText].user_id_sender == CurrUser.id)
+            popupMenuMsgTextDialog(adapter.currentList[idMsgText], viewTextMsg)
         })
         binding.apply {
             btnBack.setOnClickListener {
@@ -134,7 +133,7 @@ class PageChatFragment : Fragment() {
                 binding.btnDownScroll.visibility = View.GONE
                 recyclerView.setOnScrollChangeListener(null)
                 iScrollDown = true
-                smoother.targetPosition = messageList.size-1
+                smoother.targetPosition = adapter.currentList.size-1
                 binding.recyclerView.layoutManager!!.startSmoothScroll(smoother)
             }
 
@@ -175,12 +174,10 @@ class PageChatFragment : Fragment() {
         }
         mObserver = Observer { messages->
             messages?.let { list->
-                messageList.clear()
-                messageList.addAll(list)
-                adapter.setData(list)
+                adapter.submitList(list)
                 if (iScrollDown){
                     if (list.isNotEmpty()){
-                        smoother.targetPosition = messageList.size-1
+                        smoother.targetPosition = adapter.currentList.size-1
                         binding.recyclerView.layoutManager!!.startSmoothScroll(smoother)
                     }
                     Handler(Looper.getMainLooper()).postDelayed({binding.recyclerView.setOnScrollChangeListener(scrollListener)},1000)
@@ -195,6 +192,7 @@ class PageChatFragment : Fragment() {
         }
     }
 
+    @SuppressLint("DiscouragedPrivateApi")
     private fun popupMenuMsgTextDialog(message: Message, viewTextMsg: View) {
         val popupMenu = PopupMenu(context, viewTextMsg)
         popupMenu.inflate(R.menu.msg_menu)
@@ -229,19 +227,20 @@ class PageChatFragment : Fragment() {
         alertDialogBuilder.setView(binding.root)
         binding.edMessage.setText(message.text_msg!!)
         alertDialogBuilder
-            .setPositiveButton("Ok"){ dialog, which ->
+            .setPositiveButton("Ok"){ _, _ ->
                 if (binding.edMessage.text.toString().isEmpty()){
                     showToast("Input text message is null!")
                 } else {
                     viewModel.editMsg(message.copy(text_msg = binding.edMessage.text.toString()))
                 }
             }
-            .setNegativeButton("Cancel"){ dialog, which->
+            .setNegativeButton("Cancel"){ dialog, _ ->
                 dialog.dismiss()
             }.create().show()
     }
 
 
+    @SuppressLint("DiscouragedPrivateApi")
     private fun popupMenuFileDialog(message: Message, viewPanel: View) {
         val popupMenu = PopupMenu(context, viewPanel)
         popupMenu.inflate(R.menu.file_menu)
@@ -274,6 +273,7 @@ class PageChatFragment : Fragment() {
         return true
     }
 
+    @SuppressLint("DiscouragedPrivateApi")
     private fun popupMenuChat(it: View) {
         val popupMenu = PopupMenu(context, it)
         popupMenu.inflate(R.menu.chat_menu)
@@ -351,7 +351,7 @@ class PageChatFragment : Fragment() {
 
     private val requestCameraPermission = registerForActivityResult(ActivityResultContracts.RequestPermission()){
             if (it){
-
+                APP.mNavController.navigate(R.id.action_pageChatFragment_to_scanFragment)
             }else {
                 showToast("Permission denied!")
             }
@@ -389,7 +389,7 @@ class PageChatFragment : Fragment() {
                         .setTitle("Pick Theme")           	// Default "Choose Color"
                         .setColorShape(ColorShape.SQAURE)   // Default ColorShape.CIRCLE
                         .setDefaultColor(R.color.black)     // Pass Default Color
-                        .setColorListener { color, colorHex ->
+                        .setColorListener { color, _ ->
                             drawingView.setBrushColor(color)
                         }
                         .show()
@@ -433,6 +433,7 @@ class PageChatFragment : Fragment() {
     }
 
 
+    @SuppressLint("DiscouragedPrivateApi")
     private fun popupMenu3Dialog(message: Message, view: View) {
         val popupMenu = PopupMenu(context, view)
         popupMenu.inflate(R.menu.file_3d_menu)
@@ -496,6 +497,7 @@ class PageChatFragment : Fragment() {
         return true
     }
 
+    @SuppressLint("DiscouragedPrivateApi")
     private fun popupMenuImageDialog(message: Message) {
         val dialog = context?.let { Dialog(it) }
         dialog?.let {
@@ -594,7 +596,7 @@ class PageChatFragment : Fragment() {
         downloadManager("$name-$nowDate.$extension", DIRECTORY_DOWNLOADS,url)
     }
 
-    private val scrollListener = View.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+    private val scrollListener = View.OnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
             if (scrollY > oldScrollY) {
                 //Log.i("tag", "Scroll DOWN scrollY:$scrollY oldScrollY:$oldScrollY")
                 binding.btnDownScroll.visibility = View.GONE
@@ -609,7 +611,7 @@ class PageChatFragment : Fragment() {
 
     private val smoother = object : LinearSmoothScroller(APP.applicationContext){
         override fun getVerticalSnapPreference(): Int {
-            return LinearSmoothScroller.SNAP_TO_END
+            return SNAP_TO_END
         }
     }
 
@@ -621,8 +623,8 @@ class PageChatFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        viewModel.messagesList.observe(this,mObserver)
-        viewModel.chatDef.observe(this,cObserver)
+        viewModel.messagesList.observe(viewLifecycleOwner,mObserver)
+        viewModel.chatDef.observe(viewLifecycleOwner,cObserver)
 
         val myProgress = MyProgressDialog(requireContext())
         myProgress.load("Loading chat....")
@@ -635,17 +637,24 @@ class PageChatFragment : Fragment() {
                 }
             }
         }.start()
+    }
 
+    override fun onResume() {
+        super.onResume()
         val intentFilter = IntentFilter()
         intentFilter.addAction(FireServices.PUSH_TAG)
         requireActivity().registerReceiver(broadcastReceiver,intentFilter)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        requireActivity().unregisterReceiver(broadcastReceiver)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         viewModel.messagesList.removeObserver(mObserver)
         viewModel.chatDef.removeObserver(cObserver)
-        requireActivity().unregisterReceiver(broadcastReceiver)
         //_binding = null
     }
 
@@ -673,7 +682,7 @@ class PageChatFragment : Fragment() {
                                 user_id_recepient = extras.getInt(FireServices.KEY_ID_RECIPIENT)
                             )
                             adapter.addItem(message)
-                            messageList.add(message)*/
+                            adapter.currentList.add(message)*/
                         }
                         FireServices.ACTION_CHAT -> {
 

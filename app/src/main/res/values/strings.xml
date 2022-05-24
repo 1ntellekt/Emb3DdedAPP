@@ -10,16 +10,16 @@
     <string name="forgot_password_tv"><u>Forgot password?</u></string>
     <string name="sign_up_tv"><u>Sign Up</u></string>
     <string name="have_you_an_account_tv">Have you an account?</string>
-    <string name="enter_email_hint">Enter email...</string>
-    <string name="enter_password_hint">Enter password...</string>
+    <string name="enter_email_hint">Enter email…</string>
+    <string name="enter_password_hint">Enter password…</string>
     <string name="sign_up_to_account_tv">Sign Up to account</string>
-    <string name="enter_login_hint">Enter login...</string>
-    <string name="enter_telephone_number_hint">Enter telephone number...</string>
-    <string name="confirm_your_password_hint">Confirm your password...</string>
+    <string name="enter_login_hint">Enter login…</string>
+    <string name="enter_telephone_number_hint">Enter telephone number…</string>
+    <string name="confirm_your_password_hint">Confirm your password…</string>
     <string name="sign_up_with_email_btn">Sign Up with Email</string>
-    <string name="enter_person_status_hint">Enter person status...</string>
-    <string name="enter_old_password_hint">Enter old password...</string>
-    <string name="enter_new_password_hint">Enter new password...</string>
+    <string name="enter_person_status_hint">Enter person status…</string>
+    <string name="enter_old_password_hint">Enter old password…</string>
+    <string name="enter_new_password_hint">Enter new password…</string>
     <string name="user_profile_update_btn">User profile update</string>
     <string name="exit_from_account_btn">Exit from account</string>
     <string name="enter_title_of_the_order_hint">Enter title of the order....</string>
@@ -28,7 +28,7 @@
     <string name="enter_tag_of_the_news_hint">Enter tag of the news....</string>
     <string name="enter_description_of_the_news_hint">Enter description of the news....</string>
     <string name="no_orders_page_hint">No orders</string>
-    <string name="loading_txt_tv">Loading...!!</string>
+    <string name="loading_txt_tv">Loading…!!</string>
     <string name="filter_options_tv">Filter options</string>
     <string name="sort_by_date_tv">Sort by Date</string>
     <string name="search_text_in_view_tv">Search text in view</string>
@@ -42,13 +42,20 @@
     <string name="enter_email_address_for_reset_password_dia_tv">Enter email address for reset password</string>
     <string name="chats_head_tv">Chats</string>
     <string name="enter_new_text_message_dia_tv">Enter new text message</string>
-    <string name="enter_message_hint">Enter message...</string>
+    <string name="enter_message_hint">Enter message…</string>
     <string name="orders_head_tv">Orders</string>
-    <string name="hint_search_view_orders">Enter the name author...</string>
-    <string name="hint_search_view_chats">Enter the login...</string>
-    <string name="hint_search_view_news">Enter the name or tag of the entry...</string>
+    <string name="hint_search_view_orders">Enter the name author…</string>
+    <string name="hint_search_view_chats">Enter the login…</string>
+    <string name="hint_search_view_news">Enter the name or tag of the entry…</string>
     <string name="you_already_set_rating_for_this_article_tv"><u>You already set rating for this article!</u></string>
     <string name="set_rating_of_article_tv">Set rating of article</string>
     <string name="enter_your_comment_hint">Enter your comment....</string>
+
+    <string name="picture_txt">A picture</string>
+    <string name="no_msg_txt">!No messages!</string>
+    <string name="d_file_txt">A 3d file</string>
+    <string name="file_txt">A file</string>
+    <string name="order_auth">Order author:</string>
+
 
 </resources>

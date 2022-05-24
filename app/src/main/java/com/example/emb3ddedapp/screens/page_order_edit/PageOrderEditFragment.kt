@@ -36,19 +36,19 @@ class PageOrderEditFragment : Fragment() {
     private var curOrder:Order? = null
     private var selectedImgCurrOrder:String? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        curOrder = arguments?.getSerializable("order") as Order?
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = PageOrderEditFragmentBinding.inflate(inflater,container,false)
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(PageOrderEditViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this)[PageOrderEditViewModel::class.java]
         binding.apply {
             appbar.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
                 var scrollRange = -1
@@ -65,8 +65,6 @@ class PageOrderEditFragment : Fragment() {
                     }
                 }
             })
-
-            curOrder = arguments?.getSerializable("order") as Order?
             curOrder?.let {
                 edDescription.setText(it.description)
                 edTitle.setText(it.title)
@@ -84,8 +82,8 @@ class PageOrderEditFragment : Fragment() {
                 APP.mNavController.navigate(R.id.action_pageOrderEditFragment_to_mainFragment, Bundle().also { it.putString("nav", "orders") })
             }
 
-            edDescription.doOnTextChanged { text, start, before, count -> edDescriptionLayout.error = null}
-            edTitle.doOnTextChanged { text, start, before, count -> edTitleLayout.error = null }
+            edDescription.doOnTextChanged { _, _, _, _ -> edDescriptionLayout.error = null}
+            edTitle.doOnTextChanged { _, _, _, _ -> edTitleLayout.error = null }
 
             btnPopMenu.setOnClickListener {
                 if (edTitle.text.toString().isEmpty()){

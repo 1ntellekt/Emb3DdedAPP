@@ -37,21 +37,16 @@ class AllOrdersFragment : Fragment() {
     private lateinit var mObserver:Observer<List<Order>?>
     private lateinit var adapter:AllOrdersAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = AllOrdersFragmentBinding.inflate(inflater,container,false)
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(AllOrdersViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this)[AllOrdersViewModel::class.java]
         adapter = AllOrdersAdapter { posItem ->
-            val order = ordersList[posItem]
+            val order = adapter.currentList[posItem]
             val args = Bundle().also { it.putSerializable("order", order) }
             APP.mNavController.navigate(R.id.action_mainFragment_to_pageOrderFragment,args)
         }
@@ -61,18 +56,6 @@ class AllOrdersFragment : Fragment() {
             btnFilter.setOnClickListener {
                 dialogFilterOrder()
             }
-/*            btnNewFirst.setOnClickListener {
-                val list = ordersList.sortedByDescending { getDataTimeWithFormat(it.created_at!!)}
-                adapter.setData(list)
-                btnOldFirst.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
-                btnNewFirst.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_active)
-            }
-            btnOldFirst.setOnClickListener {
-                val list = ordersList.sortedBy {getDataTimeWithFormat(it.created_at!!)}
-                adapter.setData(list)
-                btnOldFirst.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_active)
-                btnNewFirst.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
-            }*/
             refLayout.setOnRefreshListener(refLayListener)
 
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
@@ -96,7 +79,7 @@ class AllOrdersFragment : Fragment() {
 
                 ordersList.clear()
                 ordersList.addAll(orders)
-                adapter.setData(orders)
+                adapter.submitList(orders)
             }
         }
         //Log.i("tagLife", "onViewCreated() on AllOrders")
@@ -105,12 +88,12 @@ class AllOrdersFragment : Fragment() {
     private fun filterOrders(newText: String?) {
         if (newText != null){
             if (searchByAuthorName){
-                adapter.setData(ordersList.filter { item->  item.user!!.login.contains(newText.lowercase(Locale.getDefault()), ignoreCase = true) })
+                adapter.submitList(ordersList.filter { item->  item.user!!.login.contains(newText.lowercase(Locale.getDefault()), ignoreCase = true) })
             } else {
-                adapter.setData(ordersList.filter { item->  item.title.contains(newText.lowercase(Locale.getDefault()), ignoreCase = true) })
+                adapter.submitList(ordersList.filter { item->  item.title.contains(newText.lowercase(Locale.getDefault()), ignoreCase = true) })
             }
         } else {
-            adapter.setData(ordersList)
+            adapter.submitList(ordersList)
         }
     }
 
@@ -122,7 +105,7 @@ class AllOrdersFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         viewModel.getAllOrders()
-        viewModel.allOrdersList.observe(this,mObserver)
+        viewModel.allOrdersList.observe(viewLifecycleOwner,mObserver)
         //showToast("ALLOrders")
         //Log.i("tagLife", "onStart() on AllOrders")
 
@@ -130,16 +113,23 @@ class AllOrdersFragment : Fragment() {
             val dialog = DialogWarningConnection(requireContext())
             dialog.showDialog()
         }
+    }
 
+    override fun onResume() {
+        super.onResume()
         val intentFilter = IntentFilter()
-         intentFilter.addAction(FireServices.PUSH_TAG)
-         requireActivity().registerReceiver(broadcastReceiver,intentFilter)
+        intentFilter.addAction(FireServices.PUSH_TAG)
+        requireActivity().registerReceiver(broadcastReceiver,intentFilter)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        requireActivity().unregisterReceiver(broadcastReceiver)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         viewModel.allOrdersList.removeObserver(mObserver)
-        requireActivity().unregisterReceiver(broadcastReceiver)
         _binding = null
     }
 

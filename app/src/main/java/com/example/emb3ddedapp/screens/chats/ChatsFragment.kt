@@ -40,27 +40,22 @@ class ChatsFragment : Fragment() {
     private lateinit var mObserver: Observer<List<Chat>?>
     private val chatList = mutableListOf<Chat>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = ChatsFragmentBinding.inflate(inflater,container,false)
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ChatsViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this)[ChatsViewModel::class.java]
         adapter = ChatAdapter(CurrUser.id){ idItem->
-            val chatId = chatList[idItem].id
+            val chatId = adapter.currentList[idItem].id
             val args = Bundle()
             args.putInt("id_chat",chatId)
-            if (chatList[idItem].user_first!!.id == CurrUser.id)
-            args.putSerializable("recipientUser",chatList[idItem].user_second)
-            else if (chatList[idItem].user_second!!.id == CurrUser.id){
-                args.putSerializable("recipientUser",chatList[idItem].user_first)
+            if (adapter.currentList[idItem].user_first!!.id == CurrUser.id)
+            args.putSerializable("recipientUser",adapter.currentList[idItem].user_second)
+            else if (adapter.currentList[idItem].user_second!!.id == CurrUser.id){
+                args.putSerializable("recipientUser",adapter.currentList[idItem].user_first)
             }
             APP.mNavController.navigate(R.id.action_mainFragment_to_pageChatFragment,args)
         }
@@ -107,14 +102,14 @@ class ChatsFragment : Fragment() {
                 }
                 chatList.clear()
                 chatList.addAll(chats1)
-                adapter.setData(chats1)
+                adapter.submitList(chats1)
             }
         }
     }
 
     private fun filterChats(newText: String?) {
         if (newText != null){
-            adapter.setData(
+            adapter.submitList(
                 chatList
 //                .filterNot { it.user_id_first == CurrUser.id }
 //                .filterNot { it.user_id_second == CurrUser.id }
@@ -126,29 +121,36 @@ class ChatsFragment : Fragment() {
                 }
             )
         } else {
-            adapter.setData(chatList)
+            adapter.submitList(chatList)
         }
     }
 
     override fun onStart() {
         super.onStart()
         viewModel.getChatsByUser(CurrUser.id)
-        viewModel.chatsList.observe(this,mObserver)
+        viewModel.chatsList.observe(viewLifecycleOwner,mObserver)
 
         if (!IS_CONNECT_INTERNET){
             val dialog = DialogWarningConnection(requireContext())
             dialog.showDialog()
         }
+    }
 
+    override fun onResume() {
+        super.onResume()
         val intentFilter = IntentFilter()
         intentFilter.addAction(FireServices.PUSH_TAG)
         requireActivity().registerReceiver(broadcastReceiver,intentFilter)
     }
 
+    override fun onPause() {
+        super.onPause()
+        requireActivity().unregisterReceiver(broadcastReceiver)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         viewModel.chatsList.removeObserver(mObserver)
-        requireActivity().unregisterReceiver(broadcastReceiver)
         _binding = null
     }
 

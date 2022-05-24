@@ -8,6 +8,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.emb3ddedapp.R
@@ -21,22 +22,7 @@ class NewsAdapter(
     private val onItemListener:AdapterListeners.OnItemClick?,
     private val onEditListener:AdapterListeners.OnEditClick?,
     private val onDeleteListener:AdapterListeners.OnDeleteClick?,
-):RecyclerView.Adapter<NewsAdapter.NewsHolder>() {
-
-     val newsList = mutableListOf<NewsItem>()
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun setData(list: List<NewsItem>){
-        newsList.clear()
-        newsList.addAll(list)
-        notifyDataSetChanged()
-    }
-
-    fun deleteItem(position: Int){
-        newsList.removeAt(position)
-        notifyItemRemoved(position)
-        notifyItemRangeChanged(position,itemCount)
-    }
+):ListAdapter<NewsItem,NewsAdapter.NewsHolder>(NewsItemDiffCallback()) {
 
     class NewsHolder(itemView: View) :RecyclerView.ViewHolder(itemView){
         val tvShortDescription:TextView = itemView.findViewById(R.id.tvShortDescription)
@@ -56,7 +42,7 @@ class NewsAdapter(
     }
 
     override fun onBindViewHolder(holder: NewsHolder, position: Int) {
-        val newsItem = newsList[position]
+        val newsItem = getItem(position)
         holder.apply {
             tvAuthor.text = newsItem.user!!.login
             tvTag.text = newsItem.tag
@@ -124,10 +110,6 @@ class NewsAdapter(
         holder.itemView.setOnClickListener(null)
         holder.btnDel.setOnClickListener(null)
         holder.btnEdit.setOnClickListener(null)
-    }
-
-    override fun getItemCount(): Int {
-        return newsList.size
     }
 
 }

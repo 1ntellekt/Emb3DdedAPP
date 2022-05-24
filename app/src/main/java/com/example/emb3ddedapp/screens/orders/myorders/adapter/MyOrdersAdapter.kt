@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.emb3ddedapp.R
 import com.example.emb3ddedapp.models.Order
 import com.example.emb3ddedapp.screens.listeners.AdapterListeners
+import com.example.emb3ddedapp.screens.orders.OrderItemDiffCallback
 import com.example.emb3ddedapp.utils.getDataTimeWithFormat
 import com.google.android.material.imageview.ShapeableImageView
 import java.text.DateFormat
@@ -22,22 +24,7 @@ class MyOrdersAdapter(
     private val onDelListen:AdapterListeners.OnDeleteClick,
     private val onEditListen:AdapterListeners.OnEditClick,
     private val onDoneListen:AdapterListeners.OnDoneClick
-    ):RecyclerView.Adapter<MyOrdersAdapter.OrderHolder>() {
-
-    private val ordersList = mutableListOf<Order>()
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun setData(list: List<Order>){
-        ordersList.clear()
-        ordersList.addAll(list)
-        notifyDataSetChanged()
-    }
-
-    fun deleteItem(position: Int){
-        ordersList.removeAt(position)
-        notifyItemRemoved(position)
-        notifyItemRangeChanged(position,itemCount)
-    }
+    ):ListAdapter<Order,MyOrdersAdapter.OrderHolder>(OrderItemDiffCallback()) {
 
     class OrderHolder(itemView: View) :RecyclerView.ViewHolder(itemView){
         val imgOrder: ShapeableImageView = itemView.findViewById(R.id.imgOrder)
@@ -57,10 +44,11 @@ class MyOrdersAdapter(
         return OrderHolder(LayoutInflater.from(parent.context).inflate(R.layout.order_item_layout_2,parent,false))
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: OrderHolder, position: Int) {
-        val order = ordersList[position]
+        val order = getItem(position)
         holder.apply {
-            tvAuthor.text = "Order author: ${ order.user!!.login }"
+            tvAuthor.text = "${tvAuthor.context.resources.getString(R.string.order_auth)} ${ order.user!!.login }"
             tvTitle.text = "${order.title.take(30)}...."
             tvShortDescription.text = "${order.description.take(190)}...."
             order.img_url?.let { url->
@@ -73,10 +61,6 @@ class MyOrdersAdapter(
                 btnDone.isEnabled = false
             }
         }
-    }
-
-    override fun getItemCount(): Int {
-        return ordersList.size
     }
 
     override fun onViewAttachedToWindow(holder: OrderHolder) {

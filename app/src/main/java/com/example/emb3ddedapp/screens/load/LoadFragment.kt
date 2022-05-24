@@ -28,19 +28,14 @@ class LoadFragment : Fragment() {
 
     private lateinit var viewModel: LoadViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = LoadFragmentBinding.inflate(inflater,container,false)
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(LoadViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this)[LoadViewModel::class.java]
         mObserver = Observer { userEntity ->
                 CurrUser.status = userEntity.status
                 CurrUser.email = userEntity.email
@@ -54,7 +49,6 @@ class LoadFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-
         if (getInitUserId() > 0){
             RetrofitInstance.setAuthorizationBearer(getTokenAccess()!!)
                 CoroutineScope(Dispatchers.Main).launch {
@@ -80,7 +74,7 @@ class LoadFragment : Fragment() {
                     viewModel.getDataForCurrentUser({
                         APP.mNavController.navigate(R.id.action_loadFragment_to_mainFragment)
                     }) {
-                        viewModel.userLive.observe(this@LoadFragment,mObserver)
+                        viewModel.userLive.observe(viewLifecycleOwner,mObserver)
                     }
                 }
         } else {

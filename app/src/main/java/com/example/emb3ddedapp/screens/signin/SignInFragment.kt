@@ -23,27 +23,21 @@ class SignInFragment : Fragment() {
 
     private lateinit var viewModel: SignInViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = SignInFragmentBinding.inflate(inflater,container,false)
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(SignInViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        viewModel = ViewModelProvider(this)[SignInViewModel::class.java]
         binding.apply {
 
             toggleSignUp.setOnClickListener {
                 APP.mNavController.navigate(R.id.action_signInFragment_to_signUpFragment)
             }
 
-            edPassword.doOnTextChanged { text, start, count, after ->
+            edPassword.doOnTextChanged { text, _, _, _ ->
                 text?.let { txt->
                     if (txt.toString().length <=7){
                         edPasswordLayout.error = "More than 7 characters"
@@ -53,7 +47,7 @@ class SignInFragment : Fragment() {
                 }
             }
 
-            edEmail.doOnTextChanged { text, start, before, count -> edEmailLayout.error = null }
+            edEmail.doOnTextChanged { _, _, _, _ -> edEmailLayout.error = null }
 
 
             btnLogInEmail.setOnClickListener {
@@ -93,9 +87,9 @@ class SignInFragment : Fragment() {
         alertDialog.setView(binding.root)
 
         binding.apply {
-            edEmail.doOnTextChanged { text, start, before, count -> edEmailLayout.error = null }
+            edEmail.doOnTextChanged { _, _, _, _ -> edEmailLayout.error = null }
 
-            alertDialog.setPositiveButton("Ok"){ dialog, which ->
+            alertDialog.setPositiveButton("Ok"){ _, _ ->
 
                 if (edEmail.text.toString().isNotEmpty()){
                     viewModel.resetPassword(email = edEmail.text.toString())
@@ -103,31 +97,13 @@ class SignInFragment : Fragment() {
                     showToast("Input was empty!")
                 }
 
-            }.setNegativeButton("Cancel"){dialog, which ->
+            }.setNegativeButton("Cancel"){ dialog, _ ->
                 dialog.dismiss()
             }
 
         }
         alertDialog.create().show()
     }
-
-    override fun onStart() {
-        super.onStart()
-    }
-
-/*    private val takeGoogleAcc = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-        val task = GoogleSignIn.getSignedInAccountFromIntent(it.data!!)
-        try {
-            val account = task.getResult(ApiException::class.java)
-            account?.let { acc->
-//                viewModel.logInGoogle(acc.idToken!!){
-//                    APP.mNavController.navigate(R.id.action_signInFragment_to_mainFragment)
-//                }
-            }
-        }catch (e: ApiException){
-            Log.e("tag", "error sign Google: ${e.message.toString()}")
-        }
-    }*/
 
     override fun onDestroyView() {
         super.onDestroyView()

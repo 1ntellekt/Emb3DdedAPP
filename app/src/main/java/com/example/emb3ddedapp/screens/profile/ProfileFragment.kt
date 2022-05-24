@@ -1,5 +1,6 @@
 package com.example.emb3ddedapp.screens.profile
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
@@ -42,19 +43,14 @@ class ProfileFragment : Fragment() {
     private val binding:ProfileFragmentBinding
     get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = ProfileFragmentBinding.inflate(inflater,container,false)
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this)[ProfileViewModel::class.java]
         binding.apply {
             initProfileUser()
 
@@ -64,7 +60,7 @@ class ProfileFragment : Fragment() {
 
             edNumber.addTextChangedListener(PhoneNumberFormattingTextWatcher("US"))
 
-            edNumber.doOnTextChanged { text, start, before, count ->
+            edNumber.doOnTextChanged { text, _, _, _ ->
                 text?.let { txt->
                     if (txt.toString().length != 13) {
                         edNumberLayout.error = "Number format not access!"
@@ -74,7 +70,7 @@ class ProfileFragment : Fragment() {
                 }
             }
 
-            edLogin.doOnTextChanged { text, start, before, count ->
+            edLogin.doOnTextChanged { text, _, _, _ ->
                 text?.let { txt->
                     when {
                         txt.toString().length <= 6 -> {
@@ -90,7 +86,7 @@ class ProfileFragment : Fragment() {
                 }
             }
 
-            edOldPassword.doOnTextChanged { text, start, before, count ->
+            edOldPassword.doOnTextChanged { text, _, _, _ ->
                 text?.let { txt->
                     if (txt.toString().isNotEmpty() && txt.toString().length <= 7) {
                         edOldPasswordLayout.error = "More than 7 characters"
@@ -100,7 +96,7 @@ class ProfileFragment : Fragment() {
                 }
             }
 
-            edNewPassword.doOnTextChanged { text, start, before, count ->
+            edNewPassword.doOnTextChanged { text, _, _, _ ->
                 text?.let { txt->
                     if (txt.toString().isNotEmpty() && txt.toString().length <= 7) {
                         edNewPasswordLayout.error = "More than 7 characters"
@@ -135,16 +131,16 @@ class ProfileFragment : Fragment() {
                     edNewPasswordLayout.error = "input confirm password is empty!"
                     edNewPassword.requestFocus()
                 } else {
-                    var new_pass_input:String? = null
-                    var old_pass_input:String? = null
+                    var newPassInput:String? = null
+                    var oldPassInput:String? = null
                     if (edNewPassword.text.toString().isNotEmpty() && edOldPassword.text.toString().isNotEmpty()){
-                        new_pass_input = edNewPassword.text.toString()
-                        old_pass_input = edOldPassword.text.toString()
+                        newPassInput = edNewPassword.text.toString()
+                        oldPassInput = edOldPassword.text.toString()
                     }
 
                     if (selectedFileNames.isEmpty()){
                         viewModel.updateUserProfile(
-                            old_pass = old_pass_input, new_pass = new_pass_input,
+                            old_pass = oldPassInput, new_pass = newPassInput,
                             user = User(id = CurrUser.id, login = edLogin.text.toString(),
                                 status = edStatus.text.toString(), number = edNumber.text.toString(), url_profile = CurrUser.url_profile)
                        ) { updatedUser ->
@@ -158,7 +154,7 @@ class ProfileFragment : Fragment() {
                         viewModel.uploadFile(selectedFileNames.last(),{ pathUrl->
 
                         viewModel.updateUserProfile(
-                                old_pass = old_pass_input, new_pass = new_pass_input,
+                                old_pass = oldPassInput, new_pass = newPassInput,
                                 user = User(id = CurrUser.id, login = edLogin.text.toString(),
                                     status = edStatus.text.toString(), number = edNumber.text.toString(), url_profile = pathUrl)
                             ) { updatedUser ->
@@ -180,6 +176,7 @@ class ProfileFragment : Fragment() {
 
     }
 
+    @SuppressLint("DiscouragedPrivateApi")
     private fun showPopupMenu() {
         val popupMenu = PopupMenu(context, binding.btnEditProfilePhoto)
         popupMenu.inflate(R.menu.profile_menu)
@@ -223,10 +220,6 @@ class ProfileFragment : Fragment() {
             edNewPassword.setText("")
             edOldPassword.setText("")
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
     }
 
     override fun onDestroyView() {
