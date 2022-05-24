@@ -37,7 +37,7 @@ class AllOrdersFragment : Fragment() {
     private lateinit var mObserver:Observer<List<Order>?>
     private lateinit var adapter:AllOrdersAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = AllOrdersFragmentBinding.inflate(inflater,container,false)
         return binding.root
     }

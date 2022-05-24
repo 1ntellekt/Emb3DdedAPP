@@ -40,7 +40,7 @@ class AllNewsFragment : Fragment() {
     private lateinit var mObserver: Observer<List<NewsItem>?>
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
         _binding = AllNewsFragmentBinding.inflate(inflater,container,false)
         return binding.root
     }
@@ -121,7 +121,7 @@ class AllNewsFragment : Fragment() {
                 }
 
                 ratingBar.onRatingBarChangeListener =
-                    RatingBar.OnRatingBarChangeListener { ratingBar, rating, fromUser ->
+                    RatingBar.OnRatingBarChangeListener { _, rating, _ ->
                         minRating = rating.toDouble()
                     }
 

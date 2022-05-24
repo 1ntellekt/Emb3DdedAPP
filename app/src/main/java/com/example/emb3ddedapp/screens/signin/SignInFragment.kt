@@ -23,7 +23,7 @@ class SignInFragment : Fragment() {
 
     private lateinit var viewModel: SignInViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = SignInFragmentBinding.inflate(inflater,container,false)
         return binding.root
     }
@@ -37,7 +37,7 @@ class SignInFragment : Fragment() {
                 APP.mNavController.navigate(R.id.action_signInFragment_to_signUpFragment)
             }
 
-            edPassword.doOnTextChanged { text, start, count, after ->
+            edPassword.doOnTextChanged { text, _, _, _ ->
                 text?.let { txt->
                     if (txt.toString().length <=7){
                         edPasswordLayout.error = "More than 7 characters"
@@ -47,7 +47,7 @@ class SignInFragment : Fragment() {
                 }
             }
 
-            edEmail.doOnTextChanged { text, start, before, count -> edEmailLayout.error = null }
+            edEmail.doOnTextChanged { _, _, _, _ -> edEmailLayout.error = null }
 
 
             btnLogInEmail.setOnClickListener {
@@ -87,9 +87,9 @@ class SignInFragment : Fragment() {
         alertDialog.setView(binding.root)
 
         binding.apply {
-            edEmail.doOnTextChanged { text, start, before, count -> edEmailLayout.error = null }
+            edEmail.doOnTextChanged { _, _, _, _ -> edEmailLayout.error = null }
 
-            alertDialog.setPositiveButton("Ok"){ dialog, which ->
+            alertDialog.setPositiveButton("Ok"){ _, _ ->
 
                 if (edEmail.text.toString().isNotEmpty()){
                     viewModel.resetPassword(email = edEmail.text.toString())
@@ -97,7 +97,7 @@ class SignInFragment : Fragment() {
                     showToast("Input was empty!")
                 }
 
-            }.setNegativeButton("Cancel"){dialog, which ->
+            }.setNegativeButton("Cancel"){ dialog, _ ->
                 dialog.dismiss()
             }
 

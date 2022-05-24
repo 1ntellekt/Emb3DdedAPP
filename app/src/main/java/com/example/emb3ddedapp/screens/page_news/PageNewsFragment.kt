@@ -1,22 +1,16 @@
 package com.example.emb3ddedapp.screens.page_news
 
 import android.app.Dialog
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.opengl.Visibility
 import android.os.Bundle
 import android.view.*
-import android.widget.SeekBar
-import androidx.core.content.ContextCompat
-import androidx.core.view.drawToBitmap
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.bumptech.glide.Glide
 import com.example.emb3ddedapp.R
-import com.example.emb3ddedapp.databinding.DialogDrawLayoutBinding
 import com.example.emb3ddedapp.databinding.DialogRatingSetLayoutBinding
 import com.example.emb3ddedapp.databinding.PageNewsFragmentBinding
 import com.example.emb3ddedapp.models.CurrUser
@@ -25,17 +19,8 @@ import com.example.emb3ddedapp.models.Rating
 import com.example.emb3ddedapp.models.RatingL
 import com.example.emb3ddedapp.screens.page_news.adapter.CommentAdapter
 import com.example.emb3ddedapp.utils.APP
-import com.example.emb3ddedapp.utils.TIME_PAT
 import com.example.emb3ddedapp.utils.getDataTimeWithFormat
-import com.example.emb3ddedapp.utils.showToast
-import com.github.dhaval2404.colorpicker.ColorPickerDialog
-import com.github.dhaval2404.colorpicker.model.ColorShape
 import com.google.android.material.appbar.AppBarLayout
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileOutputStream
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 class PageNewsFragment : Fragment() {
@@ -55,7 +40,7 @@ class PageNewsFragment : Fragment() {
         currNewsItem = arguments?.getSerializable("news_item") as? NewsItem
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = PageNewsFragmentBinding.inflate(inflater,container,false)
         return binding.root
     }

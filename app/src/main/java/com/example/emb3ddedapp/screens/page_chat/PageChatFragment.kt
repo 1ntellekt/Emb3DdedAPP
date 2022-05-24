@@ -1,6 +1,7 @@
 package com.example.emb3ddedapp.screens.page_chat
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
@@ -84,7 +85,7 @@ class PageChatFragment : Fragment() {
         recipientUser = arguments?.getSerializable("recipientUser") as? User
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = PageChatFragmentBinding.inflate(inflater,container,false)
         return binding.root
     }
@@ -191,6 +192,7 @@ class PageChatFragment : Fragment() {
         }
     }
 
+    @SuppressLint("DiscouragedPrivateApi")
     private fun popupMenuMsgTextDialog(message: Message, viewTextMsg: View) {
         val popupMenu = PopupMenu(context, viewTextMsg)
         popupMenu.inflate(R.menu.msg_menu)
@@ -225,19 +227,20 @@ class PageChatFragment : Fragment() {
         alertDialogBuilder.setView(binding.root)
         binding.edMessage.setText(message.text_msg!!)
         alertDialogBuilder
-            .setPositiveButton("Ok"){ dialog, which ->
+            .setPositiveButton("Ok"){ _, _ ->
                 if (binding.edMessage.text.toString().isEmpty()){
                     showToast("Input text message is null!")
                 } else {
                     viewModel.editMsg(message.copy(text_msg = binding.edMessage.text.toString()))
                 }
             }
-            .setNegativeButton("Cancel"){ dialog, which->
+            .setNegativeButton("Cancel"){ dialog, _ ->
                 dialog.dismiss()
             }.create().show()
     }
 
 
+    @SuppressLint("DiscouragedPrivateApi")
     private fun popupMenuFileDialog(message: Message, viewPanel: View) {
         val popupMenu = PopupMenu(context, viewPanel)
         popupMenu.inflate(R.menu.file_menu)
@@ -270,6 +273,7 @@ class PageChatFragment : Fragment() {
         return true
     }
 
+    @SuppressLint("DiscouragedPrivateApi")
     private fun popupMenuChat(it: View) {
         val popupMenu = PopupMenu(context, it)
         popupMenu.inflate(R.menu.chat_menu)
@@ -385,7 +389,7 @@ class PageChatFragment : Fragment() {
                         .setTitle("Pick Theme")           	// Default "Choose Color"
                         .setColorShape(ColorShape.SQAURE)   // Default ColorShape.CIRCLE
                         .setDefaultColor(R.color.black)     // Pass Default Color
-                        .setColorListener { color, colorHex ->
+                        .setColorListener { color, _ ->
                             drawingView.setBrushColor(color)
                         }
                         .show()
@@ -429,6 +433,7 @@ class PageChatFragment : Fragment() {
     }
 
 
+    @SuppressLint("DiscouragedPrivateApi")
     private fun popupMenu3Dialog(message: Message, view: View) {
         val popupMenu = PopupMenu(context, view)
         popupMenu.inflate(R.menu.file_3d_menu)
@@ -492,6 +497,7 @@ class PageChatFragment : Fragment() {
         return true
     }
 
+    @SuppressLint("DiscouragedPrivateApi")
     private fun popupMenuImageDialog(message: Message) {
         val dialog = context?.let { Dialog(it) }
         dialog?.let {
@@ -590,7 +596,7 @@ class PageChatFragment : Fragment() {
         downloadManager("$name-$nowDate.$extension", DIRECTORY_DOWNLOADS,url)
     }
 
-    private val scrollListener = View.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+    private val scrollListener = View.OnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
             if (scrollY > oldScrollY) {
                 //Log.i("tag", "Scroll DOWN scrollY:$scrollY oldScrollY:$oldScrollY")
                 binding.btnDownScroll.visibility = View.GONE
@@ -605,7 +611,7 @@ class PageChatFragment : Fragment() {
 
     private val smoother = object : LinearSmoothScroller(APP.applicationContext){
         override fun getVerticalSnapPreference(): Int {
-            return LinearSmoothScroller.SNAP_TO_END
+            return SNAP_TO_END
         }
     }
 

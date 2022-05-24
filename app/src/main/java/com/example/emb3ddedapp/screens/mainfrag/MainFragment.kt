@@ -1,21 +1,16 @@
 package com.example.emb3ddedapp.screens.mainfrag
 
-import android.app.Dialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.emb3ddedapp.R
 import com.example.emb3ddedapp.databinding.MainFragmentBinding
 import com.example.emb3ddedapp.utils.APP
-import com.example.emb3ddedapp.utils.IS_CONNECT_INTERNET
-import com.example.emb3ddedapp.utils.warning_dialog.DialogWarningConnection
 
 class MainFragment : Fragment() {
 
@@ -33,7 +28,7 @@ class MainFragment : Fragment() {
 
     private lateinit var viewModel: MainViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = MainFragmentBinding.inflate(inflater, container,false)
          (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar.also { it.title="" })
         return binding.root

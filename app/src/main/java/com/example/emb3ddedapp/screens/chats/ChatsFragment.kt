@@ -40,7 +40,7 @@ class ChatsFragment : Fragment() {
     private lateinit var mObserver: Observer<List<Chat>?>
     private val chatList = mutableListOf<Chat>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = ChatsFragmentBinding.inflate(inflater,container,false)
         return binding.root
     }

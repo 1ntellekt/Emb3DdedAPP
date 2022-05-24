@@ -42,7 +42,7 @@ class PageNewsEditFragment : Fragment() {
         curNewsItem = arguments?.getSerializable("news_item") as? NewsItem
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = PageNewsEditFragmentBinding.inflate(inflater,container,false)
         return binding.root
     }
@@ -81,9 +81,9 @@ class PageNewsEditFragment : Fragment() {
 
             tvAuthor.text = CurrUser.login
 
-            edTitle.doOnTextChanged { text, start, before, count -> edTitleLayout.error = null }
-            edDescription.doOnTextChanged { text, start, before, count -> edDescriptionLayout.error = null}
-            edTag.doOnTextChanged { text, start, before, count -> edTagLayout.error = null }
+            edTitle.doOnTextChanged { _, _, _, _ -> edTitleLayout.error = null }
+            edDescription.doOnTextChanged { _, _, _, _ -> edDescriptionLayout.error = null}
+            edTag.doOnTextChanged { _, _, _, _ -> edTagLayout.error = null }
 
             btnPopMenu.setOnClickListener {
                 if (edTitle.text.toString().isEmpty()){

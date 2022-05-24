@@ -23,7 +23,7 @@ class SignUpFragment : Fragment() {
 
     private lateinit var viewModel: SignUpViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = SignUpFragmentBinding.inflate(inflater,container,false)
         return binding.root
     }
@@ -35,7 +35,7 @@ class SignUpFragment : Fragment() {
 
             edNum.addTextChangedListener(PhoneNumberFormattingTextWatcher("US"))
 
-            edLogin.doOnTextChanged { text, start, before, count ->
+            edLogin.doOnTextChanged { text, _, _, _ ->
                 text?.let { txt->
                     if (txt.toString().length <= 6) {
                         edLoginLayout.error = "More than 6 characters"
@@ -47,7 +47,7 @@ class SignUpFragment : Fragment() {
                 }
             }
 
-            edPassword.doOnTextChanged { text, start, before, count ->
+            edPassword.doOnTextChanged { text, _, _, _ ->
                 text?.let { txt->
                     if (txt.toString().length <= 7) {
                         edPasswordLayout.error = "More than 7 characters"
@@ -57,7 +57,7 @@ class SignUpFragment : Fragment() {
                 }
             }
 
-            edPasswordConfirm.doOnTextChanged { text, start, before, count ->
+            edPasswordConfirm.doOnTextChanged { text, _, _, _ ->
                 text?.let { txt->
                     if (txt.toString().length <= 7) {
                         edPasswordLayoutConfirm.error = "More than 7 characters"
@@ -67,7 +67,7 @@ class SignUpFragment : Fragment() {
                 }
             }
 
-            edNum.doOnTextChanged { text, start, before, count ->
+            edNum.doOnTextChanged { text, _, _, _ ->
                 text?.let { txt->
                     if (txt.toString().length != 13) {
                         edNumLayout.error = "Number format not access!"
@@ -77,7 +77,7 @@ class SignUpFragment : Fragment() {
                 }
             }
 
-            edEmail.doOnTextChanged { text, start, before, count -> edEmailLayout.error = null }
+            edEmail.doOnTextChanged { _, _, _, _ -> edEmailLayout.error = null }
 
             btnLogInEmail.setOnClickListener {
                 if (edEmail.text.toString().isEmpty()){

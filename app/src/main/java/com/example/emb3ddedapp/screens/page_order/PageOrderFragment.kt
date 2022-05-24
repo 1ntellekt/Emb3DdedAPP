@@ -1,11 +1,11 @@
 package com.example.emb3ddedapp.screens.page_order
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.emb3ddedapp.R
 import com.example.emb3ddedapp.databinding.PageOrderFragmentBinding
@@ -14,8 +14,6 @@ import com.example.emb3ddedapp.models.Order
 import com.example.emb3ddedapp.utils.APP
 import com.example.emb3ddedapp.utils.getDataTimeWithFormat
 import com.google.android.material.appbar.AppBarLayout
-import java.text.SimpleDateFormat
-import java.util.*
 
 class PageOrderFragment : Fragment() {
 
@@ -31,7 +29,7 @@ class PageOrderFragment : Fragment() {
         curOrder = arguments?.getSerializable("order") as? Order
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = PageOrderFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }

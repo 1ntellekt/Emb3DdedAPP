@@ -44,10 +44,11 @@ class MyOrdersAdapter(
         return OrderHolder(LayoutInflater.from(parent.context).inflate(R.layout.order_item_layout_2,parent,false))
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: OrderHolder, position: Int) {
         val order = getItem(position)
         holder.apply {
-            tvAuthor.text = "Order author: ${ order.user!!.login }"
+            tvAuthor.text = "${tvAuthor.context.resources.getString(R.string.order_auth)} ${ order.user!!.login }"
             tvTitle.text = "${order.title.take(30)}...."
             tvShortDescription.text = "${order.description.take(190)}...."
             order.img_url?.let { url->

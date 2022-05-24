@@ -41,7 +41,7 @@ class PageOrderEditFragment : Fragment() {
         curOrder = arguments?.getSerializable("order") as Order?
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = PageOrderEditFragmentBinding.inflate(inflater,container,false)
         return binding.root
     }
@@ -82,8 +82,8 @@ class PageOrderEditFragment : Fragment() {
                 APP.mNavController.navigate(R.id.action_pageOrderEditFragment_to_mainFragment, Bundle().also { it.putString("nav", "orders") })
             }
 
-            edDescription.doOnTextChanged { text, start, before, count -> edDescriptionLayout.error = null}
-            edTitle.doOnTextChanged { text, start, before, count -> edTitleLayout.error = null }
+            edDescription.doOnTextChanged { _, _, _, _ -> edDescriptionLayout.error = null}
+            edTitle.doOnTextChanged { _, _, _, _ -> edTitleLayout.error = null }
 
             btnPopMenu.setOnClickListener {
                 if (edTitle.text.toString().isEmpty()){

@@ -1,19 +1,14 @@
 package com.example.emb3ddedapp
 
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.emb3ddedapp.database.repository.Repository
 import com.example.emb3ddedapp.databinding.ActivityMainBinding
-import com.example.emb3ddedapp.notification.FireServices
 import com.example.emb3ddedapp.utils.APP
 import com.example.emb3ddedapp.utils.REPOSITORY
 import com.example.emb3ddedapp.utils.connection.ConnectionReceiver

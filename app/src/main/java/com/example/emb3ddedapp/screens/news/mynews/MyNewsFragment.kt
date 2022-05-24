@@ -4,14 +4,14 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.emb3ddedapp.R
 import com.example.emb3ddedapp.databinding.MyNewsFragmentBinding
@@ -20,7 +20,6 @@ import com.example.emb3ddedapp.models.NewsItem
 import com.example.emb3ddedapp.notification.FireServices
 import com.example.emb3ddedapp.screens.news.adapter.NewsAdapter
 import com.example.emb3ddedapp.utils.APP
-import java.lang.Appendable
 
 class MyNewsFragment : Fragment() {
 
@@ -32,7 +31,7 @@ class MyNewsFragment : Fragment() {
     private lateinit var adapter:NewsAdapter
     private lateinit var mObserver:Observer<List<NewsItem>?>
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = MyNewsFragmentBinding.inflate(inflater,container,false)
         return binding.root
     }

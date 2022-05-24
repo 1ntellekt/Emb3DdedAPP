@@ -59,7 +59,7 @@ class ChatAdapter(
 
             if (chat.last_message == null){
                 tvLastMessage.setTextColor(Color.BLACK)
-                tvLastMessage.text = "!No messages!"
+                tvLastMessage.text = tvLastMessage.context.resources.getString(R.string.no_msg_txt)
             } else {
                 chat.last_message.apply {
                     if (text_msg != null){
@@ -67,13 +67,13 @@ class ChatAdapter(
                         tvLastMessage.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.color_grey))
                     } else if (img_msg != null) {
                         tvLastMessage.setTextColor(Color.MAGENTA)
-                        tvLastMessage.text = "'A picture'"
+                        tvLastMessage.text = tvLastMessage.context.resources.getString(R.string.picture_txt)
                     } else if (file_msg != null){
                         tvLastMessage.setTextColor(Color.MAGENTA)
-                        tvLastMessage.text = "'A file'"
+                        tvLastMessage.text = tvLastMessage.context.resources.getString(R.string.file_txt)
                     } else if (file_3d_msg != null){
                         tvLastMessage.setTextColor(Color.MAGENTA)
-                        tvLastMessage.text = "'A 3d file'"
+                        tvLastMessage.text = tvLastMessage.context.resources.getString(R.string.d_file_txt)
                     }
                     val dateTimeStr = getDataTimeWithFormat(created_at!!)
                     val dateStr = dateTimeStr.substringBefore(" ")
