@@ -28,15 +28,9 @@ class SignInFragment : Fragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(SignInViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        viewModel = ViewModelProvider(this)[SignInViewModel::class.java]
         binding.apply {
 
             toggleSignUp.setOnClickListener {
@@ -110,24 +104,6 @@ class SignInFragment : Fragment() {
         }
         alertDialog.create().show()
     }
-
-    override fun onStart() {
-        super.onStart()
-    }
-
-/*    private val takeGoogleAcc = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-        val task = GoogleSignIn.getSignedInAccountFromIntent(it.data!!)
-        try {
-            val account = task.getResult(ApiException::class.java)
-            account?.let { acc->
-//                viewModel.logInGoogle(acc.idToken!!){
-//                    APP.mNavController.navigate(R.id.action_signInFragment_to_mainFragment)
-//                }
-            }
-        }catch (e: ApiException){
-            Log.e("tag", "error sign Google: ${e.message.toString()}")
-        }
-    }*/
 
     override fun onDestroyView() {
         super.onDestroyView()

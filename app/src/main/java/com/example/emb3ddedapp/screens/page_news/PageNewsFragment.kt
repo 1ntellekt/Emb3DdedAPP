@@ -44,12 +44,16 @@ class PageNewsFragment : Fragment() {
     private val binding:PageNewsFragmentBinding
     get() = _binding!!
 
-    private val commentList = mutableListOf<RatingL>()
     private lateinit var adapter:CommentAdapter
     private lateinit var mObserver:Observer<List<RatingL>?>
     private lateinit var viewModel: PageNewsViewModel
 
     private var currNewsItem:NewsItem? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        currNewsItem = arguments?.getSerializable("news_item") as? NewsItem
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = PageNewsFragmentBinding.inflate(inflater,container,false)
@@ -58,7 +62,7 @@ class PageNewsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        currNewsItem = arguments?.getSerializable("news_item") as? NewsItem
+        viewModel = ViewModelProvider(this)[PageNewsViewModel::class.java]
         binding.apply {
             appbar.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
                 var scrollRange = -1
@@ -80,8 +84,7 @@ class PageNewsFragment : Fragment() {
                     Glide.with(requireContext()).load(url).into(imgNews)
                 }
 
-                tvRating.text = if (newsItem.avgMark == null) "0.0"
-                else newsItem.avgMark.toString()
+                tvRating.text = newsItem.avgMark.toString()
 
                 tvDescription.text = newsItem.description
                 tvHeadTitle.text = newsItem.title
@@ -104,9 +107,7 @@ class PageNewsFragment : Fragment() {
             recyclerView.adapter = adapter
             mObserver = Observer { listComment->
                 listComment?.let { list ->
-                    commentList.clear()
-                    commentList.addAll(list)
-                    adapter.setData(list)
+                    adapter.submitList(list)
                 }
             }
         }
@@ -150,15 +151,10 @@ class PageNewsFragment : Fragment() {
         }
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(PageNewsViewModel::class.java)
-    }
-
     override fun onStart() {
         super.onStart()
-        viewModel.ratingList.observe(this,mObserver)
-       currNewsItem?.let { newsItem ->
+        viewModel.ratingList.observe(viewLifecycleOwner,mObserver)
+        currNewsItem?.let { newsItem ->
            viewModel.getMarksByNews(newsItemId = newsItem.id)
        }
     }

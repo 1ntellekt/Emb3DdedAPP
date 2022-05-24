@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.emb3ddedapp.R
@@ -20,16 +21,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 class ChatAdapter(
     private val user_id:Int,
     private val onItemListener: AdapterListeners.OnItemClick
-):RecyclerView.Adapter<ChatAdapter.ChatHolder>() {
-
-    private val chatList = mutableListOf<Chat>()
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun setData(list: List<Chat>){
-        chatList.clear()
-        chatList.addAll(list)
-        notifyDataSetChanged()
-    }
+):ListAdapter<Chat,ChatAdapter.ChatHolder>(ChatDiffCallback()) {
 
     class ChatHolder(itemView: View):RecyclerView.ViewHolder(itemView){
         val imgChatPerson:CircleImageView = itemView.findViewById(R.id.imgChatPerson)
@@ -44,7 +36,7 @@ class ChatAdapter(
     }
 
     override fun onBindViewHolder(holder: ChatHolder, position: Int) {
-        val chat = chatList[position]
+        val chat = getItem(position)
         holder.apply {
 
             if (chat.user_first!!.id == user_id){
@@ -107,10 +99,6 @@ class ChatAdapter(
     override fun onViewDetachedFromWindow(holder: ChatHolder) {
         super.onViewDetachedFromWindow(holder)
         holder.itemView.setOnClickListener(null)
-    }
-
-    override fun getItemCount(): Int {
-        return chatList.size
     }
 
 }

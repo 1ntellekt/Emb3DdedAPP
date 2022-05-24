@@ -7,22 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.emb3ddedapp.R
 import com.example.emb3ddedapp.models.RatingL
 import de.hdodenhof.circleimageview.CircleImageView
 
-class CommentAdapter:RecyclerView.Adapter<CommentAdapter.CommentHolder>() {
-
-    private val commentList = mutableListOf<RatingL>()
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun setData(list: List<RatingL>){
-        commentList.clear()
-        commentList.addAll(list)
-        notifyDataSetChanged()
-    }
+class CommentAdapter:ListAdapter<RatingL,CommentAdapter.CommentHolder>(CommentItemDiffCallback()) {
 
     class CommentHolder(itemView: View) :RecyclerView.ViewHolder(itemView){
         val tvComment:TextView = itemView.findViewById(R.id.tvComment)
@@ -37,7 +29,7 @@ class CommentAdapter:RecyclerView.Adapter<CommentAdapter.CommentHolder>() {
     }
 
     override fun onBindViewHolder(holder: CommentHolder, position: Int) {
-        val comment = commentList[position]
+        val comment = getItem(position)
         holder.apply {
             if (comment.comment == null){
                 tvComment.visibility = View.GONE
@@ -54,10 +46,6 @@ class CommentAdapter:RecyclerView.Adapter<CommentAdapter.CommentHolder>() {
             tvLogin.text = comment.user.login
             tvRating.text = comment.mark.toString()
         }
-    }
-
-    override fun getItemCount(): Int {
-        return commentList.size
     }
 
 }

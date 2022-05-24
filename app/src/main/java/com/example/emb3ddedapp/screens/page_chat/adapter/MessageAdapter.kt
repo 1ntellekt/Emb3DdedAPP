@@ -1,6 +1,5 @@
 package com.example.emb3ddedapp.screens.page_chat.adapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +8,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.emb3ddedapp.R
@@ -23,28 +23,9 @@ class MessageAdapter(
     private val onFile:AdapterListeners.OnFile,
     private val on3dFile: AdapterListeners.On3dFile,
     private val onTextMsg: AdapterListeners.OnItemTextMsg
-):RecyclerView.Adapter<MessageAdapter.MessageHolder>() {
-
-    private val messageList = mutableListOf<Message>()
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun setData(list: List<Message>){
-        messageList.clear()
-        //val list1 = list.sortedBy { getDataTimeWithFormat(it.created_at!!) }
-        messageList.addAll(list)
-        //Log.i("messAdapter", "setData(): ${list.map { it.id }}" )
-        notifyDataSetChanged()
-        //notifyItemRangeChanged(0, itemCount)
-    }
-
-//    @SuppressLint("NotifyDataSetChanged")
-//    fun addItem(msg:Message){
-//        messageList.add(msg)
-//        notifyDataSetChanged()
-//    }
+):ListAdapter<Message,MessageAdapter.MessageHolder>(MessageItemDiffCallback()) {
 
      class MessageHolder(itemView: View) :RecyclerView.ViewHolder(itemView){
-
         val layMsgMy:ConstraintLayout = itemView.findViewById(R.id.layMsgMy)
 
         val tvMsgMy:TextView = itemView.findViewById(R.id.tvMsgMy)
@@ -71,71 +52,6 @@ class MessageAdapter(
         val panelFilePartner:LinearLayout = itemView.findViewById(R.id.panelFilePartner)
         val tvFilenamePartner:TextView = itemView.findViewById(R.id.tvFilenamePartner)
         val btnDownloadFilePartner:ImageButton = itemView.findViewById(R.id.btnDownloadFilePartner)
-
-        /*fun bind(message: Message){
-            if (message.user_id_sender == user_id){
-                // i'm sender
-                layMsgPartner.visibility = View.INVISIBLE
-                layMsgMy.visibility = View.VISIBLE
-                bindMsg(true, message)
-            } else if (message.user_id_recepient == user_id){
-                //message sends to me
-                layMsgMy.visibility = View.INVISIBLE
-                layMsgPartner.visibility = View.VISIBLE
-                bindMsg(false, message)
-            }
-        }
-
-        private fun bindMsg(isMy:Boolean, message: Message){
-            Log.i("messAdapter", "id: ${message.id} pos:$adapterPosition" )
-            if (message.text_msg!=null){
-
-               if (isMy){
-                   tvMsgMy.visibility = View.VISIBLE
-                   tvMsgMy.text = message.text_msg
-               }
-               else{
-                   tvMsgPartner.visibility = View.VISIBLE
-                   tvMsgPartner.text = message.text_msg
-               }
-
-            }
-            else if (message.img_msg != null) {
-
-                if (isMy){
-                    imgMsgMy.visibility = View.VISIBLE
-                    Glide.with(imgMsgMy.context).load(message.img_msg).into(imgMsgMy)
-                } else {
-                    imgMsgPartner.visibility = View.VISIBLE
-                    Glide.with(imgMsgPartner.context).load(message.img_msg).into(imgMsgPartner)
-                }
-
-            }
-            else if (message.file_msg != null){
-
-               if (isMy){
-                  panelFileMy.visibility = View.VISIBLE
-                  tvFilenameMy.text = message.file_msg
-               } else {
-                   panelFilePartner.visibility = View.VISIBLE
-                   tvFilenamePartner.text = message.file_msg
-               }
-
-            }
-            else if (message.file_3d_msg != null){
-
-                if (isMy){
-                    panel3dFileMy.visibility = View.VISIBLE
-                    tvFilename3dMy.text = message.file_3d_msg
-                } else {
-                    panel3dFilePartner.visibility = View.VISIBLE
-                    tvFilename3dPartner.text = message.file_3d_msg
-                }
-
-            }
-        }
-       */
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageHolder {
@@ -143,7 +59,7 @@ class MessageAdapter(
     }
 
     override fun onBindViewHolder(holder: MessageHolder, position: Int) {
-        val message = messageList[position]
+        val message = getItem(position)
         //holder.bind(message = message)
         holder.apply {
             message.apply {
@@ -335,10 +251,6 @@ class MessageAdapter(
             layMsgPartner.setOnLongClickListener(null)
         }
 
-    }
-
-    override fun getItemCount(): Int {
-        return messageList.size
     }
 
 }

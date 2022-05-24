@@ -15,7 +15,6 @@ import kotlinx.coroutines.launch
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun signOut(onSuccess:()->Unit){
-
         if (IS_CONNECT_INTERNET){
             REPOSITORY.signOut({
                 clearLocal()

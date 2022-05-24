@@ -13,7 +13,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class NewsFragment : Fragment() {
 
-    private lateinit var viewModel: NewsViewModel
     private var _binding:NewsFragmentBinding? = null
     private val binding: NewsFragmentBinding
     get() = _binding!!
@@ -35,11 +34,6 @@ class NewsFragment : Fragment() {
                 }
             }.attach()
         }
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(NewsViewModel::class.java)
     }
 
     override fun onDestroyView() {

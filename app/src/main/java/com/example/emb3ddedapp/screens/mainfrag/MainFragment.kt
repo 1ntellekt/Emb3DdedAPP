@@ -41,14 +41,9 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         navController = (childFragmentManager.findFragmentById(R.id.fragMenuNavHost) as NavHostFragment).navController
         NavigationUI.setupWithNavController(binding.bottomNavMenu, navController)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        // TODO: Use the ViewModel
     }
 
     override fun onStart() {

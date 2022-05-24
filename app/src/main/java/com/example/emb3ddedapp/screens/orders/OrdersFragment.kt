@@ -15,8 +15,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class OrdersFragment : Fragment() {
 
-    private lateinit var viewModel: OrdersViewModel
-
     private var _binding:OrdersFragmentBinding? = null
     private val binding:OrdersFragmentBinding
     get() = _binding!!
@@ -27,14 +25,6 @@ class OrdersFragment : Fragment() {
         _binding = OrdersFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(OrdersViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
-
-//    private val frags = mutableListOf(AllOrdersFragment(),MyOrdersFragment())
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,10 +39,6 @@ class OrdersFragment : Fragment() {
                 }
             }.attach()
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
     }
 
     override fun onDestroyView() {

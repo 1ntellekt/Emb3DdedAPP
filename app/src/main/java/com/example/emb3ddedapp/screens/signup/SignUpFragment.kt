@@ -28,15 +28,9 @@ class SignUpFragment : Fragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(SignUpViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        viewModel = ViewModelProvider(this)[SignUpViewModel::class.java]
         binding.apply {
 
             edNum.addTextChangedListener(PhoneNumberFormattingTextWatcher("US"))
@@ -119,90 +113,12 @@ class SignUpFragment : Fragment() {
                     })
                 }
             }
-
-            /*            btnLogInGoogle.setOnClickListener {
-                            if (edEmail.text.toString().isEmpty()){
-                                edEmailLayout.error = "Input email address is empty!"
-                            }else if (edLogin.text.toString().isEmpty()){
-                                edLoginLayout.error = "Input login is empty!"
-                            } else if (edNum.text.toString().isEmpty()){
-                                edNumLayout.error = "Input phone number is empty!"
-                            } else if (edPassword.text.toString().isEmpty()){
-                                edPasswordLayout.error = "Input password is empty!"
-                            } else if (edPasswordConfirm.text.toString().isEmpty()){
-                                edPasswordLayoutConfirm.error = "input confirm password is empty!"
-                            } else if (edPassword.text.toString() != edPasswordConfirm.text.toString()){
-                                edPasswordLayout.error = "Different passwords"
-                                edPasswordLayoutConfirm.error = "Different passwords"
-                            } else if (edPasswordLayout.error.isNullOrEmpty() && edPasswordLayoutConfirm.error.isNullOrEmpty()
-                                && edEmailLayout.error.isNullOrEmpty() && edLoginLayout.error.isNullOrEmpty() && edNumLayout.error.isNullOrEmpty()) {
-                                CurrUser.email = edEmail.text.toString()
-                                CurrUser.login = edLogin.text.toString()
-                                CurrUser.status = "Connected APP"
-                                CurrUser.number = edNum.text.toString()
-
-                                getSignInClient().signOut()
-                                takeGoogleAcc.launch(getSignInClient().signInIntent)
-                            }
-                        }*/
-
         }
-
-    }
-
-    //private var lastChar = ""
-
-    override fun onStart() {
-        super.onStart()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
-        /*    private fun showVerificationPhoneDialog(){
-        val alertDialog = AlertDialog.Builder(requireContext())
-        val binding: InputCodeLayoutBinding = InputCodeLayoutBinding.inflate(LayoutInflater.from(context))
-        alertDialog.setView(binding.root)
-
-        binding.apply {
-
-            alertDialog.setPositiveButton("Ok"){ dialog, which ->
-
-                if (edCodeTxt.text.toString().isNotEmpty()){
-                    if (rememberCode != edCodeTxt.text.toString()){
-                        showToast("Verify telephone number error!")
-                        this@SignUpFragment.binding.edNum.setText("")
-                    } else {
-                        viewModel.signUpEmail(this@SignUpFragment.binding.edEmail.text.toString(),this@SignUpFragment.binding.edPassword.text.toString()){
-                        APP.mNavController.navigate(R.id.action_signUpFragment_to_signInFragment)
-                        }
-                    }
-                } else {
-                    showToast("Input was empty!")
-                }
-
-            }.setNegativeButton("Cancel"){dialog, which ->
-                dialog.dismiss()
-            }
-
-        }
-        alertDialog.create().show()
-    }*/
-
-        /*    private val takeGoogleAcc = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-        val task = GoogleSignIn.getSignedInAccountFromIntent(it.data!!)
-        try {
-            val account = task.getResult(ApiException::class.java)
-            account?.let { acc->
-//                viewModel.signUpGoogle(acc.idToken!!){
-//                    APP.mNavController.navigate(R.id.action_signUpFragment_to_mainFragment)
-//                }
-            }
-        }catch (e: ApiException){
-            Log.e("tag", "error sign Google: ${e.message.toString()}")
-        }
-    }*/
 
 }

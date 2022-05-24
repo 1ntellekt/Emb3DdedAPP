@@ -37,6 +37,11 @@ class PageNewsEditFragment : Fragment() {
     private var curNewsItem: NewsItem? = null
     private var selectedImgCurrNewsItem:String? = null
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        curNewsItem = arguments?.getSerializable("news_item") as? NewsItem
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = PageNewsEditFragmentBinding.inflate(inflater,container,false)
         return binding.root
@@ -44,6 +49,7 @@ class PageNewsEditFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this)[PageNewsEditViewModel::class.java]
         binding.apply {
             appbar.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
                 var scrollRange = -1
@@ -60,8 +66,6 @@ class PageNewsEditFragment : Fragment() {
                     }
                 }
             })
-
-            curNewsItem = arguments?.getSerializable("news_item") as? NewsItem
 
             curNewsItem?.let {
                 edDescription.setText(it.description)
@@ -122,12 +126,6 @@ class PageNewsEditFragment : Fragment() {
                 { APP.mNavController.navigate(R.id.action_pageNewsEditFragment_to_mainFragment, Bundle().also { it.putString("nav", "news") })}
             }
         }
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(PageNewsEditViewModel::class.java)
-        // TODO: Use the ViewModel
     }
 
     override fun onDestroyView() {

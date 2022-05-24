@@ -30,7 +30,6 @@ class MyNewsFragment : Fragment() {
     get() = _binding!!
 
     private lateinit var adapter:NewsAdapter
-    private val newsList = mutableListOf<NewsItem>()
     private lateinit var mObserver:Observer<List<NewsItem>?>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -38,23 +37,17 @@ class MyNewsFragment : Fragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MyNewsViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this)[MyNewsViewModel::class.java]
         adapter = NewsAdapter(true,null,
         { editId->
-            val newsItem = newsList[editId]
+            val newsItem = adapter.currentList[editId]
             val args = Bundle().also { it.putSerializable("news_item",newsItem) }
             APP.mNavController.navigate(R.id.action_mainFragment_to_pageNewsEditFragment,args)
         },
         { delId->
-            viewModel.deleteNewsItem(newsList[delId].id)
-            adapter.deleteItem(delId)
+            viewModel.deleteNewsItem(adapter.currentList[delId].id)
         })
         binding.apply {
             recyclerView.setHasFixedSize(true)
@@ -66,9 +59,7 @@ class MyNewsFragment : Fragment() {
         }
         mObserver = Observer { list->
             list?.let {
-                newsList.clear()
-                newsList.addAll(it)
-                adapter.setData(it)
+                adapter.submitList(it)
             }
         }
     }
@@ -80,20 +71,25 @@ class MyNewsFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        viewModel.myNewsList.observe(this,mObserver)
+        viewModel.myNewsList.observe(viewLifecycleOwner,mObserver)
         viewModel.getNewsByUserId(CurrUser.id)
+    }
 
-
-
+    override fun onResume() {
+        super.onResume()
         val intentFilter = IntentFilter()
         intentFilter.addAction(FireServices.PUSH_TAG)
         requireActivity().registerReceiver(broadcastReceiver,intentFilter)
     }
 
+    override fun onPause() {
+        super.onPause()
+        requireActivity().unregisterReceiver(broadcastReceiver)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         viewModel.myNewsList.removeObserver(mObserver)
-        requireActivity().unregisterReceiver(broadcastReceiver)
         _binding = null
     }
 

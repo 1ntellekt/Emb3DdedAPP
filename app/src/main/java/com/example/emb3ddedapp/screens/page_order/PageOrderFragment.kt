@@ -26,6 +26,11 @@ class PageOrderFragment : Fragment() {
 
     private var curOrder:Order? = null
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        curOrder = arguments?.getSerializable("order") as? Order
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = PageOrderFragmentBinding.inflate(inflater, container, false)
         return binding.root
@@ -33,6 +38,7 @@ class PageOrderFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this)[PageOrderViewModel::class.java]
         binding.apply {
             appbar.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener{
                 var scrollRange = -1
@@ -50,7 +56,6 @@ class PageOrderFragment : Fragment() {
                 }
             })
 
-            curOrder = arguments?.getSerializable("order") as? Order
             curOrder?.let { order->
                 tvDescription.text = order.description
                 tvAuthor.text = order.user!!.login
@@ -77,12 +82,6 @@ class PageOrderFragment : Fragment() {
             }
             btnBack.setOnClickListener { APP.mNavController.navigate(R.id.action_pageOrderFragment_to_mainFragment, Bundle().also { it.putString("nav", "orders") }) }
         }
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(PageOrderViewModel::class.java)
-        // TODO: Use the ViewModel
     }
 
     override fun onDestroyView() {
