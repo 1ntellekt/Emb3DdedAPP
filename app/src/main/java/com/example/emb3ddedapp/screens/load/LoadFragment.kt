@@ -35,7 +35,7 @@ class LoadFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this)[LoadViewModel::class.java]
+        viewModel = ViewModelProvider(this).get(LoadViewModel::class.java)
         mObserver = Observer { userEntity ->
                 CurrUser.status = userEntity.status
                 CurrUser.email = userEntity.email

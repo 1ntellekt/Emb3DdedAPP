@@ -92,7 +92,7 @@ class PageNewsFragment : Fragment() {
             recyclerView.adapter = adapter
             mObserver = Observer { listComment->
                 listComment?.let { list ->
-                    adapter.submitList(list)
+                    adapter.setData(list)
                 }
             }
         }

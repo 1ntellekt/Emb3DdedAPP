@@ -14,9 +14,9 @@ class ConnectionReceiver : BroadcastReceiver() {
             if (ConnectivityManager.CONNECTIVITY_ACTION == intent.action){
                  val isConnect = intent.getBooleanExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, false)
                 IS_CONNECT_INTERNET = !isConnect
-                context?.let {
+                /*context?.let {
                     showToast("Connection: $IS_CONNECT_INTERNET")
-                }
+                }*/
             }
         }
     }

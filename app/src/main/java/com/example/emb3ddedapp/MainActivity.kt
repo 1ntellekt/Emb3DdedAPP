@@ -7,6 +7,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.example.emb3ddedapp.database.repository.Repository
 import com.example.emb3ddedapp.databinding.ActivityMainBinding
 import com.example.emb3ddedapp.utils.APP
@@ -25,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding?.root)
-        mNavController = Navigation.findNavController(this, R.id.fragmentNavHost)
+        mNavController = (supportFragmentManager.findFragmentById(R.id.fragmentNavHost) as NavHostFragment).navController
         APP = this
         REPOSITORY = Repository()
 

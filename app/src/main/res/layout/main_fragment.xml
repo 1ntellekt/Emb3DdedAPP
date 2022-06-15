@@ -44,7 +44,7 @@
     </androidx.appcompat.widget.Toolbar>
 
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragMenuNavHost"
         android:name="androidx.navigation.fragment.NavHostFragment"
         app:navGraph="@navigation/nav_menu_app"

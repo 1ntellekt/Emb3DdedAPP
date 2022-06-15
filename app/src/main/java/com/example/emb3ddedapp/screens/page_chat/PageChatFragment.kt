@@ -150,8 +150,7 @@ class PageChatFragment : Fragment() {
                 }
             }
             btnTakePhoto.setOnClickListener {
-                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                takePhoto.launch(intent)
+                checkPermissionTakePhoto()
             }
             btnTakeFile.setOnClickListener {
                 val intent = Intent(Intent.ACTION_GET_CONTENT)
@@ -159,7 +158,7 @@ class PageChatFragment : Fragment() {
                 takeFile.launch(intent)
             }
             btnCallPhone.setOnClickListener {
-
+                checkPhonePermission()
             }
             btnPopMenu.setOnClickListener {
                 popupMenuChat(it)
@@ -189,6 +188,47 @@ class PageChatFragment : Fragment() {
                 chatDefault = chatDef
                 setDownloadFlag(chatDef.user_id_first,chatDef.user_id_second, chatDef.download_first, chatDef.download_second)
             }
+        }
+    }
+
+    private fun checkPermissionTakePhoto() {
+        when{
+            ContextCompat.checkSelfPermission(requireContext(),Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED->{
+                requestCameraPermission.launch(Manifest.permission.CAMERA)
+            }
+            else -> {
+                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                takePhoto.launch(intent)
+            }
+        }
+    }
+
+    private fun checkPhonePermission() {
+        when {
+            ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CALL_PHONE)
+                    == PackageManager.PERMISSION_GRANTED -> {
+                callPhone()
+            }
+            else -> {
+                phonePermissionL.launch(arrayOf(Manifest.permission.CALL_PHONE))
+            }
+        }
+    }
+
+    private val phonePermissionL = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()){
+        if (it[Manifest.permission.CALL_PHONE]==true){
+            callPhone()
+        } else {
+            showToast("Call phone permission denied now!")
+        }
+    }
+
+    private fun callPhone() {
+        val number = recipientUser!!.number
+        if (number.isNotEmpty()) {
+            val s = "tel:+7$number"
+            val intent = Intent(Intent.ACTION_CALL).setData(Uri.parse(s))
+            startActivity(intent)
         }
     }
 
@@ -351,9 +391,9 @@ class PageChatFragment : Fragment() {
 
     private val requestCameraPermission = registerForActivityResult(ActivityResultContracts.RequestPermission()){
             if (it){
-                APP.mNavController.navigate(R.id.action_pageChatFragment_to_scanFragment)
+                showToast("Permission camera access!")
             }else {
-                showToast("Permission denied!")
+                showToast("Permission camera denied!")
             }
     }
 
@@ -450,6 +490,8 @@ class PageChatFragment : Fragment() {
                 val item = popupMenu.menu.findItem(R.id.delete3d)
                 item.isVisible = false
             }
+            val item = popupMenu.menu.findItem(R.id.showViewer)
+            item.isVisible = false
             popupMenu.show()
         }
     }

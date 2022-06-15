@@ -40,14 +40,14 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
     }
 
 
-    fun updateUserProfile(old_pass:String?=null,new_pass:String?=null, user: User, onSuccess: (User) -> Unit){
+    fun updateUserProfile(old_pass:String?=null,new_pass:String?=null, user: User, onSuccess: (User) -> Unit, onFail: (String) -> Unit){
         if (old_pass == null && new_pass == null){
             REPOSITORY.editCurrentUser(oldPassword = old_pass, password = new_pass, user,
                 {
                     onSuccess(user)
                 },
                 {
-                    showToast(it)
+                    onFail(it)
                 })
         } else if (old_pass != null && new_pass != null){
             REPOSITORY.reAuthenticate(CurrUser.email, new_pass, old_pass, {
@@ -57,10 +57,10 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
                 onSuccess(user)
             },
             {
-               showToast(it)
+                onFail(it)
             })
 
-            }, { showToast(it)})
+            }, { onFail(it) })
         }
     }
 

@@ -44,7 +44,7 @@
     <string name="enter_new_text_message_dia_tv">Enter new text message</string>
     <string name="enter_message_hint">Enter message…</string>
     <string name="orders_head_tv">Orders</string>
-    <string name="hint_search_view_orders">Enter the name author…</string>
+    <string name="hint_search_view_orders">Enter the name author or title of order…</string>
     <string name="hint_search_view_chats">Enter the login…</string>
     <string name="hint_search_view_news">Enter the name or tag of the entry…</string>
     <string name="you_already_set_rating_for_this_article_tv"><u>You already set rating for this article!</u></string>

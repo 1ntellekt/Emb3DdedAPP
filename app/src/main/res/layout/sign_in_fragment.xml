@@ -78,7 +78,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
-                    android:text="furadarkvan@gmail.com" />
+                    />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -100,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:inputType="textPassword"
-                    android:text="12345678" />
+                    />
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>

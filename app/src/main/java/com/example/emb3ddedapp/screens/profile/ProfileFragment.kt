@@ -1,8 +1,10 @@
 package com.example.emb3ddedapp.screens.profile
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -17,6 +19,7 @@ import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import com.bumptech.glide.Glide
 import com.example.emb3ddedapp.R
@@ -26,6 +29,7 @@ import com.example.emb3ddedapp.models.User
 import com.example.emb3ddedapp.utils.APP
 import com.example.emb3ddedapp.utils.getFileFromInput
 import com.example.emb3ddedapp.utils.getName
+import com.example.emb3ddedapp.utils.progressdialog.MyProgressDialog
 import com.example.emb3ddedapp.utils.showToast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -133,6 +137,8 @@ class ProfileFragment : Fragment() {
                 } else {
                     var newPassInput:String? = null
                     var oldPassInput:String? = null
+                    val myProgress = MyProgressDialog(requireContext())
+                    myProgress.load("Loading....")
                     if (edNewPassword.text.toString().isNotEmpty() && edOldPassword.text.toString().isNotEmpty()){
                         newPassInput = edNewPassword.text.toString()
                         oldPassInput = edOldPassword.text.toString()
@@ -142,28 +148,36 @@ class ProfileFragment : Fragment() {
                         viewModel.updateUserProfile(
                             old_pass = oldPassInput, new_pass = newPassInput,
                             user = User(id = CurrUser.id, login = edLogin.text.toString(),
-                                status = edStatus.text.toString(), number = edNumber.text.toString(), url_profile = CurrUser.url_profile)
-                       ) { updatedUser ->
+                                status = edStatus.text.toString(), number = edNumber.text.toString(), url_profile = CurrUser.url_profile),
+                        { updatedUser ->
                             CurrUser.url_profile = updatedUser.url_profile
                             CurrUser.number = updatedUser.number
                             CurrUser.status = updatedUser.status
                             CurrUser.login = updatedUser.login
                             initProfileUser()
-                        }
+                        }, {
+                            //Error
+                            myProgress.dismiss()
+                        })
                     } else {
                         viewModel.uploadFile(selectedFileNames.last(),{ pathUrl->
 
                         viewModel.updateUserProfile(
                                 old_pass = oldPassInput, new_pass = newPassInput,
                                 user = User(id = CurrUser.id, login = edLogin.text.toString(),
-                                    status = edStatus.text.toString(), number = edNumber.text.toString(), url_profile = pathUrl)
-                            ) { updatedUser ->
+                                    status = edStatus.text.toString(), number = edNumber.text.toString(), url_profile = pathUrl),
+                             { updatedUser ->
                                 CurrUser.url_profile = updatedUser.url_profile
                                 CurrUser.number = updatedUser.number
                                 CurrUser.status = updatedUser.status
                                 CurrUser.login = updatedUser.login
                                 initProfileUser()
+                            },
+                            {
+                                //Error
+                                myProgress.dismiss()
                             }
+                        )
 
                             clearFilesDir()
                         }, {clearFilesDir()})
@@ -201,11 +215,33 @@ class ProfileFragment : Fragment() {
                 takeImgFile.launch(intent)
             }
             R.id.takePhotoCamera -> {
-                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                takePhoto.launch(intent)
+                checkPhonePermission()
             }
         }
         return true
+    }
+
+    private fun checkPhonePermission() {
+        when {
+            ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
+                    == PackageManager.PERMISSION_GRANTED -> {
+                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                takePhoto.launch(intent)
+            }
+            else -> {
+                cameraPermissionL.launch(arrayOf(Manifest.permission.CAMERA))
+            }
+        }
+    }
+
+    private val cameraPermissionL = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()){
+        if (it[Manifest.permission.CALL_PHONE]==true){
+            //showToast("Camera permission granted now!")
+            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            takePhoto.launch(intent)
+        } else {
+            showToast("Camera permission denied now!")
+        }
     }
 
     private fun initProfileUser() {
