@@ -16,6 +16,7 @@ import com.example.emb3ddedapp.databinding.PageNewsEditFragmentBinding
 import com.example.emb3ddedapp.models.CurrUser
 import com.example.emb3ddedapp.models.NewsItem
 import com.example.emb3ddedapp.utils.*
+import com.example.emb3ddedapp.utils.progressdialog.MyProgressDialog
 import com.google.android.material.appbar.AppBarLayout
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -94,10 +95,14 @@ class PageNewsEditFragment : Fragment() {
                     edDescriptionLayout.error = "Input description"
                 } else {
                     if (selectedFileNames.isNotEmpty()){
+                        val myProgressDialog = MyProgressDialog(requireContext())
+                        myProgressDialog.load("Uploading image....")
                         viewModel.uploadFile(selectedFileNames.last(),{
+                            myProgressDialog.dismiss()
                             addOrEditNewsItem(it)
                             clearFilesDir()
                         },{
+                            myProgressDialog.dismiss()
                             clearFilesDir()
                         })
                     } else {

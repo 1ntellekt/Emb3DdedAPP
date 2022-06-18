@@ -28,6 +28,7 @@
     <string name="enter_tag_of_the_news_hint">Enter tag of the news....</string>
     <string name="enter_description_of_the_news_hint">Enter description of the news....</string>
     <string name="no_orders_page_hint">No orders</string>
+    <string name="no_news_page_hint">No news</string>
     <string name="loading_txt_tv">Loading…!!</string>
     <string name="filter_options_tv">Filter options</string>
     <string name="sort_by_date_tv">Sort by Date</string>

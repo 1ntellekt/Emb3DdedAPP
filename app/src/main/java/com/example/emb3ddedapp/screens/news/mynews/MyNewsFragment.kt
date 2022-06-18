@@ -59,6 +59,8 @@ class MyNewsFragment : Fragment() {
         mObserver = Observer { list->
             list?.let {
                 adapter.submitList(it)
+                if (it.isNotEmpty()) binding.tvHint.visibility = View.GONE
+                else binding.tvHint.visibility = View.VISIBLE
             }
         }
     }

@@ -138,7 +138,7 @@ class ProfileFragment : Fragment() {
                     var newPassInput:String? = null
                     var oldPassInput:String? = null
                     val myProgress = MyProgressDialog(requireContext())
-                    myProgress.load("Loading....")
+                    myProgress.load("Update values....")
                     if (edNewPassword.text.toString().isNotEmpty() && edOldPassword.text.toString().isNotEmpty()){
                         newPassInput = edNewPassword.text.toString()
                         oldPassInput = edOldPassword.text.toString()
@@ -154,6 +154,7 @@ class ProfileFragment : Fragment() {
                             CurrUser.number = updatedUser.number
                             CurrUser.status = updatedUser.status
                             CurrUser.login = updatedUser.login
+                            myProgress.dismiss()
                             initProfileUser()
                         }, {
                             //Error
@@ -171,6 +172,7 @@ class ProfileFragment : Fragment() {
                                 CurrUser.number = updatedUser.number
                                 CurrUser.status = updatedUser.status
                                 CurrUser.login = updatedUser.login
+                                myProgress.dismiss()
                                 initProfileUser()
                             },
                             {

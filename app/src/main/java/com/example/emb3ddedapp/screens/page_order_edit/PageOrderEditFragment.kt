@@ -16,6 +16,7 @@ import com.example.emb3ddedapp.databinding.PageOrderEditFragmentBinding
 import com.example.emb3ddedapp.models.CurrUser
 import com.example.emb3ddedapp.models.Order
 import com.example.emb3ddedapp.utils.*
+import com.example.emb3ddedapp.utils.progressdialog.MyProgressDialog
 import com.google.android.material.appbar.AppBarLayout
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -92,10 +93,14 @@ class PageOrderEditFragment : Fragment() {
                     edDescriptionLayout.error = "Input description"
                 } else {
                     if (selectedFileNames.isNotEmpty()){
+                        val myProgressDialog = MyProgressDialog(requireContext())
+                        myProgressDialog.load("Uploading image....")
                         viewModel.uploadFile(selectedFileNames.last(),{
+                            myProgressDialog.dismiss()
                             addOrEditOrder(it)
                             clearFilesDir()
                         },{
+                            myProgressDialog.dismiss()
                             clearFilesDir()
                         })
                     } else {

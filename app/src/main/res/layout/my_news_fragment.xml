@@ -26,7 +26,21 @@
             android:layout_height="match_parent"/>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-
+    <TextView
+        android:id="@+id/tvHint"
+        android:textSize="38sp"
+        android:fontFamily="@font/roboto_black"
+        android:text="@string/no_news_page_hint"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@color/color_head_txt"
+        android:rotation="30"
+        android:textStyle="italic"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="wrap_content"
+        android:visibility="gone"
+        android:layout_height="wrap_content"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnAddNews"

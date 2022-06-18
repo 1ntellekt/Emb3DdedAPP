@@ -51,6 +51,7 @@ import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -78,6 +79,8 @@ class PageChatFragment : Fragment() {
     private var iScrollDown = true
     private var partnerDownload3DFiles = false
     private var iDownloadFile = false
+
+    private lateinit var smoother:LinearSmoothScroller
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -126,15 +129,27 @@ class PageChatFragment : Fragment() {
                 APP.mNavController.navigate(R.id.action_pageChatFragment_to_mainFragment, Bundle().also { it.putString("nav", "chats") })
             }
 
+            smoother = object : LinearSmoothScroller(requireContext()){
+                    override fun getVerticalSnapPreference(): Int {
+                    return SNAP_TO_END
+                }
+            }
+
             recyclerView.setHasFixedSize(true)
             recyclerView.adapter = adapter
 
             btnDownScroll.setOnClickListener {
                 binding.btnDownScroll.visibility = View.GONE
                 recyclerView.setOnScrollChangeListener(null)
-                iScrollDown = true
                 smoother.targetPosition = adapter.currentList.size-1
-                binding.recyclerView.layoutManager!!.startSmoothScroll(smoother)
+                binding.recyclerView.layoutManager?.startSmoothScroll(smoother)
+                CoroutineScope(Dispatchers.Default).launch {
+                    delay(3000)
+                    Log.i("tag", "before btnDownScroll Listener iScrollDown: $iScrollDown")
+                    iScrollDown = true
+                    Log.i("tag", "before btnDownScroll Listener iScrollDown: $iScrollDown")
+                }
+
             }
 
             refLayout.isEnabled = false
@@ -173,13 +188,19 @@ class PageChatFragment : Fragment() {
         }
         mObserver = Observer { messages->
             messages?.let { list->
+                Log.i("tag", "after adapter iScrollDown: $iScrollDown")
                 adapter.submitList(list)
                 if (iScrollDown){
-                    if (list.isNotEmpty()){
-                        smoother.targetPosition = adapter.currentList.size-1
-                        binding.recyclerView.layoutManager!!.startSmoothScroll(smoother)
+                    CoroutineScope(Dispatchers.Default).launch {
+                        delay(300)
+                        if (list.isNotEmpty()){
+                            smoother.targetPosition = adapter.currentList.size-1
+                            binding.recyclerView.layoutManager?.startSmoothScroll(smoother)
+                        }
+                        delay(4500)
+                        binding.recyclerView.setOnScrollChangeListener(scrollListener)
                     }
-                    Handler(Looper.getMainLooper()).postDelayed({binding.recyclerView.setOnScrollChangeListener(scrollListener)},1000)
+                    //Handler(Looper.getMainLooper()).postDelayed({binding.recyclerView.setOnScrollChangeListener(scrollListener)},3000)
                 }
             }
         }
@@ -647,15 +668,11 @@ class PageChatFragment : Fragment() {
                 //Log.i("tag", "Scroll UP scrollY:$scrollY oldScrollY:$oldScrollY")
                 binding.btnDownScroll.visibility = View.VISIBLE
             }
+            Log.i("tag", "before scrollListener iScrollDown: $iScrollDown")
             iScrollDown = false
-            //Log.i("tag", "iScrollDown: $iScrollDown")
+            Log.i("tag", "after scrollListener iScrollDown: $iScrollDown")
         }
 
-    private val smoother = object : LinearSmoothScroller(APP.applicationContext){
-        override fun getVerticalSnapPreference(): Int {
-            return SNAP_TO_END
-        }
-    }
 
     private val refLayListener = SwipeRefreshLayout.OnRefreshListener {
         chatId?.let { viewModel.getMessagesByChatId(it) }
@@ -667,8 +684,10 @@ class PageChatFragment : Fragment() {
         super.onStart()
         viewModel.messagesList.observe(viewLifecycleOwner,mObserver)
         viewModel.chatDef.observe(viewLifecycleOwner,cObserver)
-
-        val myProgress = MyProgressDialog(requireContext())
+        chatId?.let {
+            viewModel.getMessagesByChatId(it)
+        }
+/*        val myProgress = MyProgressDialog(requireContext())
         myProgress.load("Loading chat....")
         object : CountDownTimer(3000,1000){
             override fun onTick(millisUntilFinished: Long) {}
@@ -678,170 +697,211 @@ class PageChatFragment : Fragment() {
                     viewModel.getMessagesByChatId(it)
                 }
             }
-        }.start()
+        }.start()*/
     }
 
-    override fun onResume() {
-        super.onResume()
-        val intentFilter = IntentFilter()
-        intentFilter.addAction(FireServices.PUSH_TAG)
-        requireActivity().registerReceiver(broadcastReceiver,intentFilter)
-    }
+   override fun onResume() {
+       super.onResume()
+       val intentFilter = IntentFilter()
+       intentFilter.addAction(FireServices.PUSH_TAG)
+       requireActivity().registerReceiver(broadcastReceiver,intentFilter)
+   }
 
-    override fun onPause() {
-        super.onPause()
-        requireActivity().unregisterReceiver(broadcastReceiver)
-    }
+   override fun onPause() {
+       super.onPause()
+       requireActivity().unregisterReceiver(broadcastReceiver)
+   }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        viewModel.messagesList.removeObserver(mObserver)
-        viewModel.chatDef.removeObserver(cObserver)
-        //_binding = null
-    }
+   override fun onDestroyView() {
+       super.onDestroyView()
+       viewModel.messagesList.removeObserver(mObserver)
+       viewModel.chatDef.removeObserver(cObserver)
+       //_binding = null
+   }
 
-    private val broadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            if (intent?.extras!=null){
-                val extras = intent.extras
-                //Log.d("msg","Message received!")
-                extras?.keySet()?.firstOrNull{it == FireServices.KEY_ACTION}?.let { key->
-                    //Log.d("msg","key: $key")
-                    when(extras.getString(key)){
-                        FireServices.ACTION_SHOW_MESSAGE -> {
-                          binding.refLayout.isEnabled = true
-                            refLayListener.onRefresh()
-                            //viewModel.getMessagesByChatId(chatId!!)
-                            /*  val message = Message(
-                                id = extras.getInt(FireServices.KEY_ID),
-                                chat_id = extras.getInt(FireServices.KEY_CHAT_ID),
-                                text_msg = extras.getString(FireServices.KEY_TEXT_MSG),
-                                img_msg = extras.getString(FireServices.KEY_IMG_MSG),
-                                file_msg = extras.getString(FireServices.KEY_FILE_MSG),
-                                file_3d_msg = extras.getString(FireServices.KEY_3D_FILE_MSG),
-                                created_at = extras.getString(FireServices.KEY_CREATED_AT),
-                                user_id_sender = extras.getInt(FireServices.KEY_ID_SENDER),
-                                user_id_recepient = extras.getInt(FireServices.KEY_ID_RECIPIENT)
-                            )
-                            adapter.addItem(message)
-                            adapter.currentList.add(message)*/
-                        }
-                        FireServices.ACTION_CHAT -> {
+   private val broadcastReceiver = object : BroadcastReceiver() {
+       override fun onReceive(context: Context?, intent: Intent?) {
+           if (intent?.extras!=null){
+               val extras = intent.extras
+               //Log.d("msg","Message received!")
+               extras?.keySet()?.firstOrNull{it == FireServices.KEY_ACTION}?.let { key->
+                   //Log.d("msg","key: $key")
+                   when(extras.getString(key)){
+                       FireServices.ACTION_SHOW_MESSAGE -> {
+                         binding.refLayout.isEnabled = true
+                           refLayListener.onRefresh()
+                           Log.i("tag", "iScrollDown: $iScrollDown")
+                           //viewModel.getMessagesByChatId(chatId!!)
+                           /*  val message = Message(
+                               id = extras.getInt(FireServices.KEY_ID),
+                               chat_id = extras.getInt(FireServices.KEY_CHAT_ID),
+                               text_msg = extras.getString(FireServices.KEY_TEXT_MSG),
+                               img_msg = extras.getString(FireServices.KEY_IMG_MSG),
+                               file_msg = extras.getString(FireServices.KEY_FILE_MSG),
+                               file_3d_msg = extras.getString(FireServices.KEY_3D_FILE_MSG),
+                               created_at = extras.getString(FireServices.KEY_CREATED_AT),
+                               user_id_sender = extras.getInt(FireServices.KEY_ID_SENDER),
+                               user_id_recepient = extras.getInt(FireServices.KEY_ID_RECIPIENT)
+                           )
+                           adapter.addItem(message)
+                           adapter.currentList.add(message)*/
+                       }
+                       FireServices.ACTION_CHAT -> {
 
-                            val id = extras.getString(FireServices.KEY_ID)!!.toInt()
-                            val downloadFirst = extras.getString(FireServices.KEY_D_FIRST)!!.toInt()
-                            val downloadSecond = extras.getString(FireServices.KEY_D_SECOND)!!.toInt()
- //                           iDownloadFile = (CurrUser.id == chatDefault!!.user_id_first && downloadFirst ==1) || (CurrUser.id == chatDefault!!.user_id_second && downloadSecond == 1)
-                            chatDefault?.let {
-                                if (id == it.id){
-                                    setDownloadFlag(it.user_id_first,it.user_id_second, downloadFirst, downloadSecond)
-                                } else{
-                                    Log.d("msg","chat get error")
-                                }
-                            }
+                           val id = extras.getString(FireServices.KEY_ID)!!.toInt()
+                           val downloadFirst = extras.getString(FireServices.KEY_D_FIRST)!!.toInt()
+                           val downloadSecond = extras.getString(FireServices.KEY_D_SECOND)!!.toInt()
+//                           iDownloadFile = (CurrUser.id == chatDefault!!.user_id_first && downloadFirst ==1) || (CurrUser.id == chatDefault!!.user_id_second && downloadSecond == 1)
+                           chatDefault?.let {
+                               if (id == it.id){
+                                   setDownloadFlag(it.user_id_first,it.user_id_second, downloadFirst, downloadSecond)
+                               } else{
+                                   Log.d("msg","chat get error")
+                               }
+                           }
 
-                        }
-                        else ->{
-                            Log.d("msg","key error not found")}
-                    }
-                }
-            }
-        }
-    }
+                       }
+                       else ->{
+                           Log.d("msg","key error not found")}
+                   }
+               }
+           }
+       }
+   }
 
-    private fun setDownloadFlag(first_id:Int, second_id:Int, firstBool:Int, secondBool:Int){
-        partnerDownload3DFiles = (CurrUser.id == first_id && firstBool == 1) || (CurrUser.id == second_id && secondBool == 1)
-        //iDownloadFile = (CurrUser.id == first_id && firstBool ==1) || (CurrUser.id == second_id && secondBool == 1)
-        if (recipientUser!!.id == first_id){
-            iDownloadFile = (firstBool == 1)
-        } else if (recipientUser!!.id == second_id) {
-            iDownloadFile = (secondBool == 1)
-        }
-    }
+   private fun setDownloadFlag(first_id:Int, second_id:Int, firstBool:Int, secondBool:Int){
+       partnerDownload3DFiles = (CurrUser.id == first_id && firstBool == 1) || (CurrUser.id == second_id && secondBool == 1)
+       //iDownloadFile = (CurrUser.id == first_id && firstBool ==1) || (CurrUser.id == second_id && secondBool == 1)
+       if (recipientUser!!.id == first_id){
+           iDownloadFile = (firstBool == 1)
+       } else if (recipientUser!!.id == second_id) {
+           iDownloadFile = (secondBool == 1)
+       }
+   }
 
-    private var currentSelectedFile: File? = null
-    //private val selectedFileNames = mutableListOf<File>()
+   private var currentSelectedFile: File? = null
+   //private val selectedFileNames = mutableListOf<File>()
 
-    private fun clearFilesDir(){
+   private fun clearFilesDir(){
 //        if (selectedFileNames.isNotEmpty()){
 //            selectedFileNames.forEach {
 //                it.delete()
 //            }
 //            selectedFileNames.clear()
 //        }
-        //selectedFileNames.clear()
-        CoroutineScope(Dispatchers.Default).launch {
-            requireActivity().filesDir.listFiles()?.forEach { file ->
-                if (file.isFile && !file.isHidden &&
-                    (
-                            file.name.startsWith("file-", ignoreCase = true)
-                            || file.name.startsWith("img-", ignoreCase = true)
-                            || file.name.startsWith("3dfile-", ignoreCase = true)
-                    )
-                ){
-                    file.delete()
-                }
-            }
-        }
-    }
+       //selectedFileNames.clear()
+       CoroutineScope(Dispatchers.Default).launch {
+           requireActivity().filesDir.listFiles()?.forEach { file ->
+               if (file.isFile && !file.isHidden &&
+                   (
+                           file.name.startsWith("file-", ignoreCase = true)
+                           || file.name.startsWith("img-", ignoreCase = true)
+                           || file.name.startsWith("3dfile-", ignoreCase = true)
+                   )
+               ){
+                   file.delete()
+               }
+           }
+       }
+   }
 
-    private val takeFile = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result->
-        if(result.data!=null && result.resultCode == Activity.RESULT_OK){
-            if(result.data!!.data != null){
-                val fileURI = result.data!!.data!!
-                try {
-                    val nowDate = SimpleDateFormat(TIME_PAT, Locale.getDefault()).format(Date())
-                    var fileName = "$nowDate-${fileURI.getName()}"
-                    fileName = if (fileName.endsWith(".glb") || fileName.endsWith(".gltf")){
-                        "3dfile-$fileName"
-                    } else if (fileName.endsWith(".jpeg") || fileName.endsWith(".jpg") || fileName.endsWith(".png")){
-                        "img-$fileName"
-                    } else {
-                        "file-$fileName"
-                    }
-                    val fullFileName = "${requireActivity().filesDir.path}/$fileName"
-                    currentSelectedFile = getFileFromInput(fullFileName,APP.contentResolver.openInputStream(fileURI))
-                    if (currentSelectedFile == null){
-                        showToast("File image not selected!")
-                    } else {
-                        //selectedFileNames.add(currentSelectedFile!!)
-                        when {
-                            fileName.startsWith("file-") -> {
-                                viewModel.sendFileMsg(currentSelectedFile!!,chatId!!, recipientUser!!.id,{clearFilesDir()},{clearFilesDir()})
-                            }
-                            fileName.startsWith("3dfile-") -> {
-                                viewModel.send3dFile(currentSelectedFile!!,chatId!!, recipientUser!!.id,{clearFilesDir()},{clearFilesDir()})
-                            }
-                            else -> {
-                                viewModel.sendImage(currentSelectedFile!!,chatId!!,recipientUser!!.id, {clearFilesDir()}, {clearFilesDir()})
-                            }
-                        }
-                        currentSelectedFile = null
-                    }
-                } catch (e: FileNotFoundException) {
-                    e.printStackTrace()
-                }
-                //val bmp = BitmapFactory.decodeStream(imageStream)
-            }
-        }
-    }
+   private val takeFile = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result->
+       if(result.data!=null && result.resultCode == Activity.RESULT_OK){
+           if(result.data!!.data != null){
+               val fileURI = result.data!!.data!!
+               try {
+                   val nowDate = SimpleDateFormat(TIME_PAT, Locale.getDefault()).format(Date())
+                   var fileName = "$nowDate-${fileURI.getName()}"
+                   fileName = if (fileName.endsWith(".glb") || fileName.endsWith(".gltf")){
+                       "3dfile-$fileName"
+                   } else if (fileName.endsWith(".jpeg") || fileName.endsWith(".jpg") || fileName.endsWith(".png")){
+                       "img-$fileName"
+                   } else {
+                       "file-$fileName"
+                   }
+                   val fullFileName = "${requireActivity().filesDir.path}/$fileName"
+                   currentSelectedFile = getFileFromInput(fullFileName,APP.contentResolver.openInputStream(fileURI))
+                   if (currentSelectedFile == null){
+                       showToast("File image not selected!")
+                   } else {
+                       //selectedFileNames.add(currentSelectedFile!!)
+                       when {
+                           fileName.startsWith("file-") -> {
+                               val myProgressDialog = MyProgressDialog(requireContext())
+                               myProgressDialog.load("Uploading file....")
+                               viewModel.sendFileMsg(currentSelectedFile!!,chatId!!, recipientUser!!.id,
+                                   {
+                                       myProgressDialog.dismiss()
+                                       clearFilesDir()
+                                   },
+                                   {
+                                       myProgressDialog.dismiss()
+                                       clearFilesDir()
+                                   })
+                           }
+                           fileName.startsWith("3dfile-") -> {
+                               val myProgressDialog = MyProgressDialog(requireContext())
+                               myProgressDialog.load("Uploading 3d file....")
+                               viewModel.send3dFile(currentSelectedFile!!,chatId!!, recipientUser!!.id,
+                                   {
+                                       myProgressDialog.dismiss()
+                                       clearFilesDir()
+                                   },
+                                   {
+                                       myProgressDialog.dismiss()
+                                       clearFilesDir()
+                                   })
+                           }
+                           else -> {
+                               val myProgressDialog = MyProgressDialog(requireContext())
+                               myProgressDialog.load("Uploading image....")
+                               viewModel.sendImage(currentSelectedFile!!,chatId!!,recipientUser!!.id,
+                                   {
+                                       myProgressDialog.dismiss()
+                                       clearFilesDir()
+                                   },
+                                   {
+                                       myProgressDialog.dismiss()
+                                       clearFilesDir()
+                                   })
+                           }
+                       }
+                       currentSelectedFile = null
+                   }
+               } catch (e: FileNotFoundException) {
+                   e.printStackTrace()
+               }
+               //val bmp = BitmapFactory.decodeStream(imageStream)
+           }
+       }
+   }
 
-    private val takePhoto  = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result->
-        if(result.resultCode== AppCompatActivity.RESULT_OK &&result.data!=null){
-            val bundle:Bundle = result.data!!.extras!!
-            val bmp: Bitmap = bundle.get("data") as Bitmap
-            val nowDate = SimpleDateFormat(TIME_PAT, Locale.getDefault()).format(Date())
-            val file = File(requireActivity().filesDir.path,"img-$nowDate.jpg")
-            val bos = ByteArrayOutputStream()
-            bmp.compress(Bitmap.CompressFormat.JPEG, 100, bos)
-            val bitmapData = bos.toByteArray()
-            val fos = FileOutputStream(file)
-            fos.write(bitmapData)
-            fos.flush()
-            fos.close()
-            //selectedFileNames.add(file)
-            viewModel.sendImage(file, chatId!!, recipientUser!!.id,{clearFilesDir()},{clearFilesDir()})
-        }
-    }
+   private val takePhoto  = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result->
+       if(result.resultCode== AppCompatActivity.RESULT_OK &&result.data!=null){
+           val bundle:Bundle = result.data!!.extras!!
+           val bmp: Bitmap = bundle.get("data") as Bitmap
+           val nowDate = SimpleDateFormat(TIME_PAT, Locale.getDefault()).format(Date())
+           val file = File(requireActivity().filesDir.path,"img-$nowDate.jpg")
+           val bos = ByteArrayOutputStream()
+           bmp.compress(Bitmap.CompressFormat.JPEG, 100, bos)
+           val bitmapData = bos.toByteArray()
+           val fos = FileOutputStream(file)
+           fos.write(bitmapData)
+           fos.flush()
+           fos.close()
+           //selectedFileNames.add(file)
+           val myProgressDialog = MyProgressDialog(requireContext())
+           myProgressDialog.load("Uploading image....")
+           viewModel.sendImage(file, chatId!!, recipientUser!!.id,
+               {
+                   myProgressDialog.dismiss()
+                   clearFilesDir()
+               },
+               {
+                   myProgressDialog.dismiss()
+                   clearFilesDir()
+               })
+       }
+   }
 
 }

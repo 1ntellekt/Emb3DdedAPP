@@ -80,29 +80,32 @@ class ChatsFragment : Fragment() {
         }
         mObserver = Observer { list->
             list?.let { list1->
-                val chats = if (sortByFirstNewDate){
-                    list1.sortedByDescending {it.last_message?.created_at}
-                } else {
-                    list1.sortedBy {it.last_message?.created_at}
+
+
+               val chats = when(choose){
+                    0-> {
+                        if (sortByFirstNewDate) {
+                            list1.sortedByDescending {it.last_message?.created_at}
+                        } else {
+                            list1.sortedBy {it.last_message?.created_at}
+                        }
+                    }
+                    else -> {
+                        if (sortByLoginAlpha) {
+                            list1
+                                .sortedBy { it.user_first?.login }
+                                .sortedBy { it.user_second?.login }
+                        } else {
+                            list1
+                                .sortedByDescending { it.user_first?.login }
+                                .sortedByDescending { it.user_second?.login }
+                        }
+                    }
                 }
 
-                val chats1 = if (sortByLoginAlpha) {
-                    chats
-//                        .filterNot { it.user_id_first == CurrUser.id }
-//                        .filter { it.user_id_second != CurrUser.id }
-                        .sortedBy { it.user_first?.login }
-                        .sortedBy { it.user_second?.login }
-                } else {
-                    chats
-//                        .filterNot { it.user_id_first == CurrUser.id }
-//                          .filter { (it.user_id_second != CurrUser.id && it.user_id_first == CurrUser.id)
-//                                  || (it.user_id_first != CurrUser.id && it.user_id_second == CurrUser.id) }
-                        .sortedByDescending { it.user_first?.login }
-                        .sortedByDescending { it.user_second?.login }
-                }
                 chatList.clear()
-                chatList.addAll(chats1)
-                adapter.submitList(chats1)
+                chatList.addAll(chats)
+                adapter.submitList(chats)
             }
         }
     }
@@ -181,6 +184,7 @@ class ChatsFragment : Fragment() {
     //filters
     private var sortByLoginAlpha = true
     private var sortByFirstNewDate = true
+    private var choose = 0
 
     private fun dialogFilterChats(){
         val dialog = context?.let { Dialog(it) }
@@ -191,45 +195,70 @@ class ChatsFragment : Fragment() {
 
             binding.apply {
 
-                if (sortByFirstNewDate){
-                    btnFirstNew.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_active)
-                    btnFirstOld.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
-                } else {
-                    btnFirstOld.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_active)
-                    btnFirstNew.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
-                }
-
-                if (sortByLoginAlpha){
-                    btnAlpha.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_active)
-                    btnReverseAlpha.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
-                } else {
-                    btnReverseAlpha.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_active)
-                    btnAlpha.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
+                when(choose){
+                    0->{
+                        if (sortByFirstNewDate){
+                            btnFirstNew.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_active)
+                            btnFirstOld.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
+                            btnAlpha.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
+                            btnReverseAlpha.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
+                        } else {
+                            btnFirstOld.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_active)
+                            btnFirstNew.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
+                            btnAlpha.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
+                            btnReverseAlpha.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
+                        }
+                    }
+                    else -> {
+                        if (sortByLoginAlpha){
+                            btnAlpha.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_active)
+                            btnReverseAlpha.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
+                            btnFirstNew.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
+                            btnFirstOld.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
+                        } else {
+                            btnReverseAlpha.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_active)
+                            btnAlpha.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
+                            btnFirstNew.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
+                            btnFirstOld.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
+                        }
+                    }
                 }
 
                 btnFirstNew.setOnClickListener {
-                    if (sortByFirstNewDate) return@setOnClickListener
+                    //if (sortByFirstNewDate) return@setOnClickListener
                     sortByFirstNewDate = true
+                    choose = 0
                     btnFirstNew.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_active)
                     btnFirstOld.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
-                }
-                btnFirstOld.setOnClickListener {
-                    if (!sortByFirstNewDate) return@setOnClickListener
-                    sortByFirstNewDate = false
-                    btnFirstOld.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_active)
-                    btnFirstNew.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
-                }
-                btnAlpha.setOnClickListener {
-                    if (sortByLoginAlpha) return@setOnClickListener
-                    sortByLoginAlpha = true
-                    btnAlpha.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_active)
+                    btnAlpha.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
                     btnReverseAlpha.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
                 }
+                btnFirstOld.setOnClickListener {
+                    //if (!sortByFirstNewDate) return@setOnClickListener
+                    sortByFirstNewDate = false
+                    choose = 0
+                    btnFirstOld.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_active)
+                    btnFirstNew.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
+                    btnAlpha.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
+                    btnReverseAlpha.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
+                }
+                btnAlpha.setOnClickListener {
+                    //if (sortByLoginAlpha) return@setOnClickListener
+                    sortByLoginAlpha = true
+                    choose = 1
+                    btnAlpha.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_active)
+                    btnReverseAlpha.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
+                    btnFirstNew.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
+                    btnFirstOld.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
+                }
                 btnReverseAlpha.setOnClickListener {
-                    if (!sortByLoginAlpha) return@setOnClickListener
+                    //if (!sortByLoginAlpha) return@setOnClickListener
                     sortByLoginAlpha = false
+                    choose = 1
                     btnReverseAlpha.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_active)
                     btnAlpha.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
+                    btnFirstNew.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
+                    btnFirstOld.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.btn_inactive)
                 }
             }
 
