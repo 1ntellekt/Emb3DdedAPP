@@ -137,14 +137,15 @@ class PageChatFragment : Fragment() {
 
             recyclerView.setHasFixedSize(true)
             recyclerView.adapter = adapter
+            recyclerView.setOnScrollChangeListener(scrollListener)
 
             btnDownScroll.setOnClickListener {
                 binding.btnDownScroll.visibility = View.GONE
-                recyclerView.setOnScrollChangeListener(null)
+                //recyclerView.setOnScrollChangeListener(null)
                 smoother.targetPosition = adapter.currentList.size-1
                 binding.recyclerView.layoutManager?.startSmoothScroll(smoother)
                 CoroutineScope(Dispatchers.Default).launch {
-                    delay(3000)
+                    delay(500)
                     Log.i("tag", "before btnDownScroll Listener iScrollDown: $iScrollDown")
                     iScrollDown = true
                     Log.i("tag", "before btnDownScroll Listener iScrollDown: $iScrollDown")
@@ -192,13 +193,14 @@ class PageChatFragment : Fragment() {
                 adapter.submitList(list)
                 if (iScrollDown){
                     CoroutineScope(Dispatchers.Default).launch {
-                        delay(300)
+                        delay(1000)
                         if (list.isNotEmpty()){
                             smoother.targetPosition = adapter.currentList.size-1
                             binding.recyclerView.layoutManager?.startSmoothScroll(smoother)
                         }
-                        delay(4500)
-                        binding.recyclerView.setOnScrollChangeListener(scrollListener)
+                        delay(500)
+                        //binding.recyclerView.setOnScrollChangeListener(scrollListener)
+                        iScrollDown = true
                     }
                     //Handler(Looper.getMainLooper()).postDelayed({binding.recyclerView.setOnScrollChangeListener(scrollListener)},3000)
                 }

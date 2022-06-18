@@ -54,9 +54,18 @@ class MainFragment : Fragment() {
             navPositionName = arguments?.getString("nav")
             navPositionName?.let { nav->
                 when(nav){
-                    "chats" -> {bottomNavMenu.selectedItemId = R.id.chatsFragment}
-                    "news" -> {bottomNavMenu.selectedItemId = R.id.newsFragment}
-                    "orders" -> {bottomNavMenu.selectedItemId = R.id.ordersFragment}
+                    "chats" -> {
+                        bottomNavMenu.selectedItemId = R.id.chatsFragment
+                        arguments?.clear()
+                    }
+                    "news" -> {
+                        bottomNavMenu.selectedItemId = R.id.newsFragment
+                        arguments?.clear()
+                    }
+                    "orders" -> {
+                        bottomNavMenu.selectedItemId = R.id.ordersFragment
+                        arguments?.clear()
+                    }
                 }
             }
         }
