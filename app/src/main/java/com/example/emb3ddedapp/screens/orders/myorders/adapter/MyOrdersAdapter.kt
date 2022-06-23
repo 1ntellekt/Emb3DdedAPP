@@ -51,9 +51,13 @@ class MyOrdersAdapter(
             tvAuthor.text = "${tvAuthor.context.resources.getString(R.string.order_auth)} ${ order.user!!.login }"
             tvTitle.text = "${order.title.take(30)}...."
             tvShortDescription.text = "${order.description.take(190)}...."
-            order.img_url?.let { url->
-                Glide.with(imgOrder.context).load(url).into(imgOrder)
+
+            if (order.img_url == null){
+                imgOrder.setImageResource(R.drawable.order_img)
+            } else {
+                Glide.with(imgOrder.context).load(order.img_url).into(imgOrder)
             }
+
             tvDateTime.text = getDataTimeWithFormat(order.created_at!!)
 
             if (order.status>0) {

@@ -46,8 +46,11 @@ class NewsAdapter(
         holder.apply {
             tvAuthor.text = newsItem.user!!.login
             tvTag.text = newsItem.tag
-            newsItem.img_url?.let { url->
-                Glide.with(imgNews.context).load(url).into(imgNews)
+
+            if (newsItem.img_url == null){
+                imgNews.setImageResource(R.drawable.news_img)
+            }else {
+                Glide.with(imgNews.context).load(newsItem.img_url).into(imgNews)
             }
 
             tvDateTime.text = getDataTimeWithFormat(newsItem.created_at!!)
